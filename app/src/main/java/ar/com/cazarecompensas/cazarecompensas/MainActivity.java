@@ -18,9 +18,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
+import com.facebook.Profile;
 import com.facebook.login.LoginManager;
+
+import org.w3c.dom.Text;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -61,6 +65,14 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        String valor = getUserName();
+        TextView nombreFacebook = (TextView) findViewById(R.id.nombreFacebook);
+        nombreFacebook.setText(valor);
+
+        View nav = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        TextView nombreUsuario = (TextView) nav.findViewById(R.id.nombreHader);
+        nombreUsuario.setText(valor);
+
 
     }
 
@@ -72,6 +84,13 @@ public class MainActivity extends AppCompatActivity
     public void logout(View view){
         LoginManager.getInstance().logOut();
         goLoginScreen();
+    }
+    public String getUserName(){
+        Profile profile = Profile.getCurrentProfile();
+        String nombre = Profile.getCurrentProfile().getFirstName();
+        String apellido = Profile.getCurrentProfile().getLastName();
+        String nombreCompleto = nombre+" "+apellido;
+        return nombreCompleto;
     }
 
     @Override
