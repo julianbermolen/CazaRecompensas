@@ -1,10 +1,16 @@
 package ar.com.cazarecompensas.cazarecompensas;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -18,6 +24,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -26,6 +33,11 @@ import com.facebook.login.LoginManager;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -73,6 +85,28 @@ public class MainActivity extends AppCompatActivity
         TextView nombreUsuario = (TextView) nav.findViewById(R.id.nombreHader);
         nombreUsuario.setText(valor);
 
+        URL imageUrl = null;
+        HttpURLConnection conn = null;
+
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            imageUrl =  new URL(""+Profile.getCurrentProfile().getProfilePictureUri(200,200));
+            conn = (HttpURLConnection) imageUrl.openConnection();
+            conn.connect();
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 2;
+
+            Bitmap imagen = BitmapFactory.decodeStream(conn.getInputStream());
+            ImageView img = (ImageView) nav.findViewById(R.id.imageView);
+            img.setImageBitmap(imagen);
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+
+        }
 
     }
 
