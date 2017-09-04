@@ -81,8 +81,9 @@ public class MainActivity extends AppCompatActivity
         TextView nombreFacebook = (TextView) findViewById(R.id.nombreFacebook);
         nombreFacebook.setText(valor);
 
-        View nav = navigationView.inflateHeaderView(R.layout.nav_header_main);
-        TextView nombreUsuario = (TextView) nav.findViewById(R.id.nombreHader);
+        /*View nav = navigationView.inflateHeaderView(R.layout.nav_header_main);*/
+        View header=navigationView.getHeaderView(0);
+        TextView nombreUsuario = (TextView) header.findViewById(R.id.nombreHader);
         nombreUsuario.setText(valor);
 
         URL imageUrl = null;
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            imageUrl =  new URL(""+Profile.getCurrentProfile().getProfilePictureUri(200,200));
+            imageUrl =  new URL(""+Profile.getCurrentProfile().getProfilePictureUri(180,180));
             conn = (HttpURLConnection) imageUrl.openConnection();
             conn.connect();
 
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity
             options.inSampleSize = 2;
 
             Bitmap imagen = BitmapFactory.decodeStream(conn.getInputStream());
-            ImageView img = (ImageView) nav.findViewById(R.id.imageView);
+            ImageView img = (ImageView) header.findViewById(R.id.imageView);
             img.setImageBitmap(imagen);
 
         } catch (IOException e) {
