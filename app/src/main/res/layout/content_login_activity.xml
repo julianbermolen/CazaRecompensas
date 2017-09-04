@@ -6,18 +6,42 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="ar.com.cazarecompensas.cazarecompensas.login_activity"
-    tools:showIn="@layout/activity_login_activity">
+    tools:showIn="@layout/activity_login_activity"
+    android:background="@drawable/background">
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteY="242dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="111dp"
         tools:layout_editor_absoluteX="112dp"
-        android:layout_marginTop="230dp"
+        tools:layout_editor_absoluteY="242dp" />
+
+    <TextView
+        android:id="@+id/tituloInicio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="91dp"
-        android:layout_marginEnd="91dp" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="116dp"
+        android:lineSpacingExtra="18sp"
+        android:text="@string/tituloInicio"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/descripcionInicio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tituloInicio"
+        android:layout_marginLeft="17dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="35dp"
+        android:text="@string/descripcionInicio"
+        android:textColor="@color/colorPrimary" />
 </RelativeLayout>

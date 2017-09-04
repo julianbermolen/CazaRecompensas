@@ -10,6 +10,10 @@
     <string name="fb_login_protocol_scheme">fb118040655482858</string>
     <string name="cancel_login">Error al intentar iniciar sesión</string>
     <string name="logout">Cerrar sesión</string>
-    <string name="title_activity_login_activity">login_activity</string>
+
+    <!-- LOGIN -->
+    <string name="title_activity_login_activity">Inicio de sesión</string>
+    <string name="tituloInicio">CazaRecompensas</string>
+    <string name="descripcionInicio">Ayuda a otra persona a encontrar su objeto. Obtenga una bonificación siendo solidario!</string>
 
 </resources>
