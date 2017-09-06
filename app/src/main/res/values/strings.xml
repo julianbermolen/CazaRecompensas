@@ -15,5 +15,6 @@
     <string name="title_activity_login_activity">Inicio de sesión</string>
     <string name="tituloInicio">CazaRecompensas</string>
     <string name="descripcionInicio">Ayuda a otra persona a encontrar su objeto. Obtenga una bonificación siendo solidario!</string>
+    <string name="title_activity_localizacion">Map</string>
 
 </resources>

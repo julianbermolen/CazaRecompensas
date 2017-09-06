@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -88,6 +89,18 @@ public class MainActivity extends AppCompatActivity
 
         URL imageUrl = null;
         HttpURLConnection conn = null;
+
+        Button button = (Button) findViewById(R.id.mapa);
+
+        button.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View arg0){
+                Intent intent = new Intent(getApplicationContext(),Localizacion.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+
+        });
 
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -184,4 +197,5 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }
