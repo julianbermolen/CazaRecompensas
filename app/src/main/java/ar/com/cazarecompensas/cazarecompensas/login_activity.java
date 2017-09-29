@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -17,13 +18,22 @@ import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-public class login_activity extends AppCompatActivity {
+import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class login_activity extends AppCompatActivity {
+    //TextView resultadoTextView;
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if(AccessToken.getCurrentAccessToken() != null){
             goMainScreen();
         }
@@ -51,6 +61,11 @@ public class login_activity extends AppCompatActivity {
             }
 
         });
+
+
+        // Ejemplo de invocación a la api rest
+        //resultadoTextView = (TextView)findViewById(R.id.resultado);
+        //resultadoTextView.setText(new ApiCazarecompensasWebClient().Get("/usuarios"));
 
     }
 
