@@ -17,7 +17,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="111dp"
         tools:layout_editor_absoluteX="112dp"
-        tools:layout_editor_absoluteY="242dp" />
+        tools:layout_editor_absoluteY="242dp"
+        android:text="string/loginButton"/>
 
     <TextView
         android:id="@+id/tituloInicio"

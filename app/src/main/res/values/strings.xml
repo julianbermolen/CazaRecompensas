@@ -5,7 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Configuración</string>
-
+    <string name="loginButton">Inicie sesión con Facebook</string>
     <string name="facebook_app_id">118040655482858</string>
     <string name="fb_login_protocol_scheme">fb118040655482858</string>
     <string name="cancel_login">Error al intentar iniciar sesión</string>
@@ -16,5 +16,9 @@
     <string name="tituloInicio">CazaRecompensas</string>
     <string name="descripcionInicio">Ayuda a otra persona a encontrar su objeto. Obtenga una bonificación siendo solidario!</string>
     <string name="title_activity_localizacion">Map</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">listaTesoros. Aca hay que realizar la lógica para mostrar las tarjetas</string>
+    <string name="hello_blank_fragment2">MapaTesoros. Esto iría en el segundo sprint</string>
 
 </resources>

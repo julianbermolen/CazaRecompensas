@@ -14,6 +14,7 @@ import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -51,7 +52,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, listaTesoros.OnFragmentInteractionListener,MapaTesoros.OnFragmentInteractionListener{
     
 
     @Override
@@ -72,9 +73,10 @@ public class MainActivity extends AppCompatActivity
         } catch (NoSuchAlgorithmException e) {
 
         }
-        if(AccessToken.getCurrentAccessToken() == null){
-            goLoginScreen();
-        }
+        //Chequeo si el usuario está ya logueado
+        verificarSesion();
+
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -85,22 +87,11 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        //Renderizo el perfil del usuario
+        renderFacebookProfile();
 
-        String valor = getUserName();
-        TextView nombreFacebook = (TextView) findViewById(R.id.nombreFacebook);
-        nombreFacebook.setText(valor);
 
-        /*View nav = navigationView.inflateHeaderView(R.layout.nav_header_main);*/
-        View header=navigationView.getHeaderView(0);
-        TextView nombreUsuario = (TextView) header.findViewById(R.id.nombreHader);
-        nombreUsuario.setText(valor);
-
-        URL imageUrl = null;
-        HttpURLConnection conn = null;
-
-        Button button = (Button) findViewById(R.id.mapa);
+/*        Button button = (Button) findViewById(R.id.mapa);
 
         button.setOnClickListener(new View.OnClickListener()
         {
@@ -110,7 +101,53 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
 
-        });
+        });*/
+
+        //Manejo de Fragments
+        listaTesoros fr1 = new listaTesoros();
+
+        getSupportFragmentManager().beginTransaction().add(R.id.contenedor, fr1).commit();
+
+        Button frag1 = (Button) findViewById(R.id.frag1);
+        Button frag2 = (Button) findViewById(R.id.frag2);
+
+        frag1.setOnClickListener(this);
+        frag2.setOnClickListener(this);
+
+    }
+
+    private void goLoginScreen() {
+        Intent intent = new Intent(this,login_activity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+    public void logout(View view){
+        LoginManager.getInstance().logOut();
+        goLoginScreen();
+    }
+    public String getUserName(){
+        Profile profile = Profile.getCurrentProfile();
+        String nombre = Profile.getCurrentProfile().getFirstName();
+        String apellido = Profile.getCurrentProfile().getLastName();
+        String nombreCompleto = nombre+" "+apellido;
+        return nombreCompleto;
+    }
+    public void verificarSesion(){
+        if(AccessToken.getCurrentAccessToken() == null){
+            goLoginScreen();
+        }
+    }
+    public void renderFacebookProfile(){
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        String valor = getUserName();
+        View header=navigationView.getHeaderView(0);
+        TextView nombreUsuario = (TextView) header.findViewById(R.id.nombreHader);
+        nombreUsuario.setText(valor);
+
+        URL imageUrl = null;
+        HttpURLConnection conn = null;
 
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -131,25 +168,8 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
 
         }
-
     }
 
-    private void goLoginScreen() {
-        Intent intent = new Intent(this,login_activity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
-    public void logout(View view){
-        LoginManager.getInstance().logOut();
-        goLoginScreen();
-    }
-    public String getUserName(){
-        Profile profile = Profile.getCurrentProfile();
-        String nombre = Profile.getCurrentProfile().getFirstName();
-        String apellido = Profile.getCurrentProfile().getLastName();
-        String nombreCompleto = nombre+" "+apellido;
-        return nombreCompleto;
-    }
 
     @Override
     public void onBackPressed() {
@@ -210,4 +230,26 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.frag1:
+                listaTesoros fragmento1 = new listaTesoros();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.contenedor, fragmento1);
+                transaction.commit();
+                break;
+            case R.id.frag2:
+                MapaTesoros fragmento2 = new MapaTesoros();
+                FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
+                transaction2.replace(R.id.contenedor, fragmento2);
+                transaction2.commit();
+                break;
+        }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }
