@@ -4,45 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="ar.com.cazarecompensas.cazarecompensas.login_activity"
-    tools:showIn="@layout/activity_login_activity"
-    android:background="@drawable/background">
+    tools:showIn="@layout/activity_login_activity">
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/loginButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="111dp"
-        tools:layout_editor_absoluteX="112dp"
-        tools:layout_editor_absoluteY="242dp"
-        android:text="string/loginButton"/>
-
-    <TextView
-        android:id="@+id/tituloInicio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="116dp"
-        android:lineSpacingExtra="18sp"
-        android:text="@string/app_name"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="24sp"
-        android:textStyle="bold|italic" />
-
-    <TextView
-        android:id="@+id/descripcionInicio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/tituloInicio"
-        android:layout_marginLeft="17dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="35dp"
-        android:text="@string/descripcionInicio"
-        android:textColor="@color/colorPrimary" />
+        android:background="@color/opaco">
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/loginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="111dp"
+            android:text="string/loginButton"
+            tools:layout_editor_absoluteX="112dp"
+            tools:layout_editor_absoluteY="242dp" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/loginButton"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="24dp"
+            app:srcCompat="@drawable/logotipo" />
+
+
+    </RelativeLayout>
 </RelativeLayout>
