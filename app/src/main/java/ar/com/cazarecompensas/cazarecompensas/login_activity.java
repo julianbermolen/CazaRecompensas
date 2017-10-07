@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,30 +48,35 @@ public class login_activity extends AppCompatActivity {
 
         loginButton = (LoginButton) findViewById(R.id.loginButton);
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            private ProfileTracker mProfileTracker;
             @Override
             public void onSuccess(LoginResult loginResult) {
-                AccessToken accessToken = loginResult.getAccessToken();
-
-                AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
-                    @Override
-                    protected void onCurrentAccessTokenChanged(AccessToken accessToken, AccessToken accessToken1) {
-
-                    }
-                };
-                accessTokenTracker.startTracking();
-
-                ProfileTracker profileTracker = new ProfileTracker() {
-                    @Override
-                    protected void onCurrentProfileChanged(Profile profile, Profile profile1) {
-
-                    }
-                };
-                profileTracker.startTracking();
-
-                Profile profile = Profile.getCurrentProfile();
-                if (profile != null) {
-                    goMainScreen();
+                if(Profile.getCurrentProfile() == null) {
+                    mProfileTracker = new ProfileTracker() {
+                        @Override
+                        protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                            Profile.setCurrentProfile(currentProfile);
+                            mProfileTracker.stopTracking();
+                            Profile profile = Profile.getCurrentProfile();
+                            if(profile != null){
+                                goMainScreen();
+                            }else{
+                                System.out.println("Error en el login");
+                            }
+                        }
+                    };
+                    // no need to call startTracking() on mProfileTracker
+                    // because it is called by its constructor, internally.
                 }
+                else {
+                    Profile profile = Profile.getCurrentProfile();
+                    if(profile != null){
+                        goMainScreen();
+                    }else{
+                        System.out.println("Error en el login");
+                    }
+                }
+
             }
 
             @Override
