@@ -214,6 +214,11 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_add) {
 
+            Intent Options = new Intent(this,
+                    NuevoTesoro.class);
+            this.startActivity(Options);
+            return true;
+
         } else if (id == R.id.nav_busquedas) {
 
         } else if (id == R.id.nav_misBusquedas) {

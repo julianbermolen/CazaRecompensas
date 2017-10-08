@@ -20,5 +20,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">listaTesoros. Aca hay que realizar la lógica para mostrar las tarjetas</string>
     <string name="hello_blank_fragment2">MapaTesoros. Esto iría en el segundo sprint</string>
+    <string name="title_activity_nuevo_tesoro">NuevoTesoro</string>
 
 </resources>
