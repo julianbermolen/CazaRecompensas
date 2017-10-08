@@ -17,7 +17,7 @@
         android:ems="10"
         android:layout_weight="1.20"
         android:inputType="textPersonName"
-        android:text="Nombre"
+        android:hint="Nombre"
         android:layout_gravity="center_horizontal"/>
 
     <EditText
@@ -27,7 +27,7 @@
         android:ems="10"
         android:layout_weight="1.20"
         android:inputType="textPersonName"
-        android:text="Descripcion"
+        android:hint="Descripcion"
         android:layout_gravity="center_horizontal"/>
 
     <EditText
@@ -37,7 +37,7 @@
         android:ems="10"
         android:layout_weight="1.20"
         android:inputType="textPersonName"
-        android:text="Recompensa"
+        android:hint="Recompensa"
         android:layout_gravity="center_horizontal"/>
 
     <Spinner
@@ -88,7 +88,7 @@
         android:layout_weight="0.20"
         android:text="Siguiente ->"
         android:layout_gravity="right"
-        app:backgroundTint="@color/white"
+        android:backgroundTint="@color/cardview_light_background"
         android:stateListAnimator="@null"/>
 
 
