@@ -27,6 +27,7 @@ import com.facebook.login.widget.LoginButton;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -54,6 +55,8 @@ public class login_activity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
 
         loginButton = (LoginButton) findViewById(R.id.loginButton);
+        loginButton.setReadPermissions(Arrays.asList(
+                "public_profile", "email", "user_birthday", "user_friends"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             private ProfileTracker mProfileTracker;
             @Override
@@ -66,6 +69,7 @@ public class login_activity extends AppCompatActivity {
                             mProfileTracker.stopTracking();
                             Profile profile = Profile.getCurrentProfile();
                             if(profile != null){
+                             //   registrarPerfilEnBDD();
                                 goMainScreen();
                             }else{
                                 System.out.println("Error en el login");
@@ -78,6 +82,7 @@ public class login_activity extends AppCompatActivity {
                 else {
                     Profile profile = Profile.getCurrentProfile();
                     if(profile != null){
+                      //  registrarPerfilEnBDD();
                         goMainScreen();
                     }else{
                         System.out.println("Error en el login");
@@ -105,13 +110,30 @@ public class login_activity extends AppCompatActivity {
 
     }
 
+   /* private void registrarPerfilEnBDD(){
+        Usuario nuevoUsuario = new Usuario();
+        Profile profile = Profile.getCurrentProfile();
+
+        nuevoUsuario.setIdFacebook(Integer.parseInt(profile.getId()));
+        nuevoUsuario.setNombre(profile.getFirstName());
+        nuevoUsuario.setApellido(profile.getLastName());
+        nuevoUsuario.setEmail("Prueba@gmail.com");
+        nuevoUsuario.setUrlFoto(profile.getProfilePictureUri(180,180).toString());
+
+        String nombre = nuevoUsuario.getNombre();
+        String urlFoto = nuevoUsuario.getUrlFoto();
+
+
+        System.out.println("el nombre de facebook es" + nombre + "y la url de foto es : " + urlFoto );
+
+    }*/
+
     private void goMainScreen() {
         Intent intent = new Intent(this,MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data )
