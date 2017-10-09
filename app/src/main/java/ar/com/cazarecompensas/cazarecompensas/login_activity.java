@@ -69,7 +69,7 @@ public class login_activity extends AppCompatActivity {
                             mProfileTracker.stopTracking();
                             Profile profile = Profile.getCurrentProfile();
                             if(profile != null){
-                             //   registrarPerfilEnBDD();
+                                registrarPerfilEnBDD();
                                 goMainScreen();
                             }else{
                                 System.out.println("Error en el login");
@@ -82,7 +82,7 @@ public class login_activity extends AppCompatActivity {
                 else {
                     Profile profile = Profile.getCurrentProfile();
                     if(profile != null){
-                      //  registrarPerfilEnBDD();
+                        registrarPerfilEnBDD();
                         goMainScreen();
                     }else{
                         System.out.println("Error en el login");
@@ -110,11 +110,11 @@ public class login_activity extends AppCompatActivity {
 
     }
 
-   /* private void registrarPerfilEnBDD(){
+    private void registrarPerfilEnBDD(){
         Usuario nuevoUsuario = new Usuario();
         Profile profile = Profile.getCurrentProfile();
-
-        nuevoUsuario.setIdFacebook(Integer.parseInt(profile.getId()));
+        String id = profile.getId();
+        nuevoUsuario.setIdFacebook((int) Long.parseLong(id));
         nuevoUsuario.setNombre(profile.getFirstName());
         nuevoUsuario.setApellido(profile.getLastName());
         nuevoUsuario.setEmail("Prueba@gmail.com");
@@ -126,7 +126,7 @@ public class login_activity extends AppCompatActivity {
 
         System.out.println("el nombre de facebook es" + nombre + "y la url de foto es : " + urlFoto );
 
-    }*/
+    }
 
     private void goMainScreen() {
         Intent intent = new Intent(this,MainActivity.class);

@@ -5,7 +5,7 @@ package ar.com.cazarecompensas.cazarecompensas;
  */
 
 public class Usuario {
-    private Integer idUsuario;
+    private Long idUsuario;
     private String Nombre;
     private String Apellido;
     private String UrlFoto;
@@ -24,11 +24,11 @@ public class Usuario {
                 '}';
     }
 
-    public int getIdUsuario() {
+    public Long getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
     }
 
