@@ -7,6 +7,7 @@ import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
@@ -30,6 +31,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 
+import ar.com.cazarecompensas.cazarecompensas.Models.ModelResponse;
+import ar.com.cazarecompensas.cazarecompensas.Models.TokenRequest;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -111,21 +114,42 @@ public class login_activity extends AppCompatActivity {
     }
 
     private void registrarPerfilEnBDD(){
-        Usuario nuevoUsuario = new Usuario();
         Profile profile = Profile.getCurrentProfile();
-        String id = profile.getId();
-        nuevoUsuario.setIdFacebook((int) Long.parseLong(id));
-        nuevoUsuario.setNombre(profile.getFirstName());
-        nuevoUsuario.setApellido(profile.getLastName());
-        nuevoUsuario.setEmail("Prueba@gmail.com");
-        nuevoUsuario.setUrlFoto(profile.getProfilePictureUri(180,180).toString());
 
-        String nombre = nuevoUsuario.getNombre();
-        String urlFoto = nuevoUsuario.getUrlFoto();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:5000/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        LoginApi service = retrofit.create(LoginApi.class);
 
+        TokenRequest tokenRequest = new TokenRequest();
+        tokenRequest.setApellido(profile.getLastName());
+        tokenRequest.setNombre(profile.getFirstName());
+        tokenRequest.setEmail("email@ejemplo.com");
+        tokenRequest.setIdFacebook(profile.getId());
+        tokenRequest.setUrlFoto(profile.getProfilePictureUri(180,180).toString());
 
-        System.out.println("el nombre de facebook es" + nombre + "y la url de foto es : " + urlFoto );
+        String nombre = tokenRequest.getNombre();
+        String apellido = tokenRequest.getApellido();
+        String email = tokenRequest.getEmail();
+        String idFacebook = tokenRequest.getIdFacebook();
+        String urlFoto = tokenRequest.getUrlFoto();
+        Call<ModelResponse> modelResponseCall = service.getExito(nombre,apellido,email,idFacebook,urlFoto);
+        modelResponseCall.enqueue(new Callback<ModelResponse>() {
+            @Override
+            public void onResponse(Call<ModelResponse> call, Response<ModelResponse> response) {
+                int statusCode = response.code();
 
+                ModelResponse modelResponse = response.body();
+                Log.d("login_activity","onResponse:" +statusCode);
+
+            }
+
+            @Override
+            public void onFailure(Call<ModelResponse> call, Throwable t) {
+                Log.d("login_activity","onFailure:" + t.getMessage());
+            }
+        });
     }
 
     private void goMainScreen() {

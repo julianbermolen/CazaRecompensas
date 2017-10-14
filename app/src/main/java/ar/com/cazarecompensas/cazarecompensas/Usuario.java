@@ -14,7 +14,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Cliente{" +
+        return "Usuario{" +
                 "idUsuario=" + idUsuario +
                 ", nombre='" + Nombre + '\'' +
                 ", apellido='" + Apellido + '\'' +
