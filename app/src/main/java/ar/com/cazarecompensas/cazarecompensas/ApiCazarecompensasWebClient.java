@@ -23,7 +23,7 @@ public class ApiCazarecompensasWebClient {
     }
 
     public String Get(String path) {
-        retrofit = new Retrofit.Builder().baseUrl("10.0.2.2:5000/api" + path + "/")
+        retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:5000/api" + path + "/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

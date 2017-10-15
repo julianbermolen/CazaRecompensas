@@ -21,10 +21,16 @@ import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -43,6 +49,7 @@ public class login_activity extends AppCompatActivity {
     //TextView resultadoTextView;
     private LoginButton loginButton;
     private CallbackManager callbackManager;
+    String emailUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +71,7 @@ public class login_activity extends AppCompatActivity {
             private ProfileTracker mProfileTracker;
             @Override
             public void onSuccess(LoginResult loginResult) {
+
                 if(Profile.getCurrentProfile() == null) {
                     mProfileTracker = new ProfileTracker() {
                         @Override
@@ -72,7 +80,7 @@ public class login_activity extends AppCompatActivity {
                             mProfileTracker.stopTracking();
                             Profile profile = Profile.getCurrentProfile();
                             if(profile != null){
-                                registrarPerfilEnBDD();
+                                    registrarPerfilEnBDD();
                                 goMainScreen();
                             }else{
                                 System.out.println("Error en el login");
@@ -117,18 +125,19 @@ public class login_activity extends AppCompatActivity {
         Profile profile = Profile.getCurrentProfile();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:5000/api/")
+                .baseUrl(getString(R.string.apiUrl))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         LoginApi service = retrofit.create(LoginApi.class);
 
+// METOTODO EN EL MODELO DE USUARIO TOKENREQUEST.
         TokenRequest tokenRequest = new TokenRequest();
         tokenRequest.setApellido(profile.getLastName());
         tokenRequest.setNombre(profile.getFirstName());
-        tokenRequest.setEmail("email@ejemplo.com");
         tokenRequest.setIdFacebook(profile.getId());
+        tokenRequest.setEmail("Ejemplo");
         tokenRequest.setUrlFoto(profile.getProfilePictureUri(180,180).toString());
-
+// LO PARSEO PARA ENVIARLO COMO QUERY STRING.
         String nombre = tokenRequest.getNombre();
         String apellido = tokenRequest.getApellido();
         String email = tokenRequest.getEmail();
