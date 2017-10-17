@@ -2,6 +2,8 @@ package ar.com.cazarecompensas.cazarecompensas;
 
 import java.util.List;
 
+import ar.com.cazarecompensas.cazarecompensas.Models.Cliente;
+import ar.com.cazarecompensas.cazarecompensas.services.ClienteService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

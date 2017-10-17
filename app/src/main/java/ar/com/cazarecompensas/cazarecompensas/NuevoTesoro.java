@@ -6,7 +6,9 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.media.Image;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
@@ -14,14 +16,25 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
 import java.io.IOException;
+
+import ar.com.cazarecompensas.cazarecompensas.Models.ModelResponse;
+import ar.com.cazarecompensas.cazarecompensas.services.LoginApi;
+import ar.com.cazarecompensas.cazarecompensas.services.TesoroService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NuevoTesoro extends AppCompatActivity {
 
@@ -34,6 +47,7 @@ public class NuevoTesoro extends AppCompatActivity {
     ImageButton botonImagen1;
     ImageButton botonImagen2;
     ImageButton botonImagen3;
+    Button siguiente;
 
 
     @Override
@@ -44,9 +58,40 @@ public class NuevoTesoro extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        botonImagen1 = (ImageButton) findViewById(R.id.imageButton);
-        botonImagen2 = (ImageButton) findViewById(R.id.imageButton2);
-        botonImagen3 = (ImageButton) findViewById(R.id.imageButton3);
+        siguiente = (Button) findViewById(R.id.siguientes);
+
+        siguiente.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                EditText nombre = (EditText) findViewById(R.id.NombreTesoro);
+                EditText descripcion = (EditText) findViewById(R.id.DescripcionTesoro);
+                EditText recompensa = (EditText) findViewById(R.id.RecompensaTesoro);
+
+                Spinner categoria = (Spinner) findViewById(R.id.Categoria);
+                ImageView imagen1 = (ImageView) findViewById(R.id.foto);
+                ImageView imagen2 = (ImageView) findViewById(R.id.foto2);
+                ImageView imagen3 = (ImageView) findViewById(R.id.foto3);
+
+
+
+                String nombre2 = nombre.getText().toString();
+                String descripcion2 = descripcion.getText().toString();
+                Long categoria2 = categoria.getSelectedItemId();
+                int IdUsuario = 1;
+                Integer Recompensa = Integer.parseInt(String.valueOf(recompensa.getText()));
+                int idTesoroEstado = 1;
+                    guardarTesoro(nombre2,descripcion2,categoria2,IdUsuario,Recompensa,idTesoroEstado);
+
+                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+            }
+
+        });
+
+        botonImagen1 = (ImageButton) findViewById(R.id.foto);
+        botonImagen2 = (ImageButton) findViewById(R.id.foto2);
+        botonImagen3 = (ImageButton) findViewById(R.id.foto3);
 
 
         //Cuando se clickea el primer boton de imagen (ImageButton)
@@ -78,7 +123,7 @@ public class NuevoTesoro extends AppCompatActivity {
 
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             //get the spinner from the xml.
-            Spinner dropdown = (Spinner)findViewById(R.id.spinner);
+            Spinner dropdown = (Spinner)findViewById(R.id.Categoria);
             //create a list of items for the spinner.
             String[] items = new String[]{"Mascota", "Celular", "Mochila"};
             //create an adapter to describe how the items are displayed, adapters are used in several places in android.
@@ -253,6 +298,31 @@ public class NuevoTesoro extends AppCompatActivity {
             }
         }
     }
+
+public void guardarTesoro(String nombre,String descripcion,Long categoria,int IdUsuario,Integer Recompensa,int idTesoroEstado){
+
+    Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl(getString(R.string.apiUrl))
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+    TesoroService service = retrofit.create(TesoroService.class);
+
+    Call<ModelResponse> modelResponseCall = service.postTesoro(nombre,descripcion,categoria,IdUsuario,Recompensa,idTesoroEstado);
+    modelResponseCall.enqueue(new Callback<ModelResponse>() {
+        @Override
+        public void onResponse(Call<ModelResponse> call, Response<ModelResponse> response) {
+            int statusCode = response.code();
+
+            ModelResponse modelResponse = response.body();
+            Log.d("NuevoTesorox","onResponse:" +statusCode);
+        }
+
+        @Override
+        public void onFailure(Call<ModelResponse> call, Throwable t) {
+
+        }
+    });
+}
 
 
 }

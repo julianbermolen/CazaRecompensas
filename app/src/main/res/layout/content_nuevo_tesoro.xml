@@ -11,7 +11,7 @@
 
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/NombreTesoro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -21,7 +21,7 @@
         android:layout_gravity="center_horizontal"/>
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/DescripcionTesoro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -31,7 +31,7 @@
         android:layout_gravity="center_horizontal"/>
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/RecompensaTesoro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -41,7 +41,7 @@
         android:layout_gravity="center_horizontal"/>
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/Categoria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.05"
@@ -60,7 +60,7 @@
         android:layout_marginBottom="50px"
         >
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/foto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -68,7 +68,7 @@
             android:adjustViewBounds="true"/>
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/foto2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -76,7 +76,7 @@
             android:adjustViewBounds="true"/>
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/foto3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -85,14 +85,15 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/siguientes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.20"
         android:text="Siguiente ->"
         android:layout_gravity="right"
         android:backgroundTint="@color/cardview_light_background"
-        android:stateListAnimator="@null"/>
+        android:stateListAnimator="@null"
+        />
 
 
 </LinearLayout>

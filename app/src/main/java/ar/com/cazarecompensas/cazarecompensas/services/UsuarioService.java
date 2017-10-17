@@ -1,7 +1,6 @@
-package ar.com.cazarecompensas.cazarecompensas;
+package ar.com.cazarecompensas.cazarecompensas.services;
 
-import java.util.List;
-
+import ar.com.cazarecompensas.cazarecompensas.Models.Usuario;
 import retrofit2.Call;
 import retrofit2.http.GET;
 

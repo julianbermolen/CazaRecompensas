@@ -1,4 +1,4 @@
-package ar.com.cazarecompensas.cazarecompensas;
+package ar.com.cazarecompensas.cazarecompensas.services;
 
 import android.media.session.MediaSession;
 

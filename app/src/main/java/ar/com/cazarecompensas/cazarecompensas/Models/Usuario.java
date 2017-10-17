@@ -1,4 +1,4 @@
-package ar.com.cazarecompensas.cazarecompensas;
+package ar.com.cazarecompensas.cazarecompensas.Models;
 
 /**
  * Created by jbermolen on 9/10/2017.
