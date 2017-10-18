@@ -10,7 +10,11 @@ public class Usuario {
     private String Apellido;
     private String UrlFoto;
     private String Email;
+<<<<<<< HEAD
     private long IdFacebook;
+=======
+    private Long IdFacebook;
+>>>>>>> 2b81f8fee2d346d2f36d7438e84d57484107bafd
 
     @Override
     public String toString() {
@@ -64,11 +68,19 @@ public class Usuario {
         Email = email;
     }
 
+<<<<<<< HEAD
     public long getIdFacebook() {
         return IdFacebook;
     }
 
     public void setIdFacebook(long idFacebook) {
+=======
+    public Long getIdFacebook() {
+        return IdFacebook;
+    }
+
+    public void setIdFacebook(Long idFacebook) {
+>>>>>>> 2b81f8fee2d346d2f36d7438e84d57484107bafd
         IdFacebook = idFacebook;
     }
 }
