@@ -1,5 +1,7 @@
 package ar.com.cazarecompensas.cazarecompensas.Models;
 
+import java.util.Arrays;
+
 /**
  * Created by julia on 16/10/2017.
  */
@@ -14,7 +16,33 @@ public class Tesoro {
     private String Imagen1;
     private String Imagen2;
     private String Imagen3;
-    private int IdTesoroCategoria;
+    private long IdTesoroCategoria;
+
+    public int getIdUsuario() {
+        return IdUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        IdUsuario = idUsuario;
+    }
+
+    private int IdUsuario;
+
+    @Override
+    public String toString() {
+        return "Tesoro{" +
+                "Nombre='" + Nombre + '\'' +
+                ", Descripcion='" + Descripcion + '\'' +
+                ", Recompensa=" + Recompensa +
+                ", Imagen1=" + Imagen1 +
+                ", Imagen2=" + Imagen2 +
+                ", Imagen3=" + Imagen3 +
+                ", IdTesoroCategoria=" + IdTesoroCategoria +
+                ", IdUsuario=" + IdUsuario +
+                '}';
+    }
+
+
 
     public int getIdTesoro() {
         return IdTesoro;
@@ -88,11 +116,11 @@ public class Tesoro {
         Imagen3 = imagen3;
     }
 
-    public int getIdTesoroCategoria() {
+    public long getIdTesoroCategoria() {
         return IdTesoroCategoria;
     }
 
-    public void setIdTesoroCategoria(int idTesoroCategoria) {
+    public void setIdTesoroCategoria(long idTesoroCategoria) {
         IdTesoroCategoria = idTesoroCategoria;
     }
 

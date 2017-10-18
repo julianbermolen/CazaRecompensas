@@ -1,11 +1,13 @@
 package ar.com.cazarecompensas.cazarecompensas;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
 import android.net.Uri;
 import android.nfc.Tag;
@@ -16,6 +18,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -25,11 +28,16 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 
 import ar.com.cazarecompensas.cazarecompensas.Models.ModelResponse;
+import ar.com.cazarecompensas.cazarecompensas.Models.Tesoro;
 import ar.com.cazarecompensas.cazarecompensas.services.LoginApi;
 import ar.com.cazarecompensas.cazarecompensas.services.TesoroService;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -72,15 +80,32 @@ public class NuevoTesoro extends AppCompatActivity {
                 ImageView imagen2 = (ImageView) findViewById(R.id.foto2);
                 ImageView imagen3 = (ImageView) findViewById(R.id.foto3);
 
-
+                //Imagen 1
+                Bitmap bitmap = ((BitmapDrawable) imagen1.getDrawable()).getBitmap();
+                ByteArrayOutputStream imageArray = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,imageArray);
+                byte[] imageInByte1 = imageArray.toByteArray();
+                //Imagen 2
+                Bitmap bitmap2 = ((BitmapDrawable) imagen1.getDrawable()).getBitmap();
+                ByteArrayOutputStream imageArray2 = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,imageArray2);
+                byte[] imageInByte2 = imageArray2.toByteArray();
+                //Imagen 3
+                Bitmap bitmap3 = ((BitmapDrawable) imagen1.getDrawable()).getBitmap();
+                ByteArrayOutputStream imageArray3 = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,imageArray3);
+                byte[] imageInByte3 = imageArray3.toByteArray();
 
                 String nombre2 = nombre.getText().toString();
                 String descripcion2 = descripcion.getText().toString();
-                Long categoria2 = categoria.getSelectedItemId();
+                long categoria2 = categoria.getSelectedItemId();
+                int categoria3 = (int) categoria2;
                 int IdUsuario = 1;
                 Integer Recompensa = Integer.parseInt(String.valueOf(recompensa.getText()));
                 int idTesoroEstado = 1;
-                    guardarTesoro(nombre2,descripcion2,categoria2,IdUsuario,Recompensa,idTesoroEstado);
+
+
+                    guardarTesoro(nombre2,descripcion2,categoria3,IdUsuario,Recompensa,idTesoroEstado,bitmap,bitmap2,bitmap3);
 
                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -299,15 +324,28 @@ public class NuevoTesoro extends AppCompatActivity {
         }
     }
 
-public void guardarTesoro(String nombre,String descripcion,Long categoria,int IdUsuario,Integer Recompensa,int idTesoroEstado){
+public void guardarTesoro(String nombre, String descripcion, int categoria, int IdUsuario, Integer Recompensa, int idTesoroEstado, Bitmap img1,Bitmap img2,Bitmap img3){
 
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(getString(R.string.apiUrl))
             .addConverterFactory(GsonConverterFactory.create())
             .build();
     TesoroService service = retrofit.create(TesoroService.class);
+    //Creo el tesoro
+    Tesoro tesoro = new Tesoro();
+    //Seteo los valores
+    tesoro.setNombre(nombre);
+    tesoro.setDescripcion(descripcion);
+    tesoro.setIdTesoroCategoria(categoria);
+    tesoro.setIdUsuario(IdUsuario);
+    tesoro.setRecompensa(Recompensa);
 
-    Call<ModelResponse> modelResponseCall = service.postTesoro(nombre,descripcion,categoria,IdUsuario,Recompensa,idTesoroEstado);
+    String img1String = encodeTobase64(img1);
+    String img2String = encodeTobase64(img2);
+    String img3String = encodeTobase64(img3);
+
+    //Creo la espera de la llamada y llamo al servicio
+    Call<ModelResponse> modelResponseCall = service.postTesoro(nombre,descripcion,categoria,IdUsuario,Recompensa,idTesoroEstado,img1String,img2String,img3String);
     modelResponseCall.enqueue(new Callback<ModelResponse>() {
         @Override
         public void onResponse(Call<ModelResponse> call, Response<ModelResponse> response) {
@@ -323,6 +361,14 @@ public void guardarTesoro(String nombre,String descripcion,Long categoria,int Id
         }
     });
 }
-
+    public static String encodeTobase64(Bitmap image)
+    {
+        Bitmap immagex=image;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        immagex.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b,Base64.DEFAULT);
+        return imageEncoded;
+    }
 
 }
