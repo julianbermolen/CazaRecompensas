@@ -1,6 +1,7 @@
 package ar.com.cazarecompensas.cazarecompensas.Models;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import ar.com.cazarecompensas.cazarecompensas.R;
+
+import static ar.com.cazarecompensas.cazarecompensas.R.color.white;
 
 /**
  * Created by julia on 21/10/2017.
@@ -43,7 +46,7 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
         final ViewHolder vh;
         if (convertView == null) {
             View view = mInflater.inflate(R.layout.content_lista_tesoros, parent, false);
-            vh = ViewHolder.create((RelativeLayout) view);
+            vh = ViewHolder.create((CardView) view);
             view.setTag(vh);
         } else {
             vh = (ViewHolder) convertView.getTag();
@@ -59,23 +62,25 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
     }
 
     private static class ViewHolder {
-        public final RelativeLayout rootView;
+        public final CardView rootView;
         public final ImageView imageView;
         public final TextView NombreTesoro;
         public final TextView DescripcionTesoro;
 
-        private ViewHolder(RelativeLayout rootView, ImageView imageView, TextView textViewName, TextView textViewEmail) {
+        private ViewHolder(CardView rootView, ImageView imageView, TextView textViewName, TextView textViewEmail) {
             this.rootView = rootView;
             this.imageView = imageView;
             this.NombreTesoro = textViewName;
             this.DescripcionTesoro = textViewEmail;
         }
 
-        public static ViewHolder create(RelativeLayout rootView) {
+        public static ViewHolder create(CardView rootView) {
             ImageView imageView = (ImageView) rootView.findViewById(R.id.imageView);
             TextView textViewName = (TextView) rootView.findViewById(R.id.NombreTesoro);
             TextView textViewEmail = (TextView) rootView.findViewById(R.id.DescripcionTesoro);
             return new ViewHolder(rootView, imageView, textViewName, textViewEmail);
         }
+
+
     }
 }
