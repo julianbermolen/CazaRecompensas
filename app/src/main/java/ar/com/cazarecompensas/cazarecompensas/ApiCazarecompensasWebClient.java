@@ -45,4 +45,5 @@ public class ApiCazarecompensasWebClient {
         });
         return result;
     }
+
 }

@@ -1,5 +1,7 @@
 package ar.com.cazarecompensas.cazarecompensas.Models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Arrays;
 
 /**
@@ -7,16 +9,28 @@ import java.util.Arrays;
  */
 
 public class Tesoro {
+    @SerializedName("idTesoro")
     private int IdTesoro;
+    @SerializedName("nombre")
     private String Nombre;
+    @SerializedName("descripcion")
     private String Descripcion;
+    @SerializedName("recompensa")
     private float Recompensa;
+    @SerializedName("latitud")
     private String Latitud;
+    @SerializedName("longitud")
     private String Longitud;
+    @SerializedName("imagen1")
     private String Imagen1;
+    @SerializedName("imagen2")
     private String Imagen2;
+    @SerializedName("imagen3")
     private String Imagen3;
+    @SerializedName("idTesoroCategoria")
     private long IdTesoroCategoria;
+    @SerializedName("idTesoroEstado")
+    private int IdTesoroEstado;
 
     public int getIdUsuario() {
         return IdUsuario;
