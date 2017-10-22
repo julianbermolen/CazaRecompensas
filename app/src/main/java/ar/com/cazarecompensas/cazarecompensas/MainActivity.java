@@ -91,17 +91,6 @@ public class MainActivity extends AppCompatActivity
         renderFacebookProfile();
 
 
-/*        Button button = (Button) findViewById(R.id.mapa);
-
-        button.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View arg0){
-                Intent intent = new Intent(getApplicationContext(),Localizacion.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-
-        });*/
 
         //Manejo de Fragments
         listaTesoros fr1 = new listaTesoros();

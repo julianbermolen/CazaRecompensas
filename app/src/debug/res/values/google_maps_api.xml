@@ -4,15 +4,15 @@
 
     To get one, follow this link, follow the directions and press "Create" at the end:
 
-    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=F1:E7:2B:D0:3F:19:60:70:AF:9B:A9:BE:E2:CD:CD:E1:A4:01:4E:42%3Bar.com.cazarecompensas.cazarecompensas
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=EC:F2:14:12:E5:46:6B:9D:C3:9D:E0:16:79:C0:66:F8:D5:F1:83:15%3Bar.com.cazarecompensas.cazarecompensas
 
     You can also add your credentials to an existing key, using these values:
 
     Package name:
-    F1:E7:2B:D0:3F:19:60:70:AF:9B:A9:BE:E2:CD:CD:E1:A4:01:4E:42
+    EC:F2:14:12:E5:46:6B:9D:C3:9D:E0:16:79:C0:66:F8:D5:F1:83:15
 
     SHA-1 certificate fingerprint:
-    F1:E7:2B:D0:3F:19:60:70:AF:9B:A9:BE:E2:CD:CD:E1:A4:01:4E:42
+    EC:F2:14:12:E5:46:6B:9D:C3:9D:E0:16:79:C0:66:F8:D5:F1:83:15
 
     Alternatively, follow the directions here:
     https://developers.google.com/maps/documentation/android/start#get-key
@@ -21,6 +21,6 @@
     string in this file.
     -->
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-        AIzaSyBUd_eDpUsA5CCVxs2HuvW_kphaZOT83fo
+        AIzaSyCT54mzIS_T6skFh1_urbmgj4vq58KDXi0
     </string>
 </resources>
