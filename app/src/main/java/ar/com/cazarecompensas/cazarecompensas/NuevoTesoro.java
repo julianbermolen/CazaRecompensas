@@ -336,6 +336,19 @@ public void guardarTesoro(String nombre, String descripcion, int categoria, Inte
             .baseUrl(getString(R.string.apiUrl))
             .addConverterFactory(GsonConverterFactory.create())
             .build();
+    UsuarioService service2 = retrofit.create(UsuarioService.class);
+
+    Profile profile = Profile.getCurrentProfile();
+    long idFacebook = Long.parseLong(profile.getId());
+    Call<ModelResponse> callModel = service2.getUserId(idFacebook);
+    try {
+        ModelResponse model = callModel.execute().body();
+        int idUsuario = model.getValor();
+        tesoro.setIdUsuario(idUsuario);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
     TesoroService service = retrofit.create(TesoroService.class);
 
 
