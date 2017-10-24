@@ -27,6 +27,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.facebook.Profile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -36,6 +39,7 @@ import ar.com.cazarecompensas.cazarecompensas.Models.ModelResponse;
 import ar.com.cazarecompensas.cazarecompensas.Models.Tesoro;
 import ar.com.cazarecompensas.cazarecompensas.services.LoginApi;
 import ar.com.cazarecompensas.cazarecompensas.services.TesoroService;
+import ar.com.cazarecompensas.cazarecompensas.services.UsuarioService;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -100,12 +104,11 @@ public class NuevoTesoro extends AppCompatActivity {
                 String descripcion2 = descripcion.getText().toString();
                 long categoria2 = categoria.getSelectedItemId();
                 int categoria3 = (int) categoria2;
-                int IdUsuario = 1;
                 Integer Recompensa = Integer.parseInt(String.valueOf(recompensa.getText()));
                 int idTesoroEstado = 1;
 
 
-                    guardarTesoro(nombre2,descripcion2,categoria3,IdUsuario,Recompensa,idTesoroEstado,bitmap,bitmap2,bitmap3);
+                    guardarTesoro(nombre2,descripcion2,categoria3,Recompensa,idTesoroEstado,bitmap,bitmap2,bitmap3);
 
                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -324,20 +327,23 @@ public class NuevoTesoro extends AppCompatActivity {
         }
     }
 
-public void guardarTesoro(String nombre, String descripcion, int categoria, int IdUsuario, Integer Recompensa, int idTesoroEstado, Bitmap img1,Bitmap img2,Bitmap img3){
+public void guardarTesoro(String nombre, String descripcion, int categoria, Integer Recompensa, int idTesoroEstado, Bitmap img1, Bitmap img2, Bitmap img3){
+
+    //Creo el tesoro
+    final Tesoro tesoro = new Tesoro();
 
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(getString(R.string.apiUrl))
             .addConverterFactory(GsonConverterFactory.create())
             .build();
     TesoroService service = retrofit.create(TesoroService.class);
-    //Creo el tesoro
-    Tesoro tesoro = new Tesoro();
+
+
     //Seteo los valores
     tesoro.setNombre(nombre);
     tesoro.setDescripcion(descripcion);
     tesoro.setIdTesoroCategoria(categoria);
-    tesoro.setIdUsuario(IdUsuario);
+
     tesoro.setRecompensa(Recompensa);
 
     String img1String = encodeTobase64(img1);
@@ -345,7 +351,8 @@ public void guardarTesoro(String nombre, String descripcion, int categoria, int 
     String img3String = encodeTobase64(img3);
 
     //Creo la espera de la llamada y llamo al servicio
-    Call<ModelResponse> modelResponseCall = service.postTesoro(nombre,descripcion,categoria,IdUsuario,Recompensa,idTesoroEstado,img1String,img2String,img3String);
+    int idUsuario = tesoro.getIdUsuario();
+    Call<ModelResponse> modelResponseCall = service.postTesoro(nombre,descripcion,categoria,idUsuario,Recompensa,idTesoroEstado,img1String,img2String,img3String);
     modelResponseCall.enqueue(new Callback<ModelResponse>() {
         @Override
         public void onResponse(Call<ModelResponse> call, Response<ModelResponse> response) {
@@ -361,6 +368,8 @@ public void guardarTesoro(String nombre, String descripcion, int categoria, int 
         }
     });
 }
+
+
     public static String encodeTobase64(Bitmap image)
     {
         Bitmap immagex=image;

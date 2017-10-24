@@ -17,6 +17,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.Profile;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -133,6 +135,7 @@ public class listaTesoros extends Fragment {
 
            @Override
            public void onFailure(Call<Tesoro[]> call, Throwable t) {
+               progressDialog.dismiss();
                Toast.makeText(getContext().getApplicationContext(), "Error en la carga de tesoros", Toast.LENGTH_SHORT).show();
            }
        });

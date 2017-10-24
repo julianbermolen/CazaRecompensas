@@ -10,11 +10,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.facebook.Profile;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import ar.com.cazarecompensas.cazarecompensas.R;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static ar.com.cazarecompensas.cazarecompensas.R.color.white;
 
@@ -56,7 +58,16 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
 
         vh.NombreTesoro.setText(item.getNombre());
         vh.DescripcionTesoro.setText(item.getDescripcion());
-        Picasso.with(context).load(item.getImagen1()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(vh.imageView);
+        String recompensa = "$"+ Float.toString(item.getRecompensa());
+        vh.RecompensaTesoro.setText(recompensa);
+        Profile profile = Profile.getCurrentProfile();
+        vh.NombreUsuario.setText(profile.getFirstName());
+
+
+        Picasso.with(context).load(item.getUsuario().getUrlFoto()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(vh.imageViewUser);
+
+        String urlImagen = "C://wamp//www//ApiCazaRecompensa//api"+item.getImagen1();
+        Picasso.with(context).load(urlImagen).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(vh.imageView);
 
         return vh.rootView;
     }
@@ -66,19 +77,28 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
         public final ImageView imageView;
         public final TextView NombreTesoro;
         public final TextView DescripcionTesoro;
+        public final TextView RecompensaTesoro;
+        public final TextView NombreUsuario;
+        public final CircleImageView imageViewUser;
 
-        private ViewHolder(CardView rootView, ImageView imageView, TextView textViewName, TextView textViewEmail) {
+        private ViewHolder(CardView rootView, ImageView imageView, TextView textViewName,TextView textViewEmail,TextView textViewRecompensa, TextView textViewNameUser, CircleImageView imageViewUser) {
             this.rootView = rootView;
             this.imageView = imageView;
+            this.imageViewUser = imageViewUser;
             this.NombreTesoro = textViewName;
             this.DescripcionTesoro = textViewEmail;
+            this.RecompensaTesoro = textViewRecompensa;
+            this.NombreUsuario = textViewNameUser;
         }
 
         public static ViewHolder create(CardView rootView) {
             ImageView imageView = (ImageView) rootView.findViewById(R.id.imageView);
+            CircleImageView ImageViewUser = (CircleImageView) rootView.findViewById(R.id.imageUser);
             TextView textViewName = (TextView) rootView.findViewById(R.id.NombreTesoro);
             TextView textViewEmail = (TextView) rootView.findViewById(R.id.DescripcionTesoro);
-            return new ViewHolder(rootView, imageView, textViewName, textViewEmail);
+            TextView textViewRecompense = (TextView) rootView.findViewById(R.id.RecompensaTesoro);
+            TextView textViewNameUser = (TextView) rootView.findViewById(R.id.NombreUsuario);
+            return new ViewHolder(rootView, imageView, textViewName, textViewEmail,textViewRecompense,textViewNameUser,ImageViewUser);
         }
 
 

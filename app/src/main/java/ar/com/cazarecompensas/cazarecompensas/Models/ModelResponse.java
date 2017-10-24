@@ -15,6 +15,11 @@ public class ModelResponse {
         @SerializedName("mensaje")
         @Expose
         private String mensaje;
+        @SerializedName("valor")
+        @Expose
+        private int valor;
+
+    public int getValor() { return valor;  }
 
     public Boolean getExito() {
         return exito;

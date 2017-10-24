@@ -4,38 +4,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="fill_parent"
-    android:layout_height="250dp"
+    android:layout_height="300dp"
     android:layout_margin="40dp"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    card_view:cardCornerRadius="4dp"
     card_view:cardBackgroundColor="@color/white"
+    card_view:cardCornerRadius="4dp"
     card_view:cardElevation="14dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentTop="true"
+            android:layout_height="70dp"
             android:orientation="vertical"
-            >
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/nav_header_vertical_spacing"
+                android:src="@mipmap/ic_launcher"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_alignTop="@+id/NombreUsuario"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true" />
+
+
+            <TextView
+                android:id="@+id/NombreUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/NombreTesoro"
+                android:layout_marginTop="10dp"
+                android:elevation="1dp"
+                android:text="NombreUsuario"
+                android:textColor="@color/cardview_dark_background"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/NombreTesoro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="64dp"
+                android:layout_marginStart="64dp"
                 android:textAppearance="?android:textAppearanceLarge"
                 android:textColor="@color/cardview_dark_background"
+                android:textSize="14sp"
                 tools:text="TextView"
-                android:layout_marginRight="77dp"
-                android:layout_marginEnd="77dp"
-                android:layout_alignParentTop="true"
+                android:layout_below="@+id/NombreUsuario"
+                android:layout_toRightOf="@+id/imageUser"
+                android:layout_toEndOf="@+id/imageUser" />
+
+            <TextView
+                android:id="@+id/RecompensaTesoro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
+                android:text="Recompensa"
+                android:textColor="@color/cardview_dark_background"
+                android:layout_alignBaseline="@+id/NombreUsuario"
+                android:layout_alignBottom="@+id/NombreUsuario"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
@@ -48,41 +88,42 @@
 
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:id="@+id/relativeLayout">
 
             <TextView
                 android:id="@+id/DescripcionTesoro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:layout_marginLeft="26dp"
                 android:layout_marginStart="26dp"
                 android:gravity="right"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@color/cardview_dark_background"
-                tools:text="TextView"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                tools:text="TextView" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_below="@+id/linearLayout"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="36dp">
+            android:layout_above="@+id/relativeLayout"
+            android:layout_below="@+id/linearLayout">
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="94dp"
-                android:src="@mipmap/ic_launcher"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginBottom="39dp" />
+                android:layout_marginBottom="39dp"
+                android:src="@mipmap/ic_launcher" />
 
         </RelativeLayout>
     </RelativeLayout>

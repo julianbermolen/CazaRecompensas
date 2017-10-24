@@ -3,6 +3,7 @@ package ar.com.cazarecompensas.cazarecompensas.Models;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by julia on 16/10/2017.
@@ -32,6 +33,17 @@ public class Tesoro {
     @SerializedName("idTesoroEstado")
     private int IdTesoroEstado;
 
+    public ar.com.cazarecompensas.cazarecompensas.Models.Usuario getUsuario() {
+        return Usuario;
+    }
+
+    public void setUsuario(ar.com.cazarecompensas.cazarecompensas.Models.Usuario usuario) {
+        Usuario = usuario;
+    }
+
+    @SerializedName("usuario")
+    private Usuario Usuario;
+
     public int getIdUsuario() {
         return IdUsuario;
     }
@@ -41,6 +53,8 @@ public class Tesoro {
     }
 
     private int IdUsuario;
+    private long IdFacebook;
+
 
     @Override
     public String toString() {

@@ -1,15 +1,23 @@
 package ar.com.cazarecompensas.cazarecompensas.Models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by jbermolen on 9/10/2017.
  */
 
 public class Usuario {
+    @SerializedName("idUsuario")
     private Long idUsuario;
+    @SerializedName("nombre")
     private String Nombre;
+    @SerializedName("apellido")
     private String Apellido;
+    @SerializedName("urlFoto")
     private String UrlFoto;
+    @SerializedName("email")
     private String Email;
+    @SerializedName("idFacebook")
     private long IdFacebook;
 
     @Override
