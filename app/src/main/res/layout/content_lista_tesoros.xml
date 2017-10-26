@@ -10,7 +10,7 @@
     android:foreground="?android:attr/selectableItemBackground"
     card_view:cardBackgroundColor="@color/white"
     card_view:cardCornerRadius="4dp"
-    card_view:cardElevation="14dp">
+    card_view:cardElevation="24dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -36,8 +36,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_alignTop="@+id/NombreUsuario"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentBottom="true" />
+                android:layout_alignParentStart="true" />
 
 
             <TextView
@@ -56,15 +55,16 @@
                 android:id="@+id/NombreTesoro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="64dp"
-                android:layout_marginStart="64dp"
+                android:layout_marginLeft="28dp"
+                android:layout_marginStart="28dp"
                 android:textAppearance="?android:textAppearanceLarge"
                 android:textColor="@color/cardview_dark_background"
                 android:textSize="14sp"
                 tools:text="TextView"
                 android:layout_below="@+id/NombreUsuario"
                 android:layout_toRightOf="@+id/imageUser"
-                android:layout_toEndOf="@+id/imageUser" />
+                android:layout_toEndOf="@+id/imageUser"
+                android:layout_marginTop="7dp" />
 
             <TextView
                 android:id="@+id/RecompensaTesoro"
@@ -104,6 +104,41 @@
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@color/cardview_dark_background"
                 tools:text="TextView" />
+
+            <Button
+                android:id="@+id/encontreTesoro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:text="Lo encontre!"
+                android:layout_below="@+id/DescripcionTesoro"
+                android:background="@color/white"
+                android:textColor="@color/cardview_dark_background"/>
+
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Compartir"
+                android:background="@color/white"
+                android:textColor="@color/cardview_dark_background"
+                android:layout_alignBaseline="@+id/encontreTesoro"
+                android:layout_alignBottom="@+id/encontreTesoro"
+                android:layout_centerHorizontal="true" />
+
+            <Button
+                android:id="@+id/button9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ir al mapa"
+                android:background="@color/white"
+                android:textColor="@color/cardview_dark_background"
+                android:layout_alignParentBottom="true"
+                android:layout_alignRight="@+id/DescripcionTesoro"
+                android:layout_alignEnd="@+id/DescripcionTesoro" />
 
         </RelativeLayout>
 

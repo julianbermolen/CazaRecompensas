@@ -1,5 +1,8 @@
 package ar.com.cazarecompensas.cazarecompensas.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Arrays;
@@ -9,7 +12,7 @@ import java.util.List;
  * Created by julia on 16/10/2017.
  */
 
-public class Tesoro {
+public class Tesoro implements Parcelable{
     @SerializedName("idTesoro")
     private int IdTesoro;
     @SerializedName("nombre")
@@ -32,29 +35,44 @@ public class Tesoro {
     private long IdTesoroCategoria;
     @SerializedName("idTesoroEstado")
     private int IdTesoroEstado;
-
-    public ar.com.cazarecompensas.cazarecompensas.Models.Usuario getUsuario() {
-        return Usuario;
-    }
-
-    public void setUsuario(ar.com.cazarecompensas.cazarecompensas.Models.Usuario usuario) {
-        Usuario = usuario;
-    }
-
     @SerializedName("usuario")
     private Usuario Usuario;
-
-    public int getIdUsuario() {
-        return IdUsuario;
-    }
-
-    public void setIdUsuario(int idUsuario) {
-        IdUsuario = idUsuario;
-    }
-
+    @SerializedName("idUsuario")
     private int IdUsuario;
+    @SerializedName("idFacebook")
     private long IdFacebook;
 
+    public Tesoro(){
+
+        }
+
+    protected Tesoro(Parcel in) {
+        IdTesoro = in.readInt();
+        Nombre = in.readString();
+        Descripcion = in.readString();
+        Recompensa = in.readFloat();
+        Latitud = in.readString();
+        Longitud = in.readString();
+        Imagen1 = in.readString();
+        Imagen2 = in.readString();
+        Imagen3 = in.readString();
+        IdTesoroCategoria = in.readLong();
+        IdTesoroEstado = in.readInt();
+        IdUsuario = in.readInt();
+        IdFacebook = in.readLong();
+    }
+
+    public static final Creator<Tesoro> CREATOR = new Creator<Tesoro>() {
+        @Override
+        public Tesoro createFromParcel(Parcel in) {
+            return new Tesoro(in);
+        }
+
+        @Override
+        public Tesoro[] newArray(int size) {
+            return new Tesoro[size];
+        }
+    };
 
     @Override
     public String toString() {
@@ -69,9 +87,21 @@ public class Tesoro {
                 ", IdUsuario=" + IdUsuario +
                 '}';
     }
+    public int getIdUsuario() {
+        return IdUsuario;
+    }
 
+    public void setIdUsuario(int idUsuario) {
+        IdUsuario = idUsuario;
+    }
 
+    public ar.com.cazarecompensas.cazarecompensas.Models.Usuario getUsuario() {
+        return Usuario;
+    }
 
+    public void setUsuario(ar.com.cazarecompensas.cazarecompensas.Models.Usuario usuario) {
+        Usuario = usuario;
+    }
     public int getIdTesoro() {
         return IdTesoro;
     }
@@ -153,7 +183,25 @@ public class Tesoro {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-
-
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(IdTesoro);
+        dest.writeString(Nombre);
+        dest.writeString(Descripcion);
+        dest.writeFloat(Recompensa);
+        dest.writeString(Latitud);
+        dest.writeString(Longitud);
+        dest.writeString(Imagen1);
+        dest.writeString(Imagen2);
+        dest.writeString(Imagen3);
+        dest.writeLong(IdTesoroCategoria);
+        dest.writeInt(IdTesoroEstado);
+        dest.writeInt(IdUsuario);
+        dest.writeLong(IdFacebook);
+    }
 }

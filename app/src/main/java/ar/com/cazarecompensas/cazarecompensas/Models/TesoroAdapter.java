@@ -1,21 +1,30 @@
 package ar.com.cazarecompensas.cazarecompensas.Models;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.Profile;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.List;
 
+import ar.com.cazarecompensas.cazarecompensas.EncontreTesoro;
 import ar.com.cazarecompensas.cazarecompensas.R;
+import ar.com.cazarecompensas.cazarecompensas.login_activity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static ar.com.cazarecompensas.cazarecompensas.R.color.white;
@@ -38,6 +47,7 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
 
     }
 
+
     @Override
     public Tesoro getItem(int position) {
         return tesoroList[position];
@@ -54,7 +64,7 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
             vh = (ViewHolder) convertView.getTag();
         }
 
-        Tesoro item = getItem(position);
+        final Tesoro item = getItem(position);
 
         vh.NombreTesoro.setText(item.getNombre());
         vh.DescripcionTesoro.setText(item.getDescripcion());
@@ -63,10 +73,20 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
         Profile profile = Profile.getCurrentProfile();
         vh.NombreUsuario.setText(profile.getFirstName());
 
+        vh.EncontreTesoro.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                           public void onClick(View v) {
+                                 goLoEncontreScreen(item);
+                                        }
+                                 }
+        );
 
+        String fotoUser = item.getUsuario().getUrlFoto();
+        Log.d("UrlFoto:",fotoUser);
         Picasso.with(context).load(item.getUsuario().getUrlFoto()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(vh.imageViewUser);
 
-        String urlImagen = "C://wamp//www//ApiCazaRecompensa//api"+item.getImagen1();
+        String urlImagen = "C:\\wamp\\www\\ApiCazarecompensa\\api\\"+item.getImagen1();
+        Log.d("URL:",urlImagen);
         Picasso.with(context).load(urlImagen).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(vh.imageView);
 
         return vh.rootView;
@@ -80,8 +100,9 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
         public final TextView RecompensaTesoro;
         public final TextView NombreUsuario;
         public final CircleImageView imageViewUser;
+        public final Button EncontreTesoro;
 
-        private ViewHolder(CardView rootView, ImageView imageView, TextView textViewName,TextView textViewEmail,TextView textViewRecompensa, TextView textViewNameUser, CircleImageView imageViewUser) {
+        private ViewHolder(CardView rootView, ImageView imageView, TextView textViewName,TextView textViewEmail,TextView textViewRecompensa, TextView textViewNameUser, CircleImageView imageViewUser,Button encontreTesoro) {
             this.rootView = rootView;
             this.imageView = imageView;
             this.imageViewUser = imageViewUser;
@@ -89,6 +110,7 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
             this.DescripcionTesoro = textViewEmail;
             this.RecompensaTesoro = textViewRecompensa;
             this.NombreUsuario = textViewNameUser;
+            this.EncontreTesoro = encontreTesoro;
         }
 
         public static ViewHolder create(CardView rootView) {
@@ -98,9 +120,15 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
             TextView textViewEmail = (TextView) rootView.findViewById(R.id.DescripcionTesoro);
             TextView textViewRecompense = (TextView) rootView.findViewById(R.id.RecompensaTesoro);
             TextView textViewNameUser = (TextView) rootView.findViewById(R.id.NombreUsuario);
-            return new ViewHolder(rootView, imageView, textViewName, textViewEmail,textViewRecompense,textViewNameUser,ImageViewUser);
+            Button encontreTesoro = (Button) rootView.findViewById(R.id.encontreTesoro);
+            return new ViewHolder(rootView, imageView, textViewName, textViewEmail,textViewRecompense,textViewNameUser,ImageViewUser,encontreTesoro);
         }
 
-
+    }
+    private void goLoEncontreScreen(Tesoro tesoro)  {
+        Intent intent = new Intent(getContext().getApplicationContext(),EncontreTesoro.class);
+        intent.putExtra("Tesoro",(Parcelable) tesoro);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }
