@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * Created by julia on 16/10/2017.
  */
 
-public class Tesoro implements Parcelable{
+public class Tesoro implements Serializable,Parcelable{
     @SerializedName("idTesoro")
     private int IdTesoro;
     @SerializedName("nombre")
@@ -95,7 +96,7 @@ public class Tesoro implements Parcelable{
         IdUsuario = idUsuario;
     }
 
-    public ar.com.cazarecompensas.cazarecompensas.Models.Usuario getUsuario() {
+    public Usuario getUsuario() {
         return Usuario;
     }
 

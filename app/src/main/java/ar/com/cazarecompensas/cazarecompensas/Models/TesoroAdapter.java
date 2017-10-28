@@ -85,7 +85,7 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
         Log.d("UrlFoto:",fotoUser);
         Picasso.with(context).load(item.getUsuario().getUrlFoto()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(vh.imageViewUser);
 
-        String urlImagen = "C:\\wamp\\www\\ApiCazarecompensa\\api\\"+item.getImagen1();
+        String urlImagen = "http://www.seguroautomotor.org/wp-content/uploads/2015/01/auto-s.png";
         Log.d("URL:",urlImagen);
         Picasso.with(context).load(urlImagen).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(vh.imageView);
 
@@ -127,7 +127,9 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
     }
     private void goLoEncontreScreen(Tesoro tesoro)  {
         Intent intent = new Intent(getContext().getApplicationContext(),EncontreTesoro.class);
+        Usuario usuario = tesoro.getUsuario();
         intent.putExtra("Tesoro",(Parcelable) tesoro);
+        intent.putExtra("Usuario",(Serializable) usuario);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }

@@ -24,6 +24,7 @@ import com.facebook.Profile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import ar.com.cazarecompensas.cazarecompensas.Models.LinkedHashMapAdapter;
@@ -51,8 +52,8 @@ public class NuevoTesoro extends AppCompatActivity {
     ImageButton botonImagen3;
     Button siguiente;
 
-    private LinkedHashMapAdapter<String, String> adapter;
-    private LinkedHashMap<String, String> mapData;
+    private LinkedHashMapAdapter<Integer, String> adapter;
+    private LinkedHashMap<Integer, String> mapData;
 
 
 
@@ -62,6 +63,7 @@ public class NuevoTesoro extends AppCompatActivity {
         setContentView(R.layout.activity_nuevo_tesoro);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         siguiente = (Button) findViewById(R.id.siguientes);
@@ -96,8 +98,8 @@ public class NuevoTesoro extends AppCompatActivity {
 
                 String nombre2 = nombre.getText().toString();
                 String descripcion2 = descripcion.getText().toString();
-                long categoria2 = categoria.getSelectedItemId();
-                int categoria3 = (int) categoria2;
+                Object categoria2 = categoria.getSelectedItem();
+                int categoria3 = 2;
                 Integer Recompensa = Integer.parseInt(String.valueOf(recompensa.getText()));
                 int idTesoroEstado = 1;
 
@@ -177,7 +179,7 @@ public class NuevoTesoro extends AppCompatActivity {
 
                 String[] asd = new String[cont];
 
-                mapData = new LinkedHashMap<String, String>();
+                mapData = new LinkedHashMap<Integer, String>();
 
 
                 for (int i = 0; i < response.body().length; i++) {
@@ -185,7 +187,7 @@ public class NuevoTesoro extends AppCompatActivity {
 
                         asd[i] = response.body()[i].getNombre();
 
-                        mapData.put(response.body()[i].getIdTesoroCategoria().toString(), response.body()[i].getNombre());
+                        mapData.put(response.body()[i].getIdTesoroCategoria(), response.body()[i].getNombre());
 
                     } catch (Exception e) {
                         // TODO Auto-generated catch block
@@ -193,7 +195,7 @@ public class NuevoTesoro extends AppCompatActivity {
                     }
                 }
 
-                adapter = new LinkedHashMapAdapter<String, String>(NuevoTesoro.this, android.R.layout.simple_spinner_item, mapData);
+                adapter = new LinkedHashMapAdapter<Integer, String>(NuevoTesoro.this, android.R.layout.simple_spinner_item, mapData);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                 Spinner categoriaSpinner = (Spinner)findViewById(R.id.Categoria);
