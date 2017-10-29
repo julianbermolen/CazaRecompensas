@@ -3,6 +3,8 @@ package ar.com.cazarecompensas.cazarecompensas;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -10,6 +12,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,6 +27,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+import java.util.List;
+
 import static java.security.AccessController.getContext;
 
 public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallback {
@@ -33,8 +40,10 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
     View mView;
     private Marker marcador;
     private Marker marcadorObtener;
+    private Marker marcadorBusqueda;
     double lat = 0.0;
     double lng = 0.0;
+    Button botonBuscar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +54,17 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        botonBuscar = (Button) findViewById(R.id.buttonBuscarUbicacion);
+
+        botonBuscar.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                onSearch();
+            }
+
+        });
+
     }
 
 
@@ -78,6 +98,40 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
         miUbicacion();
     }
 
+    public void onSearch(){
+
+        EditText location_tf = (EditText) findViewById(R.id.editTextBuscarUbicacion);
+
+        String location = location_tf.getText().toString();
+        List<Address> addressList = null;
+
+        if(location !=null || !location.equals("")){
+
+            Geocoder geocoder = new Geocoder(this);
+            try {
+                addressList = geocoder.getFromLocationName(location,1);
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+
+            Address address = addressList.get(0);
+            LatLng latLng = new LatLng(address.getLatitude(),address.getLongitude());
+
+            if (marcadorBusqueda != null) {
+
+                marcadorBusqueda.remove();
+
+            }
+            marcadorBusqueda = mMap.addMarker(new MarkerOptions().position(latLng));
+            CameraUpdate ubicacionBuscada = CameraUpdateFactory.newLatLngZoom(latLng, 17);
+            mMap.animateCamera(ubicacionBuscada);
+
+        }
+
+
+    }
+
+
     private void agregarMarcador(double lat, double lng) {
         LatLng coordenadas = new LatLng(lat, lng);
         CameraUpdate miUbicacion = CameraUpdateFactory.newLatLngZoom(coordenadas, 11);
@@ -106,6 +160,8 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
         }
 
     }
+
+
 
     LocationListener locListener = new LocationListener() {
         @Override
@@ -145,7 +201,7 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         actualizarUbicacion(location);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,15000,0,locListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,45000,0,locListener);
 
 
     }
