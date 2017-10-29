@@ -71,7 +71,11 @@ public class NuevoTesoro extends AppCompatActivity {
         siguiente.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                EditText nombre = (EditText) findViewById(R.id.NombreTesoro);
+
+                Intent intent = new Intent(getApplicationContext(),MapaNuevoTesoro.class);
+                startActivity(intent);
+
+       /*         EditText nombre = (EditText) findViewById(R.id.NombreTesoro);
                 EditText descripcion = (EditText) findViewById(R.id.DescripcionTesoro);
                 EditText recompensa = (EditText) findViewById(R.id.RecompensaTesoro);
 
@@ -108,7 +112,7 @@ public class NuevoTesoro extends AppCompatActivity {
 
                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
+                    startActivity(intent);*/
             }
 
         });

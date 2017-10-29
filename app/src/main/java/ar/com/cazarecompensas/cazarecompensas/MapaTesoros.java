@@ -85,16 +85,6 @@ public class MapaTesoros extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-/*        MapsInitializer.initialize(getContext());
-
-        mGoogleMap = googleMap;
-        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(40.000223, -74)).title("Tu vieja").snippet("asd"));
-
-        CameraPosition Liberty = CameraPosition.builder().target(new LatLng(40.000223, -74)).zoom(16).bearing(0).tilt(45).build();
-
-        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Liberty));*/
 
         mMap=googleMap;
 
@@ -113,7 +103,7 @@ public class MapaTesoros extends Fragment implements OnMapReadyCallback {
 
         }
 
-        marcador = mMap.addMarker(new MarkerOptions().position(coordenadas).title("Mi Posición Actual").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)));
+        marcador = mMap.addMarker(new MarkerOptions().position(coordenadas).title("Mi Posición Actual").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_position)));
         mMap.animateCamera(miUbicacion);
 
         circle = mMap.addCircle(new CircleOptions()

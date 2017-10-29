@@ -91,7 +91,7 @@
         android:layout_weight="0.20"
         android:text="Siguiente ->"
         android:layout_gravity="right"
-        android:backgroundTint="@color/cardview_light_background"
+        android:background="@null"
         android:stateListAnimator="@null"
         />
 
