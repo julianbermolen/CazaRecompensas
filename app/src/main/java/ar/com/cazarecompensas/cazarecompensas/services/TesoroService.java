@@ -16,7 +16,7 @@ import retrofit2.http.POST;
 public interface TesoroService {
     @FormUrlEncoded
     @POST("Tesoros/guardar")
-    Call<ModelResponse> postTesoro(@Field("Nombre") String nombre, @Field("Descripcion") String descripcion, @Field("IdTesoroCategoria") int IdTesoroCategoria, @Field("IdUsuario") int idUsuario, @Field("Recompensa") int recompensa, @Field("IdTesoroEstado") int idTesoroEstado,@Field("Imagen1") String imageInByte1,@Field("Imagen2") String imageInByte2,@Field("Imagen3") String imageInByte3);
+    Call<ModelResponse> postTesoro(@Field("Nombre") String nombre, @Field("Descripcion") String descripcion, @Field("IdTesoroCategoria") int IdTesoroCategoria, @Field("IdUsuario") int idUsuario, @Field("Recompensa") int recompensa, @Field("IdTesoroEstado") int idTesoroEstado,@Field("Imagen1") String imageInByte1,@Field("Imagen2") String imageInByte2,@Field("Imagen3") String imageInByte3,@Field("Latitud") String latitud,@Field("Longitud") String longitud);
 /*, @Query("Imagen1") String imagen1, @Query("Imagen2") String imagen2, @Query("Imagen3") String imagen3*/
 
     @GET("Tesoros/ObtenerCategoria")
