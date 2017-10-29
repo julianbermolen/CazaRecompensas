@@ -75,7 +75,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MapaNuevoTesoro"
-            android:label="@string/title_activity_mapa_nuevo_tesoro"></activity>
+            android:label="@string/title_activity_mapa_nuevo_tesoro" />
+        <activity
+            android:name=".BandejaEntrada"
+            android:label="@string/title_activity_bandeja_entrada"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

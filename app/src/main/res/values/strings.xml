@@ -21,7 +21,9 @@
     <string name="hello_blank_fragment">listaTesoros. Aca hay que realizar la lógica para mostrar las tarjetas</string>
     <string name="hello_blank_fragment2">MapaTesoros. Esto iría en el segundo sprint</string>
     <string name="title_activity_nuevo_tesoro">NuevoTesoro</string>
-    <string name="apiUrl">http://10.0.2.2:5000/api/</string>
+    <string name="apiUrl">http://li1166-116.members.linode.com/api/</string>
     <string name="title_activity_encontre_tesoro">EncontreTesoro</string>
+    <string name="title_activity_mapa_nuevo_tesoro"></string>
+    <string name="title_activity_bandeja_entrada">BandejaEntrada</string>
 
 </resources>
