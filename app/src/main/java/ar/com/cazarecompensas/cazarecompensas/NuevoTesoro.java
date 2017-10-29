@@ -72,10 +72,9 @@ public class NuevoTesoro extends AppCompatActivity {
             @Override
             public void onClick(View v){
 
-                Intent intent = new Intent(getApplicationContext(),MapaNuevoTesoro.class);
-                startActivity(intent);
 
-       /*         EditText nombre = (EditText) findViewById(R.id.NombreTesoro);
+                //Se hace binding
+                EditText nombre = (EditText) findViewById(R.id.NombreTesoro);
                 EditText descripcion = (EditText) findViewById(R.id.DescripcionTesoro);
                 EditText recompensa = (EditText) findViewById(R.id.RecompensaTesoro);
 
@@ -107,12 +106,22 @@ public class NuevoTesoro extends AppCompatActivity {
                 Integer Recompensa = Integer.parseInt(String.valueOf(recompensa.getText()));
                 int idTesoroEstado = 1;
 
+                //Se instancia el intento
+                Intent intent = new Intent(getApplicationContext(),MapaNuevoTesoro.class);
+                //Se agregan las variables a pasar
+                intent.putExtra("nombreTesoro", nombre2);
+                intent.putExtra("descripcionTesoro", descripcion2);
+                intent.putExtra("categoriaTesoro", categoria3);
+                intent.putExtra("recompensaTesoro", Recompensa);
+                intent.putExtra("idEstadoTesoro", idTesoroEstado);
+                intent.putExtra("imagen1Tesoro", imageInByte1);
+                intent.putExtra("imagen2Tesoro", imageInByte2);
+                intent.putExtra("imagen3Tesoro", imageInByte3);
 
-                    guardarTesoro(nombre2,descripcion2,categoria3,Recompensa,idTesoroEstado,bitmap,bitmap2,bitmap3);
+                //Se inicia el intento
+                startActivity(intent);
 
-                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);*/
+
             }
 
         });
@@ -380,70 +389,5 @@ public class NuevoTesoro extends AppCompatActivity {
         }
     }
 
-public void guardarTesoro(String nombre, String descripcion, int categoria, Integer Recompensa, int idTesoroEstado, Bitmap img1, Bitmap img2, Bitmap img3){
-
-    //Creo el tesoro
-    final Tesoro tesoro = new Tesoro();
-
-    Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(getString(R.string.apiUrl))
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-    UsuarioService service2 = retrofit.create(UsuarioService.class);
-
-    Profile profile = Profile.getCurrentProfile();
-    long idFacebook = Long.parseLong(profile.getId());
-    Call<ModelResponse> callModel = service2.getUserId(idFacebook);
-    try {
-        ModelResponse model = callModel.execute().body();
-        int idUsuario = model.getValor();
-        tesoro.setIdUsuario(idUsuario);
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-
-    TesoroService service = retrofit.create(TesoroService.class);
-
-
-    //Seteo los valores
-    tesoro.setNombre(nombre);
-    tesoro.setDescripcion(descripcion);
-    tesoro.setIdTesoroCategoria(categoria);
-
-    tesoro.setRecompensa(Recompensa);
-
-    String img1String = encodeTobase64(img1);
-    String img2String = encodeTobase64(img2);
-    String img3String = encodeTobase64(img3);
-
-    //Creo la espera de la llamada y llamo al servicio
-    int idUsuario = tesoro.getIdUsuario();
-    Call<ModelResponse> modelResponseCall = service.postTesoro(nombre,descripcion,categoria,idUsuario,Recompensa,idTesoroEstado,img1String,img2String,img3String);
-    modelResponseCall.enqueue(new Callback<ModelResponse>() {
-        @Override
-        public void onResponse(Call<ModelResponse> call, Response<ModelResponse> response) {
-            int statusCode = response.code();
-
-            ModelResponse modelResponse = response.body();
-            Log.d("NuevoTesorox","onResponse:" +statusCode);
-        }
-
-        @Override
-        public void onFailure(Call<ModelResponse> call, Throwable t) {
-
-        }
-    });
-}
-
-
-    public static String encodeTobase64(Bitmap image)
-    {
-        Bitmap immagex=image;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        immagex.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] b = baos.toByteArray();
-        String imageEncoded = Base64.encodeToString(b,Base64.DEFAULT);
-        return imageEncoded;
-    }
 
 }
