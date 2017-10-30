@@ -116,7 +116,7 @@ public class login_activity extends AppCompatActivity {
         TokenRequest tokenRequest = new TokenRequest();
         tokenRequest.setApellido(profile.getLastName());
         tokenRequest.setNombre(profile.getFirstName());
-        tokenRequest.setIdFacebook(profile.getId());
+        tokenRequest.setIdFacebook(profile.getId().toString());
         tokenRequest.setEmail("Ejemplo");
         tokenRequest.setUrlFoto(profile.getProfilePictureUri(180,180).toString());
 // LO PARSEO PARA ENVIARLO COMO QUERY STRING.

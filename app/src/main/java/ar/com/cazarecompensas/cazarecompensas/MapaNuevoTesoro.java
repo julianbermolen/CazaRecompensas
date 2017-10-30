@@ -128,7 +128,7 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
    UsuarioService service2 = retrofit.create(UsuarioService.class);
 
         Profile profile = Profile.getCurrentProfile();
-        long idFacebook = Long.parseLong(profile.getId());
+        String idFacebook = profile.getId().toString();
         Call<ModelResponse> callModel = service2.getUserId(idFacebook);
         try {
             ModelResponse model = callModel.execute().body();

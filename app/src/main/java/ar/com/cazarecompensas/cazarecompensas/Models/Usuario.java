@@ -23,7 +23,7 @@ public class Usuario implements Serializable,Parcelable{
     @SerializedName("email")
     private String Email;
     @SerializedName("idFacebook")
-    private long IdFacebook;
+    private String IdFacebook;
 
     protected Usuario(Parcel in) {
         idUsuario = in.readInt();
@@ -31,7 +31,7 @@ public class Usuario implements Serializable,Parcelable{
         Apellido = in.readString();
         UrlFoto = in.readString();
         Email = in.readString();
-        IdFacebook = in.readLong();
+        IdFacebook = in.readString();
     }
 
     public static final Creator<Usuario> CREATOR = new Creator<Usuario>() {
@@ -98,11 +98,11 @@ public class Usuario implements Serializable,Parcelable{
         Email = email;
     }
 
-    public long getIdFacebook() {
+    public String getIdFacebook() {
         return IdFacebook;
     }
 
-    public void setIdFacebook(long idFacebook) {
+    public void setIdFacebook(String idFacebook) {
 
     }
 
@@ -118,6 +118,6 @@ public class Usuario implements Serializable,Parcelable{
         dest.writeString(Apellido);
         dest.writeString(UrlFoto);
         dest.writeString(Email);
-        dest.writeLong(IdFacebook);
+        dest.writeString(IdFacebook);
     }
 }

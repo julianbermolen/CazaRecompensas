@@ -41,7 +41,7 @@ public class Tesoro implements Serializable,Parcelable{
     @SerializedName("idUsuario")
     private int IdUsuario;
     @SerializedName("idFacebook")
-    private long IdFacebook;
+    private String IdFacebook;
 
     public Tesoro(){
 
@@ -60,7 +60,7 @@ public class Tesoro implements Serializable,Parcelable{
         IdTesoroCategoria = in.readLong();
         IdTesoroEstado = in.readInt();
         IdUsuario = in.readInt();
-        IdFacebook = in.readLong();
+        IdFacebook = in.readString();
     }
 
     public static final Creator<Tesoro> CREATOR = new Creator<Tesoro>() {
@@ -203,6 +203,6 @@ public class Tesoro implements Serializable,Parcelable{
         dest.writeLong(IdTesoroCategoria);
         dest.writeInt(IdTesoroEstado);
         dest.writeInt(IdUsuario);
-        dest.writeLong(IdFacebook);
+        dest.writeString(IdFacebook);
     }
 }

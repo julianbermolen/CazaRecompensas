@@ -15,5 +15,5 @@ import retrofit2.http.Path;
 
 public interface UsuarioService {
     @GET("Usuarios/getUserId/{idFacebook}")
-    Call<ModelResponse> getUserId(@Path("idFacebook") long idFacebook);
+    Call<ModelResponse> getUserId(@Path("idFacebook") String idFacebook);
 }
