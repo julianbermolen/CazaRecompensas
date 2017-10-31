@@ -1,22 +1,79 @@
 package ar.com.cazarecompensas.cazarecompensas.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by julia on 29/10/2017.
  */
 
-public class Comentario {
+public class Comentario implements Parcelable{
     @SerializedName("idComentario")
     private int IdComentario;
     @SerializedName("idPublicacion")
     private int IdPublicacion;
     @SerializedName("idUsuario")
     private int IdUsuario;
-    @SerializedName("comentario")
-    private int Comentario;
-    @SerializedName("idRespuesta")
-    private int IdRespuesta;
+    @SerializedName("detalle")
+    private String Detalle;
+    @SerializedName("idRespuestaComentario")
+    private int IdComentarioRespuesta;
+    @SerializedName("imagen")
+    private String Imagen;
+    @SerializedName("mensajeLeido")
+    private boolean MensajeLeido;
+    @SerializedName("fechaCarga")
+    private String FechaCarga;
+    @SerializedName("publicacion")
+    private Publicacion Publicacion;
+    @SerializedName("usuario")
+    private Usuario usuario;
+
+    protected Comentario(Parcel in) {
+        IdComentario = in.readInt();
+        IdPublicacion = in.readInt();
+        IdUsuario = in.readInt();
+        Detalle = in.readString();
+        IdComentarioRespuesta = in.readInt();
+        Imagen = in.readString();
+        MensajeLeido = in.readByte() != 0;
+        usuario = in.readParcelable(Usuario.class.getClassLoader());
+        FechaCarga = in.readString();
+    }
+
+
+    public String getFechaCarga() {
+        return FechaCarga;
+    }
+
+    public void setFechaCarga(String fechaCarga) {
+        FechaCarga = fechaCarga;
+    }
+
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    public static final Creator<Comentario> CREATOR = new Creator<Comentario>() {
+        @Override
+        public Comentario createFromParcel(Parcel in) {
+            return new Comentario(in);
+        }
+
+        @Override
+        public Comentario[] newArray(int size) {
+            return new Comentario[size];
+        }
+    };
 
     public int getIdComentario() {
         return IdComentario;
@@ -42,19 +99,37 @@ public class Comentario {
         IdUsuario = idUsuario;
     }
 
-    public int getComentario() {
-        return Comentario;
+    public String getComentario() {
+        return Detalle;
     }
 
-    public void setComentario(int comentario) {
-        Comentario = comentario;
+    public void setComentario(String comentario) {
+        Detalle = comentario;
     }
 
     public int getIdRespuesta() {
-        return IdRespuesta;
+        return IdComentarioRespuesta;
     }
 
     public void setIdRespuesta(int idRespuesta) {
-        IdRespuesta = idRespuesta;
+        IdComentarioRespuesta = idRespuesta;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(IdComentario);
+        dest.writeInt(IdPublicacion);
+        dest.writeInt(IdUsuario);
+        dest.writeString(Detalle);
+        dest.writeInt(IdComentarioRespuesta);
+        dest.writeString(Imagen);
+        dest.writeByte((byte) (MensajeLeido ? 1 : 0));
+        dest.writeParcelable(usuario, flags);
+        dest.writeString(FechaCarga);
     }
 }

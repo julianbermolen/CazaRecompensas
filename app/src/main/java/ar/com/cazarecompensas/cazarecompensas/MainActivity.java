@@ -209,6 +209,7 @@ public class MainActivity extends AppCompatActivity
             return true;
 
         } else if (id == R.id.nav_busquedas) {
+            goBandejaDeEntrada();
 
         } else if (id == R.id.nav_misBusquedas) {
 
@@ -222,6 +223,11 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    private void goBandejaDeEntrada(){
+        Intent intent = new Intent(this,BandejaEntrada.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){

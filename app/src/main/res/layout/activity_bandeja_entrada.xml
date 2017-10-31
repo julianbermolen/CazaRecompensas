@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ar.com.cazarecompensas.cazarecompensas.BandejaEntrada">
+    tools:context="ar.com.cazarecompensas.cazarecompensas.EncontreTesoro">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,6 +20,12 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_bandeja_entrada" />
+    <ListView
+        android:id="@+id/listViewMensajes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="57dp">
+
+    </ListView>
 
 </android.support.design.widget.CoordinatorLayout>

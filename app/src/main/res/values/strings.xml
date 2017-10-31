@@ -25,5 +25,6 @@
     <string name="title_activity_encontre_tesoro">EncontreTesoro</string>
     <string name="title_activity_mapa_nuevo_tesoro"></string>
     <string name="title_activity_bandeja_entrada">BandejaEntrada</string>
+    <string name="title_activity_list_mensajes">list_mensajes</string>
 
 </resources>
