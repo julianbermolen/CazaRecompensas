@@ -70,8 +70,8 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
         vh.DescripcionTesoro.setText(item.getDescripcion());
         String recompensa = "$"+ Float.toString(item.getRecompensa());
         vh.RecompensaTesoro.setText(recompensa);
-        Profile profile = Profile.getCurrentProfile();
-        vh.NombreUsuario.setText(profile.getFirstName());
+        String nombreUser = item.getUsuario().getNombre()+" "+item.getUsuario().getApellido();
+        vh.NombreUsuario.setText(nombreUser);
 
         vh.EncontreTesoro.setOnClickListener(new View.OnClickListener() {
                     @Override

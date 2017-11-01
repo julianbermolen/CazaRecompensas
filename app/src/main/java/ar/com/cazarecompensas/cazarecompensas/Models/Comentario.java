@@ -34,6 +34,9 @@ public class Comentario implements Parcelable{
     @SerializedName("usuario")
     private Usuario usuario;
 
+    public Comentario(){
+
+    }
     protected Comentario(Parcel in) {
         IdComentario = in.readInt();
         IdPublicacion = in.readInt();
