@@ -80,6 +80,8 @@ public class EncontreTesoro extends AppCompatActivity {
                 Comentario comentario = new Comentario();
                 comentario.setComentario(mensaje.getText().toString());
                 comentario.setIdUsuario(usuario.getIdUsuario());
+                comentario.setIdPublicacion(1);
+                comentario.setIdRespuesta(0);
                 Call<ModelResponse> call = service.postMessage(comentario);
                 try {
                    ModelResponse model = call.execute().body();

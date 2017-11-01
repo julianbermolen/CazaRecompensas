@@ -15,16 +15,17 @@
     <string name="title_activity_login_activity">Inicio de sesión</string>
     <string name="tituloInicio">CazaRecompensas</string>
     <string name="descripcionInicio">Ayuda a otra persona a encontrar su objeto. Obtenga una bonificación siendo solidario!</string>
-    <string name="title_activity_localizacion">Map</string>
+    <string name="title_activity_localizacion">Mapa del tesoro</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">listaTesoros. Aca hay que realizar la lógica para mostrar las tarjetas</string>
-    <string name="hello_blank_fragment2">MapaTesoros. Esto iría en el segundo sprint</string>
-    <string name="title_activity_nuevo_tesoro">NuevoTesoro</string>
+    <string name="title_activity_nuevo_tesoro">Agregar un nuevo tesoro</string>
     <string name="apiUrl">http://li1166-116.members.linode.com/api/</string>
-    <string name="title_activity_encontre_tesoro">EncontreTesoro</string>
+    <string name="title_activity_encontre_tesoro">Envía un mensaje al dueño</string>
     <string name="title_activity_mapa_nuevo_tesoro"></string>
-    <string name="title_activity_bandeja_entrada">BandejaEntrada</string>
-    <string name="title_activity_list_mensajes">list_mensajes</string>
+    <string name="title_activity_bandeja_entrada">Bandeja de Entrada</string>
+    
 
+    <!-- MENSAJES FUNCIONALES DE LA APP -->
+    <string name="MensajeNuevoTesoro">Recordá que para publicar un tesoro perdido deberás abonar la recompensa. La misma será devuelta en caso de no encontrar el objeto sin incluir la comision por el servicio</string>
+    <string name="TituloNuevoTesoro">Nuevo tesoro</string>
 </resources>

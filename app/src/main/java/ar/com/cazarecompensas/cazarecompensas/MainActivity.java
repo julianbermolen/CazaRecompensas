@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity
             this.startActivity(Options);
             return true;
 
-        } else if (id == R.id.nav_busquedas) {
+        } else if (id == R.id.nav_bandejaEntrada) {
             goBandejaDeEntrada();
 
         } else if (id == R.id.nav_misBusquedas) {
