@@ -13,9 +13,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,7 +33,18 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import ar.com.cazarecompensas.cazarecompensas.Models.Tesoro;
+import ar.com.cazarecompensas.cazarecompensas.Models.TesoroAdapter;
+import ar.com.cazarecompensas.cazarecompensas.services.TesoroService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static ar.com.cazarecompensas.cazarecompensas.R.id.listView;
 import static ar.com.cazarecompensas.cazarecompensas.R.id.map;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 /**
@@ -88,8 +101,55 @@ public class MapaTesoros extends Fragment implements OnMapReadyCallback {
 
         mMap=googleMap;
 
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mMap.setMyLocationEnabled(true);
+        } else {
+            // Show rationale and request permission.
+        }
+
+        obtenerMarcadores();
         miUbicacion();
     }
+
+    private void obtenerMarcadores(){
+
+        //Creo el llamado asincronico
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.apiUrl))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        TesoroService service = retrofit.create(TesoroService.class);
+        final Call<Tesoro[]> tesoros = service.getTesoros();
+        tesoros.enqueue(new Callback<Tesoro[]>() {
+            @Override
+            public void onResponse(Call<Tesoro[]> call, Response<Tesoro[]> response) {
+
+
+
+                for (int i = 0; i < response.body().length; i++) {
+                    double lati=Double.parseDouble(response.body()[i].getLatitud());
+                    double longLat=Double.parseDouble(response.body()[i].getLongitud());
+                    mMap.addMarker(new MarkerOptions().position(
+                            new LatLng(longLat,lati))
+                            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher))
+                            .title(response.body()[i].getNombre())
+                    );
+                }
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<Tesoro[]> call, Throwable t) {
+                Toast.makeText(getContext().getApplicationContext(), "Error en la carga de tesoros", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
 
     private void agregarMarcador(double lat, double lng) {
         LatLng coordenadas = new LatLng(lat, lng);
@@ -103,7 +163,7 @@ public class MapaTesoros extends Fragment implements OnMapReadyCallback {
 
         }
 
-        marcador = mMap.addMarker(new MarkerOptions().position(coordenadas).title("Mi Posición Actual").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_position)));
+        //marcador = mMap.addMarker(new MarkerOptions().position(coordenadas).title("Mi Posición Actual").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_position)));
         mMap.animateCamera(miUbicacion);
 
         circle = mMap.addCircle(new CircleOptions()
