@@ -155,7 +155,7 @@ public class MapaTesoros extends Fragment implements OnMapReadyCallback {
         LatLng coordenadas = new LatLng(lat, lng);
         CameraUpdate miUbicacion = CameraUpdateFactory.newLatLngZoom(coordenadas, 14);
 
-        if (marcador != null) {
+        if (marcador != null || circle != null) {
 
             marcador.remove();
             circle.remove();
