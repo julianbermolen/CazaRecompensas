@@ -18,6 +18,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 
+import ar.com.cazarecompensas.cazarecompensas.Conversacion;
 import ar.com.cazarecompensas.cazarecompensas.EncontreTesoro;
 import ar.com.cazarecompensas.cazarecompensas.R;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -68,6 +69,15 @@ public class MensajeAdapter extends ArrayAdapter<Comentario> {
         String fecha = item.getFechaCarga().substring(0,10);
         vh.fechaCarga.setText(fecha);
 
+        vh.rootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext().getApplicationContext(),Conversacion.class);
+                intent.putExtra("Id",item.getIdComentario());
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
         return vh.rootView;
     }
 

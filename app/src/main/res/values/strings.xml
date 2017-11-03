@@ -23,9 +23,10 @@
     <string name="title_activity_encontre_tesoro">Envía un mensaje al dueño</string>
     <string name="title_activity_mapa_nuevo_tesoro"></string>
     <string name="title_activity_bandeja_entrada">Bandeja de Entrada</string>
-    
+
 
     <!-- MENSAJES FUNCIONALES DE LA APP -->
     <string name="MensajeNuevoTesoro">Recordá que para publicar un tesoro perdido deberás abonar la recompensa. La misma será devuelta en caso de no encontrar el objeto sin incluir la comision por el servicio</string>
     <string name="TituloNuevoTesoro">Nuevo tesoro</string>
+    <string name="title_activity_conversacion">Conversacion</string>
 </resources>

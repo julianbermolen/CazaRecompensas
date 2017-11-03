@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -97,7 +98,8 @@ public class EncontreTesoro extends AppCompatActivity {
 
                 comentario.setImagen("");
                 comentario.setMensajeLeido(false);
-                comentario.setIdRespuesta(1);
+                //Al ser el mensaje inicial, va 0.
+                comentario.setIdRespuesta(0);
 
                 int idPublicacion = comentario.getIdPublicacion();
                 int idUsuario = comentario.getIdUsuario();
@@ -110,13 +112,12 @@ public class EncontreTesoro extends AppCompatActivity {
                 call.enqueue(new Callback<ModelResponse>() {
                     @Override
                     public void onResponse(Call<ModelResponse> call, Response<ModelResponse> response) {
-                        Log.d("StatusCode", String.valueOf(response.code()));
-                        Log.d("Mensaje",response.body().getMensaje());
+                        goMainScreen();
                     }
 
                     @Override
                     public void onFailure(Call<ModelResponse> call, Throwable t) {
-
+                        Toast.makeText(EncontreTesoro.this, "Error en el envío del mensaje", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -136,5 +137,12 @@ public class EncontreTesoro extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void goMainScreen() {
+        Intent intent = new Intent(this,MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+
     }
 }

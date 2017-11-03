@@ -22,5 +22,5 @@ public interface ComentarioService {
     Call<Comentario[]> getBandejaEntrada(@Path("idUsuario") int idUsuario);
 
     @POST("Comentarios/guardar")
-    Call<ModelResponse> postMessage(@Query("IdPublicacion") int idPublicacion, @Query("IdUsuario") int idUsuario, @Query("Detalle") String detalle, @Query("IdComentarioRespuesta") int idComentarioRespuesta, @Nullable @Query("Imagen") String imagen, @Query("MensajeLeido") boolean mensajeLeido);
+    Call<ModelResponse> postMessage(@Query("IdPublicacion") int idPublicacion, @Query("IdUsuario") int idUsuario, @Query("Detalle") String detalle, @Query("IdRespuestaComentario") int idComentarioRespuesta, @Nullable @Query("Imagen") String imagen, @Query("MensajeLeido") boolean mensajeLeido);
 }
