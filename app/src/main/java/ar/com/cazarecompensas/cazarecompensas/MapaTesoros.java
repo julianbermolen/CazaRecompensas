@@ -113,6 +113,13 @@ public class MapaTesoros extends Fragment implements OnMapReadyCallback {
 
         miUbicacion();
         obtenerMarcadores();
+
+        if (lat == 0.0 && lng == 0.0){
+            LatLng coordenadas = new LatLng(-37.64903402, -65.47851562);
+            CameraUpdate ubicacionDefault = CameraUpdateFactory.newLatLngZoom(coordenadas, 4);
+            mMap.animateCamera(ubicacionDefault);
+
+        }
     }
 
     private void obtenerMarcadores(){
