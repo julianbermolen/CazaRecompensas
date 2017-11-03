@@ -33,6 +33,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.lang.reflect.Array;
+
 import ar.com.cazarecompensas.cazarecompensas.Models.Tesoro;
 import ar.com.cazarecompensas.cazarecompensas.Models.TesoroAdapter;
 import ar.com.cazarecompensas.cazarecompensas.services.TesoroService;
@@ -99,7 +101,7 @@ public class MapaTesoros extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        mMap=googleMap;
+        mMap = googleMap;
 
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -108,8 +110,9 @@ public class MapaTesoros extends Fragment implements OnMapReadyCallback {
             // Show rationale and request permission.
         }
 
-        obtenerMarcadores();
+
         miUbicacion();
+        obtenerMarcadores();
     }
 
     private void obtenerMarcadores(){
@@ -125,16 +128,33 @@ public class MapaTesoros extends Fragment implements OnMapReadyCallback {
             @Override
             public void onResponse(Call<Tesoro[]> call, Response<Tesoro[]> response) {
 
-
-
                 for (int i = 0; i < response.body().length; i++) {
                     double lati=Double.parseDouble(response.body()[i].getLatitud());
                     double longLat=Double.parseDouble(response.body()[i].getLongitud());
-                    mMap.addMarker(new MarkerOptions().position(
-                            new LatLng(longLat,lati))
-                            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher))
-                            .title(response.body()[i].getNombre())
-                    );
+
+                    Location locationA = new Location("location A");
+
+                    locationA.setLatitude(longLat / 1E6);
+                    locationA.setLongitude(lati  / 1E6);
+
+                    Location locationB = new Location("location B");
+
+                    locationB.setLatitude(lat  / 1E6);
+                    locationB.setLongitude(lng  / 1E6);
+
+                    double distance = locationA.distanceTo(locationB);
+
+                    if ( distance < 0.0060 ) {
+                        mMap.addMarker(new MarkerOptions().position(
+                                new LatLng(longLat,lati))
+                                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher))
+                                .title(response.body()[i].getNombre())
+                        );
+
+
+                    }
+
+
                 }
 
 
