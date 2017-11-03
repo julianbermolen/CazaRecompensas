@@ -65,6 +65,7 @@ public class MapaTesoros extends Fragment implements OnMapReadyCallback {
     private Circle circle;
     double lat = 0.0;
     double lng = 0.0;
+    private static final int  MY_LOCATION_REQUEST_CODE = 1 ;
 
     public MapaTesoros() {
         // Required empty public constructor
@@ -107,7 +108,9 @@ public class MapaTesoros extends Fragment implements OnMapReadyCallback {
                 == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
         } else {
-            // Show rationale and request permission.
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_LOCATION_REQUEST_CODE);
         }
 
 
@@ -119,6 +122,24 @@ public class MapaTesoros extends Fragment implements OnMapReadyCallback {
             CameraUpdate ubicacionDefault = CameraUpdateFactory.newLatLngZoom(coordenadas, 4);
             mMap.animateCamera(ubicacionDefault);
 
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == MY_LOCATION_REQUEST_CODE) {
+            if (permissions.length == 1 &&
+                    permissions[0] == Manifest.permission.ACCESS_FINE_LOCATION &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    mMap.setMyLocationEnabled(true);
+                } else {
+                    // Show rationale and request permission.
+                }
+            } else {
+                // Permission was denied. Display an error message.
+            }
         }
     }
 
