@@ -17,18 +17,22 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
 
 import ar.com.cazarecompensas.cazarecompensas.Models.Comentario;
 import ar.com.cazarecompensas.cazarecompensas.Models.ModelResponse;
+import ar.com.cazarecompensas.cazarecompensas.Models.Publicacion;
 import ar.com.cazarecompensas.cazarecompensas.Models.Tesoro;
 import ar.com.cazarecompensas.cazarecompensas.Models.Usuario;
 import ar.com.cazarecompensas.cazarecompensas.services.ComentarioService;
 import ar.com.cazarecompensas.cazarecompensas.services.TesoroService;
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -46,7 +50,7 @@ public class EncontreTesoro extends AppCompatActivity {
         //Obtengo el Tesoro del intent
         Intent i = getIntent();
 
-        Tesoro tesoro = i.getParcelableExtra("Tesoro");
+        final Tesoro tesoro = i.getParcelableExtra("Tesoro");
         final Usuario usuario = (Usuario) i.getSerializableExtra("Usuario");
         ImageView fotoTesoro = (ImageView) findViewById(R.id.fotoTesoro);
         TextView nombreTesoro = (TextView) findViewById(R.id.nombreTesoro);
@@ -76,19 +80,45 @@ public class EncontreTesoro extends AppCompatActivity {
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 ComentarioService service = retrofit.create(ComentarioService.class);
+                TesoroService service2 = retrofit.create(TesoroService.class);
 
                 Comentario comentario = new Comentario();
                 comentario.setComentario(mensaje.getText().toString());
                 comentario.setIdUsuario(usuario.getIdUsuario());
-                comentario.setIdPublicacion(1);
-                comentario.setIdRespuesta(0);
-                Call<ModelResponse> call = service.postMessage(comentario);
+                int idTesoro = tesoro.getIdTesoro();
+                Call<Publicacion> call2 = service2.getIdPublicacion(idTesoro);
                 try {
-                   ModelResponse model = call.execute().body();
-
+                    Publicacion publicacion = call2.execute().body();
+                    int idPublicacion = publicacion.getIdPublicacion();
+                    comentario.setIdPublicacion(idPublicacion);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+                comentario.setImagen("");
+                comentario.setMensajeLeido(false);
+                comentario.setIdRespuesta(1);
+
+                int idPublicacion = comentario.getIdPublicacion();
+                int idUsuario = comentario.getIdUsuario();
+                String detalle = comentario.getComentario();
+                int idComentarioRespuesta = comentario.getIdRespuesta();
+                String imagen = comentario.getImagen();
+                boolean mensajeLeido = comentario.getMensajeLeido();
+
+                Call<ModelResponse> call = service.postMessage(idPublicacion,idUsuario,detalle,idComentarioRespuesta,imagen,mensajeLeido);
+                call.enqueue(new Callback<ModelResponse>() {
+                    @Override
+                    public void onResponse(Call<ModelResponse> call, Response<ModelResponse> response) {
+                        Log.d("StatusCode", String.valueOf(response.code()));
+                        Log.d("Mensaje",response.body().getMensaje());
+                    }
+
+                    @Override
+                    public void onFailure(Call<ModelResponse> call, Throwable t) {
+
+                    }
+                });
 
             }
         });

@@ -1,6 +1,9 @@
 package ar.com.cazarecompensas.cazarecompensas.services;
 
+import org.json.JSONArray;
+
 import ar.com.cazarecompensas.cazarecompensas.Models.ModelResponse;
+import ar.com.cazarecompensas.cazarecompensas.Models.Publicacion;
 import ar.com.cazarecompensas.cazarecompensas.Models.Tesoro;
 import ar.com.cazarecompensas.cazarecompensas.Models.TesoroCategoria;
 import retrofit2.Call;
@@ -8,6 +11,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * Created by julia on 16/10/2017.
@@ -24,6 +28,9 @@ public interface TesoroService {
 
     @GET("Tesoros/obtener")
     Call<Tesoro[]> getTesoros();
+
+    @GET("Tesoros/ObtenerIdPublicacionPorIdTesoro/{id}")
+    Call<Publicacion> getIdPublicacion(@Path("id") int idTesoro);
     
 }
 

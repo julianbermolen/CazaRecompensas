@@ -22,17 +22,25 @@ public class Comentario implements Parcelable{
     @SerializedName("detalle")
     private String Detalle;
     @SerializedName("idRespuestaComentario")
-    private int IdComentarioRespuesta;
+    private int IdRespuestaComentario;
     @SerializedName("imagen")
     private String Imagen;
     @SerializedName("mensajeLeido")
-    private boolean MensajeLeido;
+    private Boolean MensajeLeido;
     @SerializedName("fechaCarga")
     private String FechaCarga;
     @SerializedName("publicacion")
     private Publicacion Publicacion;
     @SerializedName("usuario")
     private Usuario usuario;
+
+
+    public boolean getMensajeLeido(){
+        return MensajeLeido;
+    }
+    public void setMensajeLeido(boolean mensajeLeido) {
+        MensajeLeido = mensajeLeido;
+    }
 
     public Comentario(){
 
@@ -42,14 +50,20 @@ public class Comentario implements Parcelable{
         IdPublicacion = in.readInt();
         IdUsuario = in.readInt();
         Detalle = in.readString();
-        IdComentarioRespuesta = in.readInt();
+        IdRespuestaComentario = in.readInt();
         Imagen = in.readString();
         MensajeLeido = in.readByte() != 0;
         usuario = in.readParcelable(Usuario.class.getClassLoader());
         FechaCarga = in.readString();
     }
 
+    public String getImagen() {
+        return Imagen;
+    }
 
+    public void setImagen(String imagen) {
+        Imagen = imagen;
+    }
     public String getFechaCarga() {
         return FechaCarga;
     }
@@ -111,11 +125,11 @@ public class Comentario implements Parcelable{
     }
 
     public int getIdRespuesta() {
-        return IdComentarioRespuesta;
+        return IdRespuestaComentario;
     }
 
     public void setIdRespuesta(int idRespuesta) {
-        IdComentarioRespuesta = idRespuesta;
+        IdRespuestaComentario = idRespuesta;
     }
 
     @Override
@@ -129,7 +143,7 @@ public class Comentario implements Parcelable{
         dest.writeInt(IdPublicacion);
         dest.writeInt(IdUsuario);
         dest.writeString(Detalle);
-        dest.writeInt(IdComentarioRespuesta);
+        dest.writeInt(IdRespuestaComentario);
         dest.writeString(Imagen);
         dest.writeByte((byte) (MensajeLeido ? 1 : 0));
         dest.writeParcelable(usuario, flags);
