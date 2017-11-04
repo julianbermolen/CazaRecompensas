@@ -82,11 +82,11 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
         );
 
         String fotoUser = item.getUsuario().getUrlFoto();
-        Log.d("UrlFoto:",fotoUser);
+
         Picasso.with(context).load(item.getUsuario().getUrlFoto()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(vh.imageViewUser);
 
-        String urlImagen = "http://www.seguroautomotor.org/wp-content/uploads/2015/01/auto-s.png";
-        Log.d("URL:",urlImagen);
+        String urlImagen = item.getImagen1();
+
         Picasso.with(context).load(urlImagen).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(vh.imageView);
 
         return vh.rootView;
