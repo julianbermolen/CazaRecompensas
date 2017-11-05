@@ -83,7 +83,8 @@
         <activity
             android:name=".Conversacion"
             android:label="@string/title_activity_conversacion"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".MercadoPago.CardActivity"></activity>
     </application>
 
 </manifest>

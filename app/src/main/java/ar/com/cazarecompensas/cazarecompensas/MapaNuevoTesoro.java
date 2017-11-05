@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.facebook.Profile;
 import com.google.android.gms.maps.CameraUpdate;
@@ -28,15 +29,20 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.mercadopago.core.MercadoPago;
+import com.mercadopago.model.PaymentMethod;
+import com.mercadopago.util.JsonUtil;
+import com.mercadopago.util.LayoutUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import ar.com.cazarecompensas.cazarecompensas.MercadoPago.ExamplesUtils;
 import ar.com.cazarecompensas.cazarecompensas.Models.ModelResponse;
 import ar.com.cazarecompensas.cazarecompensas.Models.Tesoro;
 import ar.com.cazarecompensas.cazarecompensas.services.TesoroService;
@@ -46,8 +52,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import static java.security.AccessController.getContext;
 
 public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallback {
 
@@ -64,6 +68,7 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
     double lngObtener = 0.0;
     Button botonBuscar;
     Button botonFinalizar;
+    Button botonPagos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -326,6 +331,70 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,45000,0,locListener);
 
 
+    }
+
+    protected List<String> mSupportedPaymentTypes = new ArrayList<String>(){{
+        add("credit_card");
+        add("debit_card");
+        add("prepaid_card");
+    }};
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == MercadoPago.PAYMENT_METHODS_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+
+                // Set payment method
+                PaymentMethod paymentMethod = JsonUtil.getInstance().fromJson(data.getStringExtra("paymentMethod"), PaymentMethod.class);
+
+                // Call new card activity
+                ExamplesUtils.startCardActivity(this, ExamplesUtils.DUMMY_MERCHANT_PUBLIC_KEY, paymentMethod);
+            } else {
+
+                if ((data != null) && (data.getStringExtra("apiException") != null)) {
+                    Toast.makeText(getApplicationContext(), data.getStringExtra("apiException"), Toast.LENGTH_LONG).show();
+                }
+            }
+        } else if (requestCode == ExamplesUtils.CARD_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+
+                // Create payment
+                ExamplesUtils.createPayment(this, data.getStringExtra("token"),
+                        1, null, JsonUtil.getInstance().fromJson(data.getStringExtra("paymentMethod"), PaymentMethod.class), null);
+
+            } else {
+
+                if (data != null) {
+                    if (data.getStringExtra("apiException") != null) {
+
+                        Toast.makeText(getApplicationContext(), data.getStringExtra("apiException"), Toast.LENGTH_LONG).show();
+
+                    } else if (data.getBooleanExtra("backButtonPressed", false)) {
+
+                        new MercadoPago.StartActivityBuilder()
+                                .setActivity(this)
+                                .setPublicKey(ExamplesUtils.DUMMY_MERCHANT_PUBLIC_KEY)
+                                .setSupportedPaymentTypes(mSupportedPaymentTypes)
+                                .startPaymentMethodsActivity();
+                    }
+                }
+            }
+        } else if (requestCode == MercadoPago.CONGRATS_REQUEST_CODE) {
+
+            LayoutUtil.showRegularLayout(this);
+        }
+    }
+
+    public void submitForm(View view) {
+
+        // Call payment methods activity
+        new MercadoPago.StartActivityBuilder()
+                .setActivity(this)
+                .setPublicKey(ExamplesUtils.DUMMY_MERCHANT_PUBLIC_KEY)
+                .setSupportedPaymentTypes(mSupportedPaymentTypes)
+                .startPaymentMethodsActivity();
     }
 
 }
