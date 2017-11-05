@@ -1,5 +1,7 @@
 package ar.com.cazarecompensas.cazarecompensas;
 
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -39,6 +41,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.R.string.no;
+import static ar.com.cazarecompensas.cazarecompensas.R.string.MensajeNuevoTesoro;
+
 public class NuevoTesoro extends AppCompatActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -64,6 +69,7 @@ public class NuevoTesoro extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
 
         siguiente = (Button) findViewById(R.id.siguientes);
@@ -170,6 +176,8 @@ public class NuevoTesoro extends AppCompatActivity {
             dropdown.setAdapter(adapter);*/
 
         descargarCategorias();
+
+        DialogoAlerta();
 
 
     }
@@ -332,7 +340,7 @@ public class NuevoTesoro extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imageBitmap = getResizedBitmap(imageBitmap,400,300);
+            imageBitmap = getResizedBitmap(imageBitmap,350,300);
 
             botonImagen1.setImageBitmap(imageBitmap);
 
@@ -340,14 +348,14 @@ public class NuevoTesoro extends AppCompatActivity {
         if (requestCode == 2 && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imageBitmap = getResizedBitmap(imageBitmap,400,300);
+            imageBitmap = getResizedBitmap(imageBitmap,350,300);
 
             botonImagen2.setImageBitmap(imageBitmap);
         }
         if (requestCode == 3 && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imageBitmap = getResizedBitmap(imageBitmap,400,300);
+            imageBitmap = getResizedBitmap(imageBitmap,350,300);
 
             botonImagen3.setImageBitmap(imageBitmap);
         }
@@ -357,7 +365,7 @@ public class NuevoTesoro extends AppCompatActivity {
             Uri imageUri = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-                bitmap = getResizedBitmap(bitmap,400,300);
+                bitmap = getResizedBitmap(bitmap,350,300);
                 botonImagen1.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -369,7 +377,7 @@ public class NuevoTesoro extends AppCompatActivity {
             Uri imageUri = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-                bitmap = getResizedBitmap(bitmap,400,300);
+                bitmap = getResizedBitmap(bitmap,350,300);
                 botonImagen2.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -381,7 +389,7 @@ public class NuevoTesoro extends AppCompatActivity {
             Uri imageUri = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-                bitmap = getResizedBitmap(bitmap,400,300);
+                bitmap = getResizedBitmap(bitmap,350,300);
                 botonImagen3.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -389,5 +397,25 @@ public class NuevoTesoro extends AppCompatActivity {
         }
     }
 
+
+    private void DialogoAlerta() {
+
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(NuevoTesoro.this);
+        builder1.setMessage("Recordá que para publicar un tesoro perdido deberás abonar la recompensa. La misma será devuelta en caso de no encontrar el objeto sin incluir la comision por el servicio");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+
+}
 
 }
