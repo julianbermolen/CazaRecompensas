@@ -74,6 +74,7 @@ public class MensajeAdapter extends ArrayAdapter<Comentario> {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext().getApplicationContext(),Conversacion.class);
                 intent.putExtra("Id",item.getIdComentario());
+                intent.putExtra("IdUsuario",item.getIdUsuario());
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
