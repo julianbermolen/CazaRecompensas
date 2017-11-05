@@ -63,7 +63,8 @@ public class EncontreTesoro extends AppCompatActivity {
         //Imagen del Usuario.
         Picasso.with(getApplicationContext()).load(usuario.getUrlFoto()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(imageUser);
         //Imagen del Tesoro.
-        Picasso.with(getApplicationContext()).load("http://www.seguroautomotor.org/wp-content/uploads/2015/01/auto-s.png").placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(fotoTesoro);
+        String imagen1 = tesoro.getImagen1();
+        Picasso.with(getApplicationContext()).load(imagen1).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(fotoTesoro);
         nombreTesoro.setText(tesoro.getNombre());
         descripcionTesoro.setText(tesoro.getDescripcion());
 
