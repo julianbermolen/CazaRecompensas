@@ -72,8 +72,8 @@ public class BandejaEntrada extends AppCompatActivity {
                 public void onResponse(Call<Comentario[]> call, Response<Comentario[]> response) {
                     progressDialog.dismiss();
                     listview = (ListView) findViewById(R.id.listViewMensajes);
-                    int i = 0;
-                    for(i = 0;i<response.body().length;i++) {
+
+                    for(int i = 0;i<response.body().length;i++) {
                         if(response.body()[i].getIdRespuesta() == 0) {
                             adapter = new MensajeAdapter(getApplicationContext(), response.body());
                             listview.setAdapter(adapter);

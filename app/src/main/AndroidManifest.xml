@@ -85,6 +85,18 @@
             android:label="@string/title_activity_conversacion"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MercadoPago.CardActivity"></activity>
+
+        <service android:name=".services.NotificationService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"></action>
+            </intent-filter>
+        </service>
+        <service android:name=".services.NotificationInstanceService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" ></action>
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

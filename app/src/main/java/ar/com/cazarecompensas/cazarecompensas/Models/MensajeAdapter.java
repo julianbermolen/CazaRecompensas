@@ -56,7 +56,6 @@ public class MensajeAdapter extends ArrayAdapter<Comentario> {
         }
 
         final Comentario item = getItem(position);
-
         //vh.NombreTesoro.setText(item.getComentario());
         Picasso.with(context).load(item.getUsuario().getUrlFoto()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(vh.fotoUser);
         String nombre = item.getUsuario().getNombre()+" "+item.getUsuario().getApellido();
