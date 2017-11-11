@@ -14,6 +14,7 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -63,7 +64,6 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
     private GoogleMap mMap;
     MapView mMapView;
     View mView;
-    private Marker marcador;
     private Marker marcadorObtener;
     private Marker marcadorBusqueda;
     double lat = 0.0;
@@ -73,6 +73,7 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
     Button botonBuscar;
     Button botonFinalizar;
     Button botonPagos;
+    private static final int  MY_LOCATION_REQUEST_CODE = 1 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +122,31 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
             }
 
         });
+
+
+    }
+
+
+    public void llamarIntentParaGuardarTesoro(){
+
+
+        Intent intent = getIntent();
+        String nombreTesoro = intent.getStringExtra("nombreTesoro");
+        String descripcionTesoro = intent.getStringExtra("descripcionTesoro");
+        int categoriaTesoro = intent.getIntExtra("categoriaTesoro",0);
+        Integer recompensaTesoro = intent.getIntExtra("recompensaTesoro",0);
+        int idEstadoTesoro = intent.getIntExtra("idEstadoTesoro",0);
+        byte[] imagen1TesoroCod = intent.getByteArrayExtra("imagen1Tesoro");
+        Bitmap imagen1Tesoro = BitmapFactory.decodeByteArray(imagen1TesoroCod, 0, imagen1TesoroCod.length);
+        byte[] imagen2TesoroCod = intent.getByteArrayExtra("imagen2Tesoro");
+        Bitmap imagen2Tesoro = BitmapFactory.decodeByteArray(imagen2TesoroCod, 0, imagen2TesoroCod.length);
+        byte[] imagen3TesoroCod = intent.getByteArrayExtra("imagen3Tesoro");
+        Bitmap imagen3Tesoro = BitmapFactory.decodeByteArray(imagen3TesoroCod, 0, imagen3TesoroCod.length);
+        guardarTesoro(nombreTesoro,descripcionTesoro,categoriaTesoro,recompensaTesoro,idEstadoTesoro,imagen1Tesoro,imagen2Tesoro,imagen3Tesoro,latObtener,lngObtener);
+
+        //Al finalizar se va hacia el mainActivity
+        Intent intent2 = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent2);
 
 
     }
@@ -210,6 +236,15 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mMap.setMyLocationEnabled(true);
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_LOCATION_REQUEST_CODE);
+        }
+
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
@@ -267,16 +302,7 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
         LatLng coordenadas = new LatLng(lat, lng);
         CameraUpdate miUbicacion = CameraUpdateFactory.newLatLngZoom(coordenadas, 11);
 
-        if (marcador != null) {
-
-            marcador.remove();
-
-
-
-        }
-
-        marcador = mMap.addMarker(new MarkerOptions().position(coordenadas).title("Mi Posición Actual").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_position)));
-        mMap.animateCamera(miUbicacion);
+               mMap.animateCamera(miUbicacion);
 
 
     }
@@ -352,9 +378,16 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
         if(requestCode == MercadoPago.CARD_VAULT_REQUEST_CODE) {
             if(resultCode == RESULT_OK) {
                 PaymentMethod paymentMethod = JsonUtil.getInstance().fromJson(data.getStringExtra("paymentMethod"), PaymentMethod.class);
+
                 Issuer issuer = JsonUtil.getInstance().fromJson(data.getStringExtra("issuer"), Issuer.class);
                 Token token = JsonUtil.getInstance().fromJson(data.getStringExtra("token"), Token.class);
+                paymentMethod.getId();
+                token.getId();
 
+
+                //Aca iria el guardarNuevoTesoro
+
+                llamarIntentParaGuardarTesoro();
 
 
             } else {
