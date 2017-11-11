@@ -86,9 +86,11 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
         Picasso.with(context).load(item.getUsuario().getUrlFoto()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(vh.imageViewUser);
 
         String urlImagen = item.getImagen1();
-
+        if(urlImagen == "")
+        {Picasso.with(context).load(R.mipmap.ic_launcher).into(vh.imageView);
+        }else{
         Picasso.with(context).load(urlImagen).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(vh.imageView);
-
+        }
         return vh.rootView;
     }
 
