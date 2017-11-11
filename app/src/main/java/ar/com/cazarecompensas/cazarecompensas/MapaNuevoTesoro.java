@@ -33,16 +33,20 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mercadopago.core.MercadoPago;
+import com.mercadopago.exceptions.MPException;
+import com.mercadopago.model.Issuer;
 import com.mercadopago.model.PaymentMethod;
+import com.mercadopago.model.Token;
 import com.mercadopago.util.JsonUtil;
 import com.mercadopago.util.LayoutUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.com.cazarecompensas.cazarecompensas.MercadoPago.ExamplesUtils;
 import ar.com.cazarecompensas.cazarecompensas.Models.ModelResponse;
 import ar.com.cazarecompensas.cazarecompensas.Models.Tesoro;
 import ar.com.cazarecompensas.cazarecompensas.services.TesoroService;
@@ -333,6 +337,8 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
 
     }
 
+    //------------------------PAGOS--------------------------------------------
+
     protected List<String> mSupportedPaymentTypes = new ArrayList<String>(){{
         add("credit_card");
         add("debit_card");
@@ -343,58 +349,34 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == MercadoPago.PAYMENT_METHODS_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-
-                // Set payment method
+        if(requestCode == MercadoPago.CARD_VAULT_REQUEST_CODE) {
+            if(resultCode == RESULT_OK) {
                 PaymentMethod paymentMethod = JsonUtil.getInstance().fromJson(data.getStringExtra("paymentMethod"), PaymentMethod.class);
+                Issuer issuer = JsonUtil.getInstance().fromJson(data.getStringExtra("issuer"), Issuer.class);
+                Token token = JsonUtil.getInstance().fromJson(data.getStringExtra("token"), Token.class);
 
-                // Call new card activity
-                ExamplesUtils.startCardActivity(this, ExamplesUtils.DUMMY_MERCHANT_PUBLIC_KEY, paymentMethod);
-            } else {
 
-                if ((data != null) && (data.getStringExtra("apiException") != null)) {
-                    Toast.makeText(getApplicationContext(), data.getStringExtra("apiException"), Toast.LENGTH_LONG).show();
-                }
-            }
-        } else if (requestCode == ExamplesUtils.CARD_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-
-                // Create payment
-                ExamplesUtils.createPayment(this, data.getStringExtra("token"),
-                        1, null, JsonUtil.getInstance().fromJson(data.getStringExtra("paymentMethod"), PaymentMethod.class), null);
 
             } else {
-
-                if (data != null) {
-                    if (data.getStringExtra("apiException") != null) {
-
-                        Toast.makeText(getApplicationContext(), data.getStringExtra("apiException"), Toast.LENGTH_LONG).show();
-
-                    } else if (data.getBooleanExtra("backButtonPressed", false)) {
-
-                        new MercadoPago.StartActivityBuilder()
-                                .setActivity(this)
-                                .setPublicKey(ExamplesUtils.DUMMY_MERCHANT_PUBLIC_KEY)
-                                .setSupportedPaymentTypes(mSupportedPaymentTypes)
-                                .startPaymentMethodsActivity();
-                    }
+                if ((data != null) && (data.hasExtra("mpException"))) {
+                    MPException exception = JsonUtil.getInstance()
+                            .fromJson(data.getStringExtra("mpException"), MPException.class);
                 }
             }
-        } else if (requestCode == MercadoPago.CONGRATS_REQUEST_CODE) {
-
-            LayoutUtil.showRegularLayout(this);
         }
     }
 
     public void submitForm(View view) {
+        Intent intent = getIntent();
+        Integer recompensaTesoro = intent.getIntExtra("recompensaTesoro",0);
+        BigDecimal bi = BigDecimal.valueOf(recompensaTesoro.intValue());
 
         // Call payment methods activity
         new MercadoPago.StartActivityBuilder()
                 .setActivity(this)
-                .setPublicKey(ExamplesUtils.DUMMY_MERCHANT_PUBLIC_KEY)
-                .setSupportedPaymentTypes(mSupportedPaymentTypes)
-                .startPaymentMethodsActivity();
+                .setPublicKey("TEST-f3f86620-eb8b-4ed9-a851-46e4d7a6d2cf")
+                .setAmount(bi)
+                .startCardVaultActivity();
     }
 
 }
