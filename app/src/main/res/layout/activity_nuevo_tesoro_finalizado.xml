@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="ar.com.cazarecompensas.cazarecompensas.NuevoTesoroFinalizado">
+
+
+
+
+    <TextView
+        android:layout_marginTop="50dp"
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Felicitaciones"
+        android:textAlignment="center"
+        android:textSize="40dp"/>
+
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Su tesoro fue guardado con exito"
+        android:textAlignment="center"
+        android:textSize="12dp"/>
+
+    <Button
+        android:layout_marginTop="250dp"
+        android:id="@+id/botonVolverHomeFinalizado"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="90dp"
+        android:layout_marginRight="90dp"
+        android:layout_height="wrap_content"
+        android:text="Volver al home" />
+</LinearLayout>

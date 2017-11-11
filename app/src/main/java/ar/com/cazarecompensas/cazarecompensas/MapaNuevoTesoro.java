@@ -96,33 +96,6 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
         });
 
 
-        //Al tocar el boton finalizar guarda el tesoro
-        botonFinalizar = (Button) findViewById(R.id.finalizarNuevoTesoro);
-        botonFinalizar.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                //Se obtienen los datos traidos del intent
-                Intent intent = getIntent();
-                String nombreTesoro = intent.getStringExtra("nombreTesoro");
-                String descripcionTesoro = intent.getStringExtra("descripcionTesoro");
-                int categoriaTesoro = intent.getIntExtra("categoriaTesoro",0);
-                Integer recompensaTesoro = intent.getIntExtra("recompensaTesoro",0);
-                int idEstadoTesoro = intent.getIntExtra("idEstadoTesoro",0);
-                byte[] imagen1TesoroCod = intent.getByteArrayExtra("imagen1Tesoro");
-                Bitmap imagen1Tesoro = BitmapFactory.decodeByteArray(imagen1TesoroCod, 0, imagen1TesoroCod.length);
-                byte[] imagen2TesoroCod = intent.getByteArrayExtra("imagen2Tesoro");
-                Bitmap imagen2Tesoro = BitmapFactory.decodeByteArray(imagen2TesoroCod, 0, imagen2TesoroCod.length);
-                byte[] imagen3TesoroCod = intent.getByteArrayExtra("imagen3Tesoro");
-                Bitmap imagen3Tesoro = BitmapFactory.decodeByteArray(imagen3TesoroCod, 0, imagen3TesoroCod.length);
-                guardarTesoro(nombreTesoro,descripcionTesoro,categoriaTesoro,recompensaTesoro,idEstadoTesoro,imagen1Tesoro,imagen2Tesoro,imagen3Tesoro,latObtener,lngObtener);
-
-                //Al finalizar se va hacia el mainActivity
-                Intent intent2 = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent2);
-            }
-
-        });
-
 
     }
 
@@ -145,7 +118,7 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
         guardarTesoro(nombreTesoro,descripcionTesoro,categoriaTesoro,recompensaTesoro,idEstadoTesoro,imagen1Tesoro,imagen2Tesoro,imagen3Tesoro,latObtener,lngObtener);
 
         //Al finalizar se va hacia el mainActivity
-        Intent intent2 = new Intent(getApplicationContext(),MainActivity.class);
+        Intent intent2 = new Intent(getApplicationContext(),NuevoTesoroFinalizado.class);
         startActivity(intent2);
 
 
@@ -399,6 +372,8 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
         }
     }
 
+
+    //El boton de pagar va directo aca
     public void submitForm(View view) {
         Intent intent = getIntent();
         Integer recompensaTesoro = intent.getIntExtra("recompensaTesoro",0);
