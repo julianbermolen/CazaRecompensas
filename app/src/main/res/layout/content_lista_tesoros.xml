@@ -50,17 +50,18 @@
                         android:layout_marginTop="10dp"
                         android:text="NombreUsuario"
                         android:textColor="@color/cardview_dark_background"
-                        android:textSize="14sp" />
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/NombreTesoro"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/NombreUsuario"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp"
-                        android:layout_below="@+id/NombreUsuario"
                         android:textColor="@color/cardview_dark_background"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         tools:text="TextView" />
                 </LinearLayout>
 
@@ -74,11 +75,12 @@
                         android:id="@+id/RecompensaTesoro"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
                         android:gravity="right"
                         android:text="Recompensa"
-                        android:textColor="@color/cardview_dark_background" />
+                        android:textColor="@color/cardview_dark_background"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -86,6 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="123dp"
                 android:orientation="horizontal">
+
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="match_parent"
@@ -93,6 +96,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
+                    android:background="@color/com_facebook_button_login_silver_background_color_pressed"
                     android:src="@mipmap/ic_launcher" />
 
             </LinearLayout>
