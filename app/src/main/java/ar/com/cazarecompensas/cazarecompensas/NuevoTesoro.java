@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.facebook.Profile;
 
@@ -109,7 +110,7 @@ public class NuevoTesoro extends AppCompatActivity {
                 String descripcion2 = descripcion.getText().toString();
                 Object categoria2 = categoria.getSelectedItem();
                 int categoria3 = 2;
-                Integer Recompensa = Integer.parseInt(String.valueOf(recompensa.getText()));
+
                 int idTesoroEstado = 1;
 
                 //Se instancia el intento
@@ -118,15 +119,32 @@ public class NuevoTesoro extends AppCompatActivity {
                 intent.putExtra("nombreTesoro", nombre2);
                 intent.putExtra("descripcionTesoro", descripcion2);
                 intent.putExtra("categoriaTesoro", categoria3);
-                intent.putExtra("recompensaTesoro", Recompensa);
+                if(recompensa.getText().length() == 0 || recompensa.getText().toString() == ""){
+                    recompensa.setError("Recompensa tiene que tener un monto");
+                }else {
+                    Integer Recompensa = Integer.parseInt(String.valueOf(recompensa.getText()));
+                    intent.putExtra("recompensaTesoro", Recompensa);
+                }
                 intent.putExtra("idEstadoTesoro", idTesoroEstado);
                 intent.putExtra("imagen1Tesoro", imageInByte1);
                 intent.putExtra("imagen2Tesoro", imageInByte2);
                 intent.putExtra("imagen3Tesoro", imageInByte3);
 
                 //Se inicia el intento
-                startActivity(intent);
 
+                if(nombre.getText().toString().length() == 0) {
+                    nombre.setError("Por favor, ingresá un nombre");
+//                    Toast.makeText(NuevoTesoro.this, "Ha dejado valores vacios", Toast.LENGTH_SHORT).show();
+                }else if(descripcion.getText().toString().length() == 0) {
+                    descripcion.setError("Por favor, ingresá una descripción");
+                }else if(recompensa.getText().toString().length() == 0) {
+                    recompensa.setError("Ingresá una monto");
+                }else if(validar(recompensa.getText().toString()) == false){
+                    recompensa.setError("Ingresá un numero");
+                }
+                else{
+                    startActivity(intent);
+                }
 
             }
 
@@ -181,7 +199,13 @@ public class NuevoTesoro extends AppCompatActivity {
 
 
     }
-
+    public boolean validar(String cadena) {
+        if (cadena.matches("[0-9]*")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     private void descargarCategorias() {
 
 
