@@ -2,6 +2,7 @@ package ar.com.cazarecompensas.cazarecompensas;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -15,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -77,8 +79,11 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa_nuevo_tesoro);
+
+        DialogoAlerta();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -375,6 +380,7 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
 
     //El boton de pagar va directo aca
     public void submitForm(View view) {
+        if((latObtener != 0.0 ) && (lngObtener != 0.0)){
         Intent intent = getIntent();
         Integer recompensaTesoro = intent.getIntExtra("recompensaTesoro",0);
         BigDecimal bi = BigDecimal.valueOf(recompensaTesoro.intValue());
@@ -385,6 +391,37 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
                 .setPublicKey("TEST-f3f86620-eb8b-4ed9-a851-46e4d7a6d2cf")
                 .setAmount(bi)
                 .startCardVaultActivity();
+    }else
+        {
+            Context context = getApplicationContext();
+            CharSequence text = "Por favor, selecciona una ubicación antes de avanzar";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+
+        }
+    }
+
+
+    private void DialogoAlerta() {
+
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(MapaNuevoTesoro.this);
+        builder1.setMessage("Manten pulsado para agregar la ubicacion del objeto perdido");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+
     }
 
 }
