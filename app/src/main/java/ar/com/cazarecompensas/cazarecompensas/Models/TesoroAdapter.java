@@ -1,9 +1,11 @@
 package ar.com.cazarecompensas.cazarecompensas.Models;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,9 +24,7 @@ import com.squareup.picasso.Picasso;
 import java.io.Serializable;
 import java.util.List;
 
-import ar.com.cazarecompensas.cazarecompensas.EncontreTesoro;
-import ar.com.cazarecompensas.cazarecompensas.R;
-import ar.com.cazarecompensas.cazarecompensas.login_activity;
+import ar.com.cazarecompensas.cazarecompensas.*;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static ar.com.cazarecompensas.cazarecompensas.R.color.white;
@@ -77,9 +77,19 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
                     @Override
                            public void onClick(View v) {
                                  goLoEncontreScreen(item);
+
                                         }
                                  }
         );
+
+        vh.ReclamarTesoro.setOnClickListener(new View.OnClickListener() {
+                                                 @Override
+                                                 public void onClick(View v) {
+                                                     goReclamarScreen(item);
+                                                 }
+                                             }
+        );
+
 
         String fotoUser = item.getUsuario().getUrlFoto();
 
@@ -103,8 +113,9 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
         public final TextView NombreUsuario;
         public final CircleImageView imageViewUser;
         public final Button EncontreTesoro;
+        public final Button ReclamarTesoro;
 
-        private ViewHolder(CardView rootView, ImageView imageView, TextView textViewName,TextView textViewEmail,TextView textViewRecompensa, TextView textViewNameUser, CircleImageView imageViewUser,Button encontreTesoro) {
+        private ViewHolder(CardView rootView, ImageView imageView, TextView textViewName,TextView textViewEmail,TextView textViewRecompensa, TextView textViewNameUser, CircleImageView imageViewUser,Button encontreTesoro,Button ReclamarTesoro) {
             this.rootView = rootView;
             this.imageView = imageView;
             this.imageViewUser = imageViewUser;
@@ -113,6 +124,7 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
             this.RecompensaTesoro = textViewRecompensa;
             this.NombreUsuario = textViewNameUser;
             this.EncontreTesoro = encontreTesoro;
+            this.ReclamarTesoro = ReclamarTesoro;
         }
 
         public static ViewHolder create(CardView rootView) {
@@ -123,7 +135,8 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
             TextView textViewRecompense = (TextView) rootView.findViewById(R.id.RecompensaTesoro);
             TextView textViewNameUser = (TextView) rootView.findViewById(R.id.NombreUsuario);
             Button encontreTesoro = (Button) rootView.findViewById(R.id.encontreTesoro);
-            return new ViewHolder(rootView, imageView, textViewName, textViewEmail,textViewRecompense,textViewNameUser,ImageViewUser,encontreTesoro);
+            Button ReclamarTesoro = (Button) rootView.findViewById(R.id.reclamarTesoro);
+            return new ViewHolder(rootView, imageView, textViewName, textViewEmail,textViewRecompense,textViewNameUser,ImageViewUser,encontreTesoro,ReclamarTesoro);
         }
 
     }
@@ -135,4 +148,14 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
+
+    private void goReclamarScreen(Tesoro tesoro)  {
+        Intent intent = new Intent(getContext().getApplicationContext(),PeticionRecompensa.class);
+        Usuario usuario = tesoro.getUsuario();
+        intent.putExtra("Tesoro",(Parcelable) tesoro);
+        intent.putExtra("Usuario",(Serializable) usuario);
+        context.startActivity(intent);
+    }
+
+
 }

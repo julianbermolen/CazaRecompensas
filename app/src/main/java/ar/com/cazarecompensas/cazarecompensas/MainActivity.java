@@ -213,6 +213,11 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_misBusquedas) {
 
+            Intent Options = new Intent(this,
+                    MisPeticiones.class);
+            this.startActivity(Options);
+            return true;
+
         } else if (id == R.id.nav_cerrarSesion) {
             LoginManager.getInstance().logOut();
             goLoginScreen();

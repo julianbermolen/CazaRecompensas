@@ -96,7 +96,15 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".NuevoTesoroFinalizado"></activity>
+        <activity android:name=".NuevoTesoroFinalizado" />
+        <activity
+            android:name=".PeticionRecompensa"
+            android:label="@string/title_activity_peticion_recompensa"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MisPeticiones"
+            android:label="@string/title_activity_mis_peticiones"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

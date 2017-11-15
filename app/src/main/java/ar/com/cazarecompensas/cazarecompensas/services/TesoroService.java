@@ -3,9 +3,11 @@ package ar.com.cazarecompensas.cazarecompensas.services;
 import org.json.JSONArray;
 
 import ar.com.cazarecompensas.cazarecompensas.Models.ModelResponse;
+import ar.com.cazarecompensas.cazarecompensas.Models.PeticionRecompensaModel;
 import ar.com.cazarecompensas.cazarecompensas.Models.Publicacion;
 import ar.com.cazarecompensas.cazarecompensas.Models.Tesoro;
 import ar.com.cazarecompensas.cazarecompensas.Models.TesoroCategoria;
+import ar.com.cazarecompensas.cazarecompensas.PeticionRecompensa;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -31,6 +33,17 @@ public interface TesoroService {
 
     @GET("Tesoros/ObtenerIdPublicacionPorIdTesoro/{id}")
     Call<Publicacion> getIdPublicacion(@Path("id") int idTesoro);
-    
+
+    @FormUrlEncoded
+    @POST("PeticionRecompensa/guardar")
+    Call<ModelResponse> postPeticionRecompensa(@Field("IdUsuario") int idUsuario, @Field("IdTesoro") int idTesoro,@Field("Estado") int estado);
+
+    @GET("PeticionRecompensa/obtenerPorIdUsuario/{id}")
+    Call<PeticionRecompensaModel[]> getPeticionRecompensaPorIdUsuario(@Path("id") int idUsuario);
+
+    @FormUrlEncoded
+    @POST("PeticionRecompensa/actualizarEstado")
+    Call<ModelResponse> postValidarPeticionRecompensa(@Field("IdUsuario") int idUsuario, @Field("IdTesoro") int idTesoro,@Field("Estado") int estado);
+
 }
 

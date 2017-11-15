@@ -29,4 +29,6 @@
     <string name="MensajeNuevoTesoro">Recordá que para publicar un tesoro perdido deberás abonar la recompensa. La misma será devuelta en caso de no encontrar el objeto sin incluir la comision por el servicio</string>
     <string name="TituloNuevoTesoro">Nuevo tesoro</string>
     <string name="title_activity_conversacion">Conversacion</string>
+    <string name="title_activity_peticion_recompensa">PeticionRecompensa</string>
+    <string name="title_activity_mis_peticiones">MisPeticiones</string>
 </resources>
