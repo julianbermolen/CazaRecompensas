@@ -104,7 +104,10 @@
         <activity
             android:name=".MisPeticiones"
             android:label="@string/title_activity_mis_peticiones"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".IrAlMapa"
+            android:label="@string/title_activity_ir_al_mapa"></activity>
     </application>
 
 </manifest>

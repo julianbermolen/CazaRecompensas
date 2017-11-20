@@ -90,6 +90,13 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
                                              }
         );
 
+        vh.IrAlMapa.setOnClickListener(new View.OnClickListener() {
+                                                 @Override
+                                                 public void onClick(View v) {
+                                                     goIrAlMapa(item);
+                                                 }
+                                             }
+        );
 
         String fotoUser = item.getUsuario().getUrlFoto();
 
@@ -114,8 +121,9 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
         public final CircleImageView imageViewUser;
         public final Button EncontreTesoro;
         public final Button ReclamarTesoro;
+        public final Button IrAlMapa;
 
-        private ViewHolder(CardView rootView, ImageView imageView, TextView textViewName,TextView textViewEmail,TextView textViewRecompensa, TextView textViewNameUser, CircleImageView imageViewUser,Button encontreTesoro,Button ReclamarTesoro) {
+        private ViewHolder(CardView rootView, ImageView imageView, TextView textViewName,TextView textViewEmail,TextView textViewRecompensa, TextView textViewNameUser, CircleImageView imageViewUser,Button encontreTesoro,Button ReclamarTesoro,Button IrAlMapa) {
             this.rootView = rootView;
             this.imageView = imageView;
             this.imageViewUser = imageViewUser;
@@ -125,6 +133,7 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
             this.NombreUsuario = textViewNameUser;
             this.EncontreTesoro = encontreTesoro;
             this.ReclamarTesoro = ReclamarTesoro;
+            this.IrAlMapa = IrAlMapa;
         }
 
         public static ViewHolder create(CardView rootView) {
@@ -136,7 +145,8 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
             TextView textViewNameUser = (TextView) rootView.findViewById(R.id.NombreUsuario);
             Button encontreTesoro = (Button) rootView.findViewById(R.id.encontreTesoro);
             Button ReclamarTesoro = (Button) rootView.findViewById(R.id.reclamarTesoro);
-            return new ViewHolder(rootView, imageView, textViewName, textViewEmail,textViewRecompense,textViewNameUser,ImageViewUser,encontreTesoro,ReclamarTesoro);
+            Button IrAlMapa = (Button) rootView.findViewById(R.id.irAlMapa);
+            return new ViewHolder(rootView, imageView, textViewName, textViewEmail,textViewRecompense,textViewNameUser,ImageViewUser,encontreTesoro,ReclamarTesoro,IrAlMapa);
         }
 
     }
@@ -151,6 +161,14 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
 
     private void goReclamarScreen(Tesoro tesoro)  {
         Intent intent = new Intent(getContext().getApplicationContext(),PeticionRecompensa.class);
+        Usuario usuario = tesoro.getUsuario();
+        intent.putExtra("Tesoro",(Parcelable) tesoro);
+        intent.putExtra("Usuario",(Serializable) usuario);
+        context.startActivity(intent);
+    }
+
+    private void goIrAlMapa(Tesoro tesoro)  {
+        Intent intent = new Intent(getContext().getApplicationContext(),IrAlMapa.class);
         Usuario usuario = tesoro.getUsuario();
         intent.putExtra("Tesoro",(Parcelable) tesoro);
         intent.putExtra("Usuario",(Serializable) usuario);
