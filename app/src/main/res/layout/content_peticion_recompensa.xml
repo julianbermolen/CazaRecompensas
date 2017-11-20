@@ -35,5 +35,5 @@
         android:layout_marginRight="70dp"
         android:background="#dc6509"
         android:textColor="@color/white"
-        android:text="Toque aqui" />
+        android:text="Reclamar Ahora" />
 </LinearLayout>
