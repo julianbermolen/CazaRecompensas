@@ -3,8 +3,6 @@ package ar.com.cazarecompensas.cazarecompensas;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -23,20 +21,15 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.lang.reflect.Array;
-
 import ar.com.cazarecompensas.cazarecompensas.Models.Tesoro;
-import ar.com.cazarecompensas.cazarecompensas.Models.TesoroAdapter;
 import ar.com.cazarecompensas.cazarecompensas.services.TesoroService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,9 +37,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static ar.com.cazarecompensas.cazarecompensas.R.id.listView;
 import static ar.com.cazarecompensas.cazarecompensas.R.id.map;
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 /**

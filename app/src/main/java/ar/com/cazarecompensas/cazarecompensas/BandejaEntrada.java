@@ -3,24 +3,27 @@ package ar.com.cazarecompensas.cazarecompensas;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ListView;
 
 import com.facebook.Profile;
+import com.google.gson.internal.LinkedTreeMap;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.zip.Inflater;
 
 import ar.com.cazarecompensas.cazarecompensas.Models.Comentario;
-import ar.com.cazarecompensas.cazarecompensas.Models.MensajeAdapter;
+import ar.com.cazarecompensas.cazarecompensas.Models.Adapters.MensajeAdapter;
 import ar.com.cazarecompensas.cazarecompensas.Models.ModelResponse;
 import ar.com.cazarecompensas.cazarecompensas.services.ComentarioService;
 import ar.com.cazarecompensas.cazarecompensas.services.UsuarioService;
@@ -30,8 +33,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static ar.com.cazarecompensas.cazarecompensas.R.id.listView;
-import static java.security.AccessController.getContext;
+import static ar.com.cazarecompensas.cazarecompensas.R.id.map;
 
 public class BandejaEntrada extends AppCompatActivity {
     private Comentario[] comentario;
@@ -66,24 +68,27 @@ public class BandejaEntrada extends AppCompatActivity {
         try {
             ModelResponse model = callModel.execute().body();
             int idUsuario = model.getValor();
-            Call<Comentario[]> comentarioResponse = service.getBandejaEntrada(idUsuario);
-            comentarioResponse.enqueue(new Callback<Comentario[]>() {
+            Call<ArrayList> comentarioResponse = service.getBandejaEntrada(idUsuario);
+            comentarioResponse.enqueue(new Callback<ArrayList>() {
                 @Override
-                public void onResponse(Call<Comentario[]> call, Response<Comentario[]> response) {
+                public void onResponse(Call<ArrayList> call, Response<ArrayList> response) {
                     progressDialog.dismiss();
                     listview = (ListView) findViewById(R.id.listViewMensajes);
 
-                    for(int i = 0;i<response.body().length;i++) {
-                        if(response.body()[i].getIdRespuesta() == 0) {
-                            adapter = new MensajeAdapter(getApplicationContext(), response.body());
-                            listview.setAdapter(adapter);
+                    List<LinkedTreeMap<Integer,List<Comentario>>> list = response.body();
+                    List<Comentario> comentarios = null;
+                    for(LinkedTreeMap<Integer,List<Comentario>> dic : list){
+                        for(Map.Entry<Integer,List<Comentario>> e : dic.entrySet()){
+                            comentarios = (List) e.getValue();
                         }
                     }
 
+                            adapter = new MensajeAdapter(getApplicationContext(), comentarios);
+                            listview.setAdapter(adapter);
                 }
 
                 @Override
-                public void onFailure(Call<Comentario[]> call, Throwable t) {
+                public void onFailure(Call<ArrayList> call, Throwable t) {
                     Log.d("ERROR:","No funciona la llamada");
                 }
             });

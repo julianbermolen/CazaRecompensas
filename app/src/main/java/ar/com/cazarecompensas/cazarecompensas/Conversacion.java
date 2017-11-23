@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import java.util.ArrayList;
+
 import ar.com.cazarecompensas.cazarecompensas.Models.Comentario;
 import ar.com.cazarecompensas.cazarecompensas.services.ComentarioService;
 import ar.com.cazarecompensas.cazarecompensas.services.UsuarioService;
@@ -36,15 +38,15 @@ public class Conversacion extends AppCompatActivity {
                 .build();
         ComentarioService service2 = retrofit.create(ComentarioService.class);
 
-        Call<Comentario[]> comentarioResponse = service2.getBandejaEntrada(idUsuario);
-        comentarioResponse.enqueue(new Callback<Comentario[]>() {
+        Call<ArrayList> comentarioResponse = service2.getBandejaEntrada(idUsuario);
+        comentarioResponse.enqueue(new Callback<ArrayList>() {
             @Override
-            public void onResponse(Call<Comentario[]> call, Response<Comentario[]> response) {
+            public void onResponse(Call<ArrayList> call, Response<ArrayList> response) {
 
             }
 
             @Override
-            public void onFailure(Call<Comentario[]> call, Throwable t) {
+            public void onFailure(Call<ArrayList> call, Throwable t) {
 
             }
         });

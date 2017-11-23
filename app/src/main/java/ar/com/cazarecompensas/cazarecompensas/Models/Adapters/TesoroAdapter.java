@@ -1,4 +1,4 @@
-package ar.com.cazarecompensas.cazarecompensas.Models;
+package ar.com.cazarecompensas.cazarecompensas.Models.Adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,6 +25,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import ar.com.cazarecompensas.cazarecompensas.*;
+import ar.com.cazarecompensas.cazarecompensas.Models.Tesoro;
+import ar.com.cazarecompensas.cazarecompensas.Models.Usuario;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static ar.com.cazarecompensas.cazarecompensas.R.color.white;

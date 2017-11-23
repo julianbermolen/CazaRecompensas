@@ -13,26 +13,31 @@ import java.util.Date;
  */
 
 public class Comentario implements Parcelable{
+
     @SerializedName("idComentario")
     private int IdComentario;
     @SerializedName("idPublicacion")
     private int IdPublicacion;
-    @SerializedName("idUsuario")
-    private int IdUsuario;
+    @SerializedName("idUsuarioEmisor")
+    private int IdUsuarioEmisor;
+    @SerializedName("idUsuarioReceptor")
+    private int IdUsuarioReceptor;
     @SerializedName("detalle")
     private String Detalle;
-    @SerializedName("idRespuestaComentario")
-    private int IdRespuestaComentario;
     @SerializedName("imagen")
     private String Imagen;
     @SerializedName("mensajeLeido")
     private Boolean MensajeLeido;
     @SerializedName("fechaCarga")
     private String FechaCarga;
+    @SerializedName("numeroConversacion")
+    private int NumeroConversacion;
     @SerializedName("publicacion")
     private Publicacion Publicacion;
-    @SerializedName("usuario")
-    private Usuario usuario;
+    @SerializedName("usuarioEmisor")
+    private Usuario UsuarioEmisor;
+    @SerializedName("usuarioReceptor")
+    private Usuario UsuarioReceptor;
 
 
     public boolean getMensajeLeido(){
@@ -48,12 +53,15 @@ public class Comentario implements Parcelable{
     protected Comentario(Parcel in) {
         IdComentario = in.readInt();
         IdPublicacion = in.readInt();
-        IdUsuario = in.readInt();
+        IdUsuarioEmisor = in.readInt();
+        IdUsuarioReceptor = in.readInt();
         Detalle = in.readString();
-        IdRespuestaComentario = in.readInt();
+        NumeroConversacion = in.readInt();
         Imagen = in.readString();
         MensajeLeido = in.readByte() != 0;
-        usuario = in.readParcelable(Usuario.class.getClassLoader());
+        UsuarioEmisor = in.readParcelable(Usuario.class.getClassLoader());
+        UsuarioReceptor = in.readParcelable(Usuario.class.getClassLoader());
+        Publicacion = in.readParcelable(ar.com.cazarecompensas.cazarecompensas.Models.Publicacion.class.getClassLoader());
         FechaCarga = in.readString();
     }
 
@@ -64,6 +72,47 @@ public class Comentario implements Parcelable{
     public void setImagen(String imagen) {
         Imagen = imagen;
     }
+
+    public int getIdUsuarioEmisor() {
+        return IdUsuarioEmisor;
+    }
+
+    public void setIdUsuarioEmisor(int idUsuarioEmisor) {
+        IdUsuarioEmisor = idUsuarioEmisor;
+    }
+
+    public int getIdUsuarioReceptor() {
+        return IdUsuarioReceptor;
+    }
+
+    public void setIdUsuarioReceptor(int idUsuarioReceptor) {
+        IdUsuarioReceptor = idUsuarioReceptor;
+    }
+
+    public int getNumeroConversacion() {
+        return NumeroConversacion;
+    }
+
+    public void setNumeroConversacion(int numeroConversacion) {
+        NumeroConversacion = numeroConversacion;
+    }
+
+    public Usuario getUsuarioEmisor() {
+        return UsuarioEmisor;
+    }
+
+    public void setUsuarioEmisor(Usuario usuarioEmisor) {
+        UsuarioEmisor = usuarioEmisor;
+    }
+
+    public Usuario getUsuarioReceptor() {
+        return UsuarioReceptor;
+    }
+
+    public void setUsuarioReceptor(Usuario usuarioReceptor) {
+        UsuarioReceptor = usuarioReceptor;
+    }
+
     public String getFechaCarga() {
         return FechaCarga;
     }
@@ -72,14 +121,6 @@ public class Comentario implements Parcelable{
         FechaCarga = fechaCarga;
     }
 
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
     public static final Creator<Comentario> CREATOR = new Creator<Comentario>() {
         @Override
         public Comentario createFromParcel(Parcel in) {
@@ -108,13 +149,6 @@ public class Comentario implements Parcelable{
         IdPublicacion = idPublicacion;
     }
 
-    public int getIdUsuario() {
-        return IdUsuario;
-    }
-
-    public void setIdUsuario(int idUsuario) {
-        IdUsuario = idUsuario;
-    }
 
     public String getComentario() {
         return Detalle;
@@ -124,13 +158,6 @@ public class Comentario implements Parcelable{
         Detalle = comentario;
     }
 
-    public int getIdRespuesta() {
-        return IdRespuestaComentario;
-    }
-
-    public void setIdRespuesta(int idRespuesta) {
-        IdRespuestaComentario = idRespuesta;
-    }
 
     @Override
     public int describeContents() {
@@ -141,12 +168,15 @@ public class Comentario implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(IdComentario);
         dest.writeInt(IdPublicacion);
-        dest.writeInt(IdUsuario);
+        dest.writeInt(IdUsuarioReceptor);
+        dest.writeInt(IdUsuarioEmisor);
         dest.writeString(Detalle);
-        dest.writeInt(IdRespuestaComentario);
+        dest.writeInt(NumeroConversacion);
         dest.writeString(Imagen);
         dest.writeByte((byte) (MensajeLeido ? 1 : 0));
-        dest.writeParcelable(usuario, flags);
+        dest.writeParcelable(UsuarioEmisor, flags);
+        dest.writeParcelable(UsuarioReceptor,flags);
+        dest.writeParcelable(Publicacion,flags);
         dest.writeString(FechaCarga);
     }
 }

@@ -1,25 +1,27 @@
-package ar.com.cazarecompensas.cazarecompensas.Models;
+package ar.com.cazarecompensas.cazarecompensas.Models.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.Profile;
+import com.google.gson.internal.LinkedTreeMap;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.List;
 
 import ar.com.cazarecompensas.cazarecompensas.Conversacion;
 import ar.com.cazarecompensas.cazarecompensas.EncontreTesoro;
+import ar.com.cazarecompensas.cazarecompensas.Models.Comentario;
+import ar.com.cazarecompensas.cazarecompensas.Models.Tesoro;
+import ar.com.cazarecompensas.cazarecompensas.Models.Usuario;
 import ar.com.cazarecompensas.cazarecompensas.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -28,12 +30,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class MensajeAdapter extends ArrayAdapter<Comentario> {
-    Comentario[] comentario;
+    List<Comentario> comentario;
     Context context;
     private LayoutInflater mInflater;
 
     // Constructors
-    public MensajeAdapter(Context context, Comentario[] objects) {
+    public MensajeAdapter(Context context, List<Comentario> objects) {
         super(context, 0, objects);
         this.context = context;
         this.mInflater = LayoutInflater.from(context);
@@ -42,8 +44,9 @@ public class MensajeAdapter extends ArrayAdapter<Comentario> {
     }
     @Override
     public Comentario getItem(int position) {
-        return comentario[position];
+    return null;
     }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final MensajeAdapter.ViewHolder vh;
@@ -57,9 +60,9 @@ public class MensajeAdapter extends ArrayAdapter<Comentario> {
 
         final Comentario item = getItem(position);
         //vh.NombreTesoro.setText(item.getComentario());
-        Picasso.with(context).load(item.getUsuario().getUrlFoto()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(vh.fotoUser);
-        String nombre = item.getUsuario().getNombre()+" "+item.getUsuario().getApellido();
-        vh.nombreUser.setText(nombre);
+     //   Picasso.with(context).load(item.getUsuario().getUrlFoto()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(vh.fotoUser);
+       // String nombre = item.getUsuario().getNombre()+" "+item.getUsuario().getApellido();
+        //vh.nombreUser.setText(nombre);
         String mensaje = item.getComentario();
         if(mensaje.length() > 30){
             mensaje = mensaje.substring(0,29);
@@ -73,7 +76,7 @@ public class MensajeAdapter extends ArrayAdapter<Comentario> {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext().getApplicationContext(),Conversacion.class);
                 intent.putExtra("Id",item.getIdComentario());
-                intent.putExtra("IdUsuario",item.getIdUsuario());
+          //      intent.putExtra("IdUsuario",item.getIdUsuario());
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

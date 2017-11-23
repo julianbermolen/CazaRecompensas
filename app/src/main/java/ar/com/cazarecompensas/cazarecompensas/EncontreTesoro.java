@@ -86,7 +86,7 @@ public class EncontreTesoro extends AppCompatActivity {
 
                 Comentario comentario = new Comentario();
                 comentario.setComentario(mensaje.getText().toString());
-                comentario.setIdUsuario(usuario.getIdUsuario());
+ //               comentario.setIdUsuario(usuario.getIdUsuario());
                 int idTesoro = tesoro.getIdTesoro();
                 Call<Publicacion> call2 = service2.getIdPublicacion(idTesoro);
                 try {
@@ -100,12 +100,11 @@ public class EncontreTesoro extends AppCompatActivity {
                 comentario.setImagen("");
                 comentario.setMensajeLeido(false);
                 //Al ser el mensaje inicial, va 0.
-                comentario.setIdRespuesta(0);
 
                 int idPublicacion = comentario.getIdPublicacion();
-                int idUsuario = comentario.getIdUsuario();
+                  int idUsuario = 2;
                 String detalle = comentario.getComentario();
-                int idComentarioRespuesta = comentario.getIdRespuesta();
+                 int idComentarioRespuesta = 0;
                 String imagen = comentario.getImagen();
                 boolean mensajeLeido = comentario.getMensajeLeido();
 
