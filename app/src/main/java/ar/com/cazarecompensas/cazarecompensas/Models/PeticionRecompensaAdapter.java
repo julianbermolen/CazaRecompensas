@@ -61,25 +61,30 @@ public class PeticionRecompensaAdapter extends ArrayAdapter<PeticionRecompensaMo
 
     private static class ViewHolder {
         public final CardView rootView;
+        public final TextView TituloAdapterPR;
         public final TextView TextoAdapterPR;
         public final CircleImageView imagenTesoroPR;
         public final Button validarPeticion;
         public final Button rechazarPeticion;
 
-        private ViewHolder(CardView rootView, TextView TextoAdapterPR, CircleImageView imagenTesoroPR,Button validarPeticion,Button rechazarPeticion) {
+
+        private ViewHolder(CardView rootView, TextView TextoAdapterPR,TextView TituloAdapterPR, CircleImageView imagenTesoroPR,Button validarPeticion,Button rechazarPeticion) {
             this.rootView = rootView;
+            this.TituloAdapterPR = TituloAdapterPR;
             this.imagenTesoroPR = imagenTesoroPR;
             this.TextoAdapterPR = TextoAdapterPR;
             this.validarPeticion = validarPeticion;
             this.rechazarPeticion = rechazarPeticion;
+
         }
 
         public static ViewHolder create(CardView rootView) {
             CircleImageView imagenTesoroPR = (CircleImageView) rootView.findViewById(R.id.imagenTesoroPR);
             TextView TextoAdapterPR = (TextView) rootView.findViewById(R.id.TextoAdapterPR);
+            TextView TituloAdapterPR = (TextView) rootView.findViewById(R.id.TituloAdapterPR);
             Button validarPeticion = (Button) rootView.findViewById(R.id.validarPeticion);
             Button rechazarPeticion = (Button) rootView.findViewById(R.id.rechazarPeticion);
-            return new ViewHolder(rootView,TextoAdapterPR,imagenTesoroPR,validarPeticion,rechazarPeticion);
+            return new ViewHolder(rootView,TextoAdapterPR,TituloAdapterPR,imagenTesoroPR,validarPeticion,rechazarPeticion);
         }
 
     }
@@ -97,9 +102,11 @@ public class PeticionRecompensaAdapter extends ArrayAdapter<PeticionRecompensaMo
 
         final PeticionRecompensaModel item = getItem(position);
 
+        String titulo = item.getTesoro().getNombre();
+        vh.TituloAdapterPR.setText(titulo);
 
 
-        String texto = item.getUsuario().getApellido()+" quiere reclamar su recompensa en "+item.getTesoro().getNombre();
+        String texto = item.getUsuario().getApellido()+" quiere reclamar su recompensa.";
         vh.TextoAdapterPR.setText(texto);
 
 
