@@ -107,7 +107,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".IrAlMapa"
-            android:label="@string/title_activity_ir_al_mapa"></activity>
+            android:label="@string/title_activity_ir_al_mapa" />
+        <activity
+            android:name=".MisRecompensas"
+            android:label="@string/title_activity_mis_recompensas"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

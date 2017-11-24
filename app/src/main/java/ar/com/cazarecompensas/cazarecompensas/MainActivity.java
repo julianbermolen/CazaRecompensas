@@ -199,7 +199,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_share) {
-            // Handle the camera action
+            Intent Options = new Intent(this,
+                    MisRecompensas.class);
+            this.startActivity(Options);
+            return true;
 
         } else if (id == R.id.nav_add) {
 

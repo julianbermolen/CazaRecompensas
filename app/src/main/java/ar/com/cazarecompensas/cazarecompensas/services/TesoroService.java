@@ -41,9 +41,14 @@ public interface TesoroService {
     @GET("PeticionRecompensa/obtenerPorIdUsuario/{id}")
     Call<PeticionRecompensaModel[]> getPeticionRecompensaPorIdUsuario(@Path("id") int idUsuario);
 
+    @GET("PeticionRecompensa/obtenerPorIdUsuarioQueSolicitoRecompensa/{id}")
+    Call<PeticionRecompensaModel[]> getMisRecompensasPorIdUsuarioQueSolicitoRecompensa(@Path("id") int idUsuario);
+
     @FormUrlEncoded
     @POST("PeticionRecompensa/actualizarEstado")
     Call<ModelResponse> postValidarPeticionRecompensa(@Field("IdUsuario") int idUsuario, @Field("IdTesoro") int idTesoro,@Field("Estado") int estado);
+
+
 
 }
 
