@@ -67,28 +67,39 @@ public class BandejaEntrada extends AppCompatActivity {
         Call<ModelResponse> callModel = service2.getUserId(idFacebook);
         try {
             ModelResponse model = callModel.execute().body();
-            int idUsuario = model.getValor();
-            Call<ArrayList> comentarioResponse = service.getBandejaEntrada(idUsuario);
-            comentarioResponse.enqueue(new Callback<ArrayList>() {
+            final int idUsuario = model.getValor();
+            Call<List<LinkedTreeMap<Integer,List<Comentario>>>> comentarioResponse = service.getBandejaEntrada(idUsuario);
+            comentarioResponse.enqueue(new Callback<List<LinkedTreeMap<Integer,List<Comentario>>>>() {
                 @Override
-                public void onResponse(Call<ArrayList> call, Response<ArrayList> response) {
+                public void onResponse(Call<List<LinkedTreeMap<Integer,List<Comentario>>>> call, Response<List<LinkedTreeMap<Integer,List<Comentario>>>> response) {
                     progressDialog.dismiss();
                     listview = (ListView) findViewById(R.id.listViewMensajes);
 
                     List<LinkedTreeMap<Integer,List<Comentario>>> list = response.body();
                     List<Comentario> comentarios = null;
+
                     for(LinkedTreeMap<Integer,List<Comentario>> dic : list){
                         for(Map.Entry<Integer,List<Comentario>> e : dic.entrySet()){
+
                             comentarios = (List) e.getValue();
                         }
                     }
+                    Comentario[] comentarios1 = new Comentario[list.size()];
+                    int cont = 0;
+                    for(LinkedTreeMap<Integer,List<Comentario>> dic : list){
+                        for(Map.Entry<Integer,List<Comentario>> e : dic.entrySet()){
 
-                            adapter = new MensajeAdapter(getApplicationContext(), comentarios);
+                            comentarios = (List) e.getValue();
+                            comentarios1[cont] = comentarios.get(0);
+                            cont++;
+                        }
+                    }
+                            adapter = new MensajeAdapter(getApplicationContext(), comentarios1,idUsuario);
                             listview.setAdapter(adapter);
                 }
 
                 @Override
-                public void onFailure(Call<ArrayList> call, Throwable t) {
+                public void onFailure(Call<List<LinkedTreeMap<Integer,List<Comentario>>>> call, Throwable t) {
                     Log.d("ERROR:","No funciona la llamada");
                 }
             });

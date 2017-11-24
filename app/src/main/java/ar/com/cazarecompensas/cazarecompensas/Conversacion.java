@@ -8,7 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.google.gson.internal.LinkedTreeMap;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import ar.com.cazarecompensas.cazarecompensas.Models.Comentario;
 import ar.com.cazarecompensas.cazarecompensas.services.ComentarioService;
@@ -38,15 +41,15 @@ public class Conversacion extends AppCompatActivity {
                 .build();
         ComentarioService service2 = retrofit.create(ComentarioService.class);
 
-        Call<ArrayList> comentarioResponse = service2.getBandejaEntrada(idUsuario);
-        comentarioResponse.enqueue(new Callback<ArrayList>() {
+        Call<List<LinkedTreeMap<Integer,List<Comentario>>>> comentarioResponse = service2.getBandejaEntrada(idUsuario);
+        comentarioResponse.enqueue(new Callback<List<LinkedTreeMap<Integer,List<Comentario>>>>() {
             @Override
-            public void onResponse(Call<ArrayList> call, Response<ArrayList> response) {
+            public void onResponse(Call<List<LinkedTreeMap<Integer,List<Comentario>>>> call, Response<List<LinkedTreeMap<Integer,List<Comentario>>>> response) {
 
             }
 
             @Override
-            public void onFailure(Call<ArrayList> call, Throwable t) {
+            public void onFailure(Call<List<LinkedTreeMap<Integer,List<Comentario>>>> call, Throwable t) {
 
             }
         });

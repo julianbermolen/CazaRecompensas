@@ -2,6 +2,8 @@ package ar.com.cazarecompensas.cazarecompensas.services;
 
 import android.support.annotation.Nullable;
 
+import com.google.gson.internal.LinkedTreeMap;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +24,7 @@ import retrofit2.http.Query;
 
 public interface ComentarioService {
     @GET("Comentarios/obtener/bandejaEntrada/{idUsuario}")
-    Call<ArrayList> getBandejaEntrada(@Path("idUsuario") int idUsuario);
+    Call<List<LinkedTreeMap<Integer,List<Comentario>>>> getBandejaEntrada(@Path("idUsuario") int idUsuario);
 
     @POST("Comentarios/guardar")
     Call<ModelResponse> postMessage(@Query("IdPublicacion") int idPublicacion, @Query("IdUsuario") int idUsuario, @Query("Detalle") String detalle, @Query("IdRespuestaComentario") int idComentarioRespuesta, @Nullable @Query("Imagen") String imagen, @Query("MensajeLeido") boolean mensajeLeido);

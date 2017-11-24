@@ -14,6 +14,9 @@ import com.google.gson.internal.LinkedTreeMap;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -30,21 +33,23 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class MensajeAdapter extends ArrayAdapter<Comentario> {
-    List<Comentario> comentario;
+    Comentario[] comentario;
     Context context;
+    int idUsuario;
     private LayoutInflater mInflater;
 
     // Constructors
-    public MensajeAdapter(Context context, List<Comentario> objects) {
+    public MensajeAdapter(Context context, Comentario[] objects,int idUsuario2) {
         super(context, 0, objects);
         this.context = context;
         this.mInflater = LayoutInflater.from(context);
         comentario = objects;
+        idUsuario = idUsuario2;
 
     }
     @Override
     public Comentario getItem(int position) {
-    return null;
+        return comentario[position];
     }
 
     @Override
@@ -59,10 +64,17 @@ public class MensajeAdapter extends ArrayAdapter<Comentario> {
         }
 
         final Comentario item = getItem(position);
-        //vh.NombreTesoro.setText(item.getComentario());
-     //   Picasso.with(context).load(item.getUsuario().getUrlFoto()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(vh.fotoUser);
-       // String nombre = item.getUsuario().getNombre()+" "+item.getUsuario().getApellido();
-        //vh.nombreUser.setText(nombre);
+
+        String nombre;
+
+        if(item.getUsuarioEmisor().getIdUsuario() == idUsuario){
+            nombre = item.getUsuarioReceptor().getNombre()+" "+item.getUsuarioReceptor().getApellido();
+            Picasso.with(context).load(item.getUsuarioReceptor().getUrlFoto()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(vh.fotoUser);
+        }else{
+            nombre = item.getUsuarioReceptor().getNombre()+" "+item.getUsuarioReceptor().getApellido();
+            Picasso.with(context).load(item.getUsuarioReceptor().getUrlFoto()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(vh.fotoUser);
+        }
+        vh.nombreUser.setText(nombre);
         String mensaje = item.getComentario();
         if(mensaje.length() > 30){
             mensaje = mensaje.substring(0,29);
