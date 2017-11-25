@@ -42,6 +42,13 @@ public class Conversacion extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBandejaEntrada();
+            }
+        });
+
     Intent intent = getIntent();
         int idMensaje = intent.getIntExtra("Id",0);
         final int idUsuario = intent.getIntExtra("IdUsuario",0);
@@ -114,6 +121,12 @@ public class Conversacion extends AppCompatActivity {
 
 
 
+
+    }
+    private void goBandejaEntrada() {
+        Intent intent = new Intent(this,BandejaEntrada.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
 
     }
 
