@@ -71,8 +71,8 @@ public class MensajeAdapter extends ArrayAdapter<Comentario> {
             nombre = item.getUsuarioReceptor().getNombre()+" "+item.getUsuarioReceptor().getApellido();
             Picasso.with(context).load(item.getUsuarioReceptor().getUrlFoto()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(vh.fotoUser);
         }else{
-            nombre = item.getUsuarioReceptor().getNombre()+" "+item.getUsuarioReceptor().getApellido();
-            Picasso.with(context).load(item.getUsuarioReceptor().getUrlFoto()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(vh.fotoUser);
+            nombre = item.getUsuarioEmisor().getNombre()+" "+item.getUsuarioEmisor().getApellido();
+            Picasso.with(context).load(item.getUsuarioEmisor().getUrlFoto()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(vh.fotoUser);
         }
         vh.nombreUser.setText(nombre);
         String mensaje = item.getComentario();

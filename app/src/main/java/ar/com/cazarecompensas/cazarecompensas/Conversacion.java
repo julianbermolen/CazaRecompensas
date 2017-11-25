@@ -39,6 +39,7 @@ public class Conversacion extends AppCompatActivity {
         setContentView(R.layout.activity_conversacion);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     Intent intent = getIntent();
