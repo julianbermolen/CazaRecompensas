@@ -27,5 +27,5 @@ public interface ComentarioService {
     Call<List<LinkedTreeMap<Integer,List<Comentario>>>> getBandejaEntrada(@Path("idUsuario") int idUsuario);
 
     @POST("Comentarios/guardar")
-    Call<ModelResponse> postMessage(@Query("IdPublicacion") int idPublicacion, @Query("IdUsuario") int idUsuario, @Query("Detalle") String detalle, @Query("IdRespuestaComentario") int idComentarioRespuesta, @Nullable @Query("Imagen") String imagen, @Query("MensajeLeido") boolean mensajeLeido);
+    Call<ModelResponse> postMessage(@Query("IdPublicacion") int idPublicacion, @Query("IdUsuarioEmisor") int idUsuarioEmisor,@Query("IdUsuarioReceptor") int idUsuarioReceptor, @Query("Detalle") String detalle,@Nullable @Query("Imagen") String imagen, @Query("MensajeLeido") boolean mensajeLeido);
 }

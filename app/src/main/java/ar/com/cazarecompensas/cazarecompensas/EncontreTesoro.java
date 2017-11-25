@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.Profile;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -29,7 +30,9 @@ import ar.com.cazarecompensas.cazarecompensas.Models.Publicacion;
 import ar.com.cazarecompensas.cazarecompensas.Models.Tesoro;
 import ar.com.cazarecompensas.cazarecompensas.Models.Usuario;
 import ar.com.cazarecompensas.cazarecompensas.services.ComentarioService;
+import ar.com.cazarecompensas.cazarecompensas.services.PublicacionService;
 import ar.com.cazarecompensas.cazarecompensas.services.TesoroService;
+import ar.com.cazarecompensas.cazarecompensas.services.UsuarioService;
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -83,32 +86,53 @@ public class EncontreTesoro extends AppCompatActivity {
                         .build();
                 ComentarioService service = retrofit.create(ComentarioService.class);
                 TesoroService service2 = retrofit.create(TesoroService.class);
+                UsuarioService service3 = retrofit.create(UsuarioService.class);
+                PublicacionService service4 = retrofit.create(PublicacionService.class);
 
                 Comentario comentario = new Comentario();
                 comentario.setComentario(mensaje.getText().toString());
- //               comentario.setIdUsuario(usuario.getIdUsuario());
+ //comentario.setIdUsuario(usuario.getIdUsuario());
                 int idTesoro = tesoro.getIdTesoro();
+                int idUsuarioReceptor = 0;
+                int idPublicacion = 0;
                 Call<Publicacion> call2 = service2.getIdPublicacion(idTesoro);
                 try {
-                    Publicacion publicacion = call2.execute().body();
-                    int idPublicacion = publicacion.getIdPublicacion();
+                    Publicacion publicacion2 = call2.execute().body();
+                     idPublicacion = publicacion2.getIdPublicacion();
                     comentario.setIdPublicacion(idPublicacion);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                comentario.setImagen("");
-                comentario.setMensajeLeido(false);
-                //Al ser el mensaje inicial, va 0.
+                Call<Publicacion> call3 = service4.getPublicacion(idPublicacion);
+                try {
+                    Publicacion publicacion = call3.execute().body();
+                    idUsuarioReceptor = publicacion.getTesoro().getIdUsuario();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                int idPublicacion = comentario.getIdPublicacion();
-                  int idUsuario = 2;
+
+                int idUsuario2 = 0;
+                Profile profile = Profile.getCurrentProfile();
+                String idFacebook = profile.getId().toString();
+                Call<ModelResponse> callModel = service3.getUserId(idFacebook);
+                try {
+                    ModelResponse model = callModel.execute().body();
+                    idUsuario2 = model.getValor();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+
+                int idUsuarioEmisor = idUsuario2;
                 String detalle = comentario.getComentario();
-                 int idComentarioRespuesta = 0;
                 String imagen = comentario.getImagen();
+                comentario.setMensajeLeido(false);
                 boolean mensajeLeido = comentario.getMensajeLeido();
 
-                Call<ModelResponse> call = service.postMessage(idPublicacion,idUsuario,detalle,idComentarioRespuesta,imagen,mensajeLeido);
+                Call<ModelResponse> call = service.postMessage(idPublicacion,idUsuarioEmisor,idUsuarioReceptor,detalle,imagen,mensajeLeido);
                 call.enqueue(new Callback<ModelResponse>() {
                     @Override
                     public void onResponse(Call<ModelResponse> call, Response<ModelResponse> response) {
