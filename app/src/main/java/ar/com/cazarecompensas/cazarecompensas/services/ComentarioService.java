@@ -25,7 +25,7 @@ import retrofit2.http.Query;
 public interface ComentarioService {
     @GET("Comentarios/obtener/bandejaEntrada/{idUsuario}")
     Call<List<LinkedTreeMap<Integer,List<Comentario>>>> getBandejaEntrada(@Path("idUsuario") int idUsuario);
-
+    @FormUrlEncoded
     @POST("Comentarios/guardar")
-    Call<ModelResponse> postMessage(@Query("IdPublicacion") int idPublicacion, @Query("IdUsuarioEmisor") int idUsuarioEmisor,@Query("IdUsuarioReceptor") int idUsuarioReceptor, @Query("Detalle") String detalle,@Nullable @Query("Imagen") String imagen, @Query("MensajeLeido") boolean mensajeLeido);
+    Call<ModelResponse> postMessage(@Query("IdPublicacion") int idPublicacion, @Query("IdUsuarioEmisor") int idUsuarioEmisor,@Query("IdUsuarioReceptor") int idUsuarioReceptor, @Query("Detalle") String detalle,@Nullable @Field("Imagen") String imagen, @Query("MensajeLeido") boolean mensajeLeido);
 }

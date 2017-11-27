@@ -127,7 +127,7 @@
                     android:layout_below="@+id/DescripcionTesoro"
                     android:layout_weight="1"
                     android:background="@color/white"
-                    android:text="Lo encontre!"
+                    android:text="Mensaje"
                     android:textColor="@color/cardview_dark_background" />
 
                 <Button
@@ -136,7 +136,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/white"
-                    android:text="Reclamar"
+                    android:text="Lo encontré!"
                     android:textColor="@color/cardview_dark_background" />
 
                 <Button

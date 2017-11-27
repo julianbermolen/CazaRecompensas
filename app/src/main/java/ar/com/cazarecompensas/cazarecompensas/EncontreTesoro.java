@@ -1,17 +1,26 @@
 package ar.com.cazarecompensas.cazarecompensas;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +31,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import ar.com.cazarecompensas.cazarecompensas.Models.Comentario;
@@ -40,8 +50,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class EncontreTesoro extends AppCompatActivity {
+import static ar.com.cazarecompensas.cazarecompensas.NuevoTesoro.REQUEST_IMAGE_CAPTURE;
+import static ar.com.cazarecompensas.cazarecompensas.NuevoTesoro.REQUEST_IMAGE_CAPTURE4;
 
+public class EncontreTesoro extends AppCompatActivity {
+    ImageButton botonImagen1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +83,14 @@ public class EncontreTesoro extends AppCompatActivity {
         Picasso.with(getApplicationContext()).load(imagen1).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(fotoTesoro);
         nombreTesoro.setText(tesoro.getNombre());
         descripcionTesoro.setText(tesoro.getDescripcion());
-
+        botonImagen1 = (ImageButton) findViewById(R.id.foto2);
+        //Cuando se clickea el primer boton de imagen (ImageButton)
+        botonImagen1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dispatchTakePictureIntent();
+            }
+        });
 
         Button enviar = (Button) findViewById(R.id.enviarMensaje);
 
@@ -132,7 +152,21 @@ public class EncontreTesoro extends AppCompatActivity {
                 comentario.setMensajeLeido(false);
                 boolean mensajeLeido = comentario.getMensajeLeido();
 
-                Call<ModelResponse> call = service.postMessage(idPublicacion,idUsuarioEmisor,idUsuarioReceptor,detalle,imagen,mensajeLeido);
+
+                ImageView imagen1 = (ImageView) findViewById(R.id.foto2);
+
+                //Imagen 1
+                Bitmap bitmap = ((BitmapDrawable) imagen1.getDrawable()).getBitmap();
+                ByteArrayOutputStream imageArray = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,imageArray);
+                byte[] imageInByte1 = imageArray.toByteArray();
+                String imagenCom = encodeTobase64(bitmap);
+
+
+
+
+
+                Call<ModelResponse> call = service.postMessage(idPublicacion,idUsuarioEmisor,idUsuarioReceptor,detalle,imagenCom,mensajeLeido);
                 call.enqueue(new Callback<ModelResponse>() {
                     @Override
                     public void onResponse(Call<ModelResponse> call, Response<ModelResponse> response) {
@@ -168,5 +202,83 @@ public class EncontreTesoro extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
+    }
+    //Intentos para poder capturar imagen o buscarla en la galeria -- ImageButton1
+    private void dispatchTakePictureIntent() {
+
+        final CharSequence[] option = {"Tomar foto", "Elegir de galeria", "Cancelar"};
+        final AlertDialog.Builder builder = new AlertDialog.Builder(EncontreTesoro.this);
+        builder.setTitle("Elige una opción");
+        builder.setItems(option, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(option[which] == "Tomar foto"){
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                    }
+                }else if(option[which] == "Elegir de galeria"){
+                    Intent takePictureIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    takePictureIntent.setType("image/*");
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE4);
+                }else {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        builder.show();
+
+    }
+    //Metodo para ajustar la resolucion de la imagen ingresada
+    public static Bitmap getResizedBitmap(Bitmap image, int newHeight, int newWidth) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // create a matrix for the manipulation
+        Matrix matrix = new Matrix();
+        // resize the bit map
+        matrix.postScale(scaleWidth, scaleHeight);
+        // recreate the new Bitmap
+        Bitmap resizedBitmap = Bitmap.createBitmap(image, 0, 0, width, height,
+                matrix, false);
+        return resizedBitmap;
+    }
+
+    //Metodo que sirve para reemplazar lo obtenido dentro del imagebutton
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageBitmap = getResizedBitmap(imageBitmap,350,300);
+
+            botonImagen1.setImageBitmap(imageBitmap);
+
+        }
+
+        if (requestCode == 4 && resultCode == RESULT_OK) {
+
+            Uri imageUri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                bitmap = getResizedBitmap(bitmap,350,300);
+                botonImagen1.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+    public static String encodeTobase64(Bitmap image)
+    {
+        Bitmap immagex=image;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        immagex.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b,Base64.DEFAULT);
+        return imageEncoded;
     }
 }
