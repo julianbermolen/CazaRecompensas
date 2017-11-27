@@ -68,26 +68,32 @@ public class Conversacion extends AppCompatActivity {
             public void onResponse(Call<List<LinkedTreeMap<Integer,List<Comentario>>>> call, Response<List<LinkedTreeMap<Integer,List<Comentario>>>> response) {
 
                 listview = (ListView) findViewById(R.id.listViewMensajes);
-                List<LinkedTreeMap<Integer,List<Comentario>>> list = response.body();
+                List<LinkedTreeMap<Integer, List<Comentario>>> list = response.body();
                 List<Comentario> comentarios = null;
-                for(LinkedTreeMap<Integer,List<Comentario>> dic : list){
-                    for(Map.Entry<Integer,List<Comentario>> e : dic.entrySet()){
+                for (LinkedTreeMap<Integer, List<Comentario>> dic : list) {
+                    for (Map.Entry<Integer, List<Comentario>> e : dic.entrySet()) {
 
                         comentarios = (List) e.getValue();
 
                     }
                 }
-                Comentario[] comentarios1 = new Comentario[comentarios.size()];
+
                 int cont = 0;
-                for(LinkedTreeMap<Integer,List<Comentario>> dic : list){
-                    for(Map.Entry<Integer,List<Comentario>> e : dic.entrySet()){
+
+                Comentario[] comentarios1 = null;
+
+
+                for (LinkedTreeMap<Integer, List<Comentario>> dic : list) {
+                    for (Map.Entry<Integer, List<Comentario>> e : dic.entrySet()) {
 
                         comentarios = (List) e.getValue();
-                        if(comentarios.get(0).getNumeroConversacion() == numeroConversacion){
+
+                        if (comentarios.get(0).getNumeroConversacion() == numeroConversacion) {
+                            comentarios1 = new Comentario[comentarios.size()];
                             int cont2 = 0;
-                            int i2 = comentarios.size()-1;
-                            for(int  i= i2;i>-1;i--) {
-                                comentarios1[cont2] = comentarios.get(i);
+                            int i2 = comentarios.size() - 1;
+                            for (int i = i2; i > -1; i--) {
+                                comentarios1[cont2] = e.getValue().get(i);
                                 cont2++;
                             }
                         }
@@ -99,17 +105,17 @@ public class Conversacion extends AppCompatActivity {
                 CircleImageView imageUser = (CircleImageView) findViewById(R.id.fotoUser);
                 TextView nombreUser = (TextView) findViewById(R.id.nombreUser);
 
-                if(idUsuario == comentarios1[0].getIdUsuarioEmisor()){
+                if (idUsuario == comentarios1[0].getIdUsuarioEmisor()) {
                     Picasso.with(getApplicationContext()).load(comentarios1[0].getUsuarioReceptor().getUrlFoto()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(imageUser);
-                    String nombre = comentarios1[0].getUsuarioReceptor().getNombre()+" "+comentarios1[0].getUsuarioReceptor().getApellido();
+                    String nombre = comentarios1[0].getUsuarioReceptor().getNombre() + " " + comentarios1[0].getUsuarioReceptor().getApellido();
                     nombreUser.setText(nombre);
-                }else{
+                } else {
                     Picasso.with(getApplicationContext()).load(comentarios1[0].getUsuarioEmisor().getUrlFoto()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(imageUser);
-                    String nombre = comentarios1[0].getUsuarioEmisor().getNombre()+" "+comentarios1[0].getUsuarioEmisor().getApellido();
+                    String nombre = comentarios1[0].getUsuarioEmisor().getNombre() + " " + comentarios1[0].getUsuarioEmisor().getApellido();
                     nombreUser.setText(nombre);
                 }
 
-                adapter = new ConversacionAdapter(getApplicationContext(), comentarios1,idUsuario);
+                adapter = new ConversacionAdapter(getApplicationContext(), comentarios1, idUsuario);
                 listview.setAdapter(adapter);
             }
 

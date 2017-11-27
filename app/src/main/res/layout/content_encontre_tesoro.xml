@@ -66,6 +66,7 @@
             android:text="TEXTVIEW" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -78,11 +79,27 @@
             android:hint="Contactá al dueño!"
             android:layout_weight="1"
              />
+        <ImageButton
+            android:id="@+id/foto2"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            app:srcCompat="@mipmap/ic_add_image_button"
+            />
 
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3">
         <Button
             android:id="@+id/enviarMensaje"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"
             android:text="Enviar" />
 
     </LinearLayout>
