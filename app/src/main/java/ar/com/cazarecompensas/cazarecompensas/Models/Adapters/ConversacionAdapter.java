@@ -7,7 +7,10 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.internal.LinkedTreeMap;
@@ -68,6 +71,17 @@ public class ConversacionAdapter extends ArrayAdapter<Comentario> {
                 vh.textoRecibe.setText(item.getComentario());
             }else{
                 vh.textoDa.setText(item.getComentario());
+                if(item.getImagen() != null){
+                    Picasso.with(context).load(item.getImagen()).into(vh.fotoCom);
+                    vh.fotoCom.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Animation animation = AnimationUtils.loadAnimation(getContext(),R.anim.acercar);
+                            vh.fotoCom.startAnimation(animation);
+                        }
+                    });
+                }
+
             }
 
         return vh.rootView;
@@ -77,20 +91,23 @@ public class ConversacionAdapter extends ArrayAdapter<Comentario> {
         public final CardView rootView;
         public final TextView textoRecibe;
         public final TextView textoDa;
+        public final ImageView fotoCom;
 
 
-        private ViewHolder(CardView rootView,TextView textoDa,TextView textoRecibe) {
+        private ViewHolder(CardView rootView,TextView textoDa,TextView textoRecibe,ImageView fotoCom) {
             this.rootView = rootView;
             this.textoDa = textoDa;
             this.textoRecibe = textoRecibe;
+            this.fotoCom = fotoCom;
         }
 
         public static ConversacionAdapter.ViewHolder create(CardView rootView) {
             TextView textoDa = (TextView) rootView.findViewById(R.id.textoDa);
             TextView textoRecibe = (TextView) rootView.findViewById(R.id.textoRecibe);
+            ImageView fotoCom = (ImageView) rootView.findViewById(R.id.fotoCom);
 
 
-            return new ConversacionAdapter.ViewHolder(rootView,textoDa,textoRecibe);
+            return new ConversacionAdapter.ViewHolder(rootView,textoDa,textoRecibe,fotoCom);
         }
 
     }

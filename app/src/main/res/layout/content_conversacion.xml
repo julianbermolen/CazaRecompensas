@@ -10,34 +10,46 @@
     android:foreground="?android:attr/selectableItemBackground"
     card_view:cardBackgroundColor="@color/white"
     card_view:cardCornerRadius="0dp"
-    card_view:cardElevation="0dp">
+    card_view:cardElevation="0dp"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="1"
+            >
 
             <TextView
                 android:id="@+id/textoDa"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/colorPrimaryDark" />
+
+
+            <ImageView
+                android:id="@+id/fotoCom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_gravity="left"
+                />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
 
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textoRecibe"

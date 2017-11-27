@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ar.com.cazarecompensas.cazarecompensas.Conversacion">
+    tools:context="ar.com.cazarecompensas.cazarecompensas.Conversacion"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

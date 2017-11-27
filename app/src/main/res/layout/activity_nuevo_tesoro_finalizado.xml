@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="ar.com.cazarecompensas.cazarecompensas.NuevoTesoroFinalizado">
+    tools:context="ar.com.cazarecompensas.cazarecompensas.NuevoTesoroFinalizado"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
 
 

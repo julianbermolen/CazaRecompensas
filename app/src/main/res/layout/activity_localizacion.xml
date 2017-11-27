@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="ar.com.cazarecompensas.cazarecompensas.MainActivity"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start"
     >
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"

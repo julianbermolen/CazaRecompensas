@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ar.com.cazarecompensas.cazarecompensas.AgregarNuevoTesoro">
+    tools:context="ar.com.cazarecompensas.cazarecompensas.AgregarNuevoTesoro"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
 </android.support.constraint.ConstraintLayout>
