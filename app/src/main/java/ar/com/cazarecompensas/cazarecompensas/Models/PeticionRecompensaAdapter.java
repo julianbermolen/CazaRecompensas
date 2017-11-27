@@ -146,7 +146,7 @@ public class PeticionRecompensaAdapter extends ArrayAdapter<PeticionRecompensaMo
 
 
 
-        //Creo el llamado asincronico
+      //Creo el llamado asincronico
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://li1166-116.members.linode.com/api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -163,6 +163,31 @@ public class PeticionRecompensaAdapter extends ArrayAdapter<PeticionRecompensaMo
 
                 ModelResponse modelResponse = response.body();
                 Log.d("NuevoTesorox","onResponse:" +statusCode);
+
+            }
+
+            @Override
+            public void onFailure(Call<ModelResponse> call, Throwable t) {
+
+            }
+        });
+
+
+        Retrofit retrofit2 = new Retrofit.Builder()
+                .baseUrl("http://li1166-116.members.linode.com/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        TesoroService service2 = retrofit2.create(TesoroService.class);
+
+        Call<ModelResponse> modelResponseCall2 = service2.postCambiarEstadoTesoro(PeticionRecompensa.getIdTesoro(),2);
+        modelResponseCall2.enqueue(new Callback<ModelResponse>() {
+            @Override
+            public void onResponse(Call<ModelResponse> call, Response<ModelResponse> response) {
+
+                int statusCode = response.code();
+
+                ModelResponse modelResponse = response.body();
+                Log.d("EstadoTesorox","onResponse:" +statusCode);
 
                 Intent intent = new Intent(getContext().getApplicationContext(),MainActivity.class);
                 context.startActivity(intent);

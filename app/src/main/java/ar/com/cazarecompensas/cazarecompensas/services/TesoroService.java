@@ -34,6 +34,12 @@ public interface TesoroService {
     @GET("Tesoros/ObtenerIdPublicacionPorIdTesoro/{id}")
     Call<Publicacion> getIdPublicacion(@Path("id") int idTesoro);
 
+
+    @FormUrlEncoded
+    @POST("Tesoros/CambiarEstadoTesoro")
+    Call<ModelResponse> postCambiarEstadoTesoro(@Field("IdTesoro") int idTesoro,@Field("IdEstado") int idEstado);
+
+
     @FormUrlEncoded
     @POST("PeticionRecompensa/guardar")
     Call<ModelResponse> postPeticionRecompensa(@Field("IdUsuario") int idUsuario, @Field("IdTesoro") int idTesoro,@Field("Estado") int estado);
