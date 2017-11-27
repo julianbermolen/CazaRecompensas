@@ -157,10 +157,11 @@ public class EncontreTesoro extends AppCompatActivity {
 
                 //Imagen 1
                 Bitmap bitmap = ((BitmapDrawable) imagen1.getDrawable()).getBitmap();
+                String imagenCom = encodeTobase64(bitmap);
                 ByteArrayOutputStream imageArray = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG,100,imageArray);
                 byte[] imageInByte1 = imageArray.toByteArray();
-                String imagenCom = encodeTobase64(bitmap);
+
 
 
 
