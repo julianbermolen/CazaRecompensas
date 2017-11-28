@@ -79,7 +79,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_weight="2"
         >
+        
         <Spinner
             android:id="@+id/Categoria"
             android:layout_width="match_parent"
@@ -87,10 +89,11 @@
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="20dp"
-            android:background="@android:drawable/btn_dropdown"
+            android:hint="Seleccione una categoría"
             android:layout_gravity="center_horizontal"
             android:spinnerMode="dropdown"
-            app:backgroundTint="@color/colorPrimary"/>
+            android:textColor="@color/colorAccent"
+            />
 
     </LinearLayout>
     <LinearLayout

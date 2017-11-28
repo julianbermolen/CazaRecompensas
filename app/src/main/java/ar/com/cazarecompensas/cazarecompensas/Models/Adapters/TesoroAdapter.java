@@ -174,6 +174,7 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
         Usuario usuario = tesoro.getUsuario();
         intent.putExtra("Tesoro",(Parcelable) tesoro);
         intent.putExtra("Usuario",(Serializable) usuario);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
