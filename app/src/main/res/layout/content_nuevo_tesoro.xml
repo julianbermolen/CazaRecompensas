@@ -81,7 +81,7 @@
         android:orientation="vertical"
         android:layout_weight="2"
         >
-        
+
         <Spinner
             android:id="@+id/Categoria"
             android:layout_width="match_parent"

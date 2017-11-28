@@ -69,10 +69,11 @@ public class ConversacionAdapter extends ArrayAdapter<Comentario> {
         final Comentario item = getItem(position);
             if(item.getIdUsuarioEmisor() == idUsuario){
                 vh.textoRecibe.setText(item.getComentario());
+                vh.textoRecibe.setBackgroundResource(R.drawable.circle_border);
             }else{
                 vh.textoDa.setText(item.getComentario());
+                vh.textoDa.setBackgroundResource(R.drawable.circle_border2);
                 if(item.getImagen() != null){
-                    vh.textoRecibe.invalidate();
                     Picasso.with(context).load(item.getImagen()).into(vh.fotoCom);
                     vh.fotoCom.setOnClickListener(new View.OnClickListener() {
                         @Override

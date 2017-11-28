@@ -3,6 +3,7 @@ package ar.com.cazarecompensas.cazarecompensas;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -161,13 +162,15 @@ public class EncontreTesoro extends AppCompatActivity {
                 ByteArrayOutputStream imageArray = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG,100,imageArray);
                 byte[] imageInByte1 = imageArray.toByteArray();
+                Bitmap imagen1Comentario = BitmapFactory.decodeByteArray(imageInByte1, 0, imageInByte1.length);
+                String imagenComentario = encodeTobase64(imagen1Comentario);
 
 
 
 
 
 
-                Call<ModelResponse> call = service.postMessage(idPublicacion,idUsuarioEmisor,idUsuarioReceptor,detalle,imagenCom,mensajeLeido);
+                Call<ModelResponse> call = service.postMessage(idPublicacion,idUsuarioEmisor,idUsuarioReceptor,detalle,imagenComentario,mensajeLeido);
                 call.enqueue(new Callback<ModelResponse>() {
                     @Override
                     public void onResponse(Call<ModelResponse> call, Response<ModelResponse> response) {

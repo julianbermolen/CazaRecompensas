@@ -5,19 +5,18 @@
     android:id="@+id/card_view"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:layout_margin="0dp"
-    android:layout_marginBottom="20dp"
-    android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="false"
+    android:layout_marginTop="10dp"
     card_view:cardBackgroundColor="@color/white"
-    card_view:cardCornerRadius="0dp"
-    card_view:cardElevation="0dp"
+    card_view:cardElevation="2dp"
+    card_view:cardCornerRadius="5dp"
     >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -25,7 +24,6 @@
             android:layout_weight="1"
             android:orientation="vertical"
             android:weightSum="1"
-            android:background="@drawable/circle_border2"
             android:layout_marginLeft="15dp"
             >
 
@@ -38,19 +36,19 @@
                 android:textColor="@color/colorPrimaryDark" />
 
 
-            <ImageView
-                android:id="@+id/fotoCom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"/>
-
         </LinearLayout>
+        <ImageView
+            android:id="@+id/fotoCom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/circle_border"
+            android:background="@color/white"
             android:layout_weight="1"
             android:layout_gravity="right"
             android:gravity="right"
@@ -62,7 +60,7 @@
                 android:id="@+id/textoRecibe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/circle_border"
+
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="2dp"
                 android:textColor="@color/white"
