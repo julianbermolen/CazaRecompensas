@@ -72,6 +72,7 @@ public class ConversacionAdapter extends ArrayAdapter<Comentario> {
             }else{
                 vh.textoDa.setText(item.getComentario());
                 if(item.getImagen() != null){
+                    vh.textoRecibe.invalidate();
                     Picasso.with(context).load(item.getImagen()).into(vh.fotoCom);
                     vh.fotoCom.setOnClickListener(new View.OnClickListener() {
                         @Override
