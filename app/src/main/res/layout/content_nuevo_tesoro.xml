@@ -74,6 +74,18 @@
                 android:layout_gravity="center_horizontal"/>
         </android.support.design.widget.TextInputLayout>
 
+
+
+        <TextView
+            android:id="@+id/textComisionAviso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ff0000"
+            android:layout_marginLeft="20dp"
+            android:textSize="10dp"
+            android:text="*Se cobrara un adicional de 10% por costo de servicio" />
+
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -86,9 +98,9 @@
             android:id="@+id/Categoria"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="80dp"
             android:layout_marginBottom="20dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="80dp"
             android:hint="Seleccione una categoría"
             android:layout_gravity="center_horizontal"
             android:spinnerMode="dropdown"

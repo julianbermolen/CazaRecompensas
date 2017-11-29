@@ -70,7 +70,9 @@ public class TesoroAdapter extends ArrayAdapter<Tesoro> {
 
         vh.NombreTesoro.setText(item.getNombre());
         vh.DescripcionTesoro.setText(item.getDescripcion());
-        String recompensa = "$"+ Float.toString(item.getRecompensa());
+        int recompensaSinAdicional = Math.round(item.getRecompensa());
+        recompensaSinAdicional = recompensaSinAdicional-((recompensaSinAdicional*10)/100);
+        String recompensa = "$"+ Integer.toString(recompensaSinAdicional);
         vh.RecompensaTesoro.setText(recompensa);
         String nombreUser = item.getUsuario().getNombre()+" "+item.getUsuario().getApellido();
         vh.NombreUsuario.setText(nombreUser);

@@ -13,6 +13,8 @@ import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.Profile;
@@ -85,10 +88,12 @@ public class NuevoTesoro extends AppCompatActivity {
                 EditText descripcion = (EditText) findViewById(R.id.DescripcionTesoro);
                 EditText recompensa = (EditText) findViewById(R.id.RecompensaTesoro);
 
+
                 Spinner categoria = (Spinner) findViewById(R.id.Categoria);
                 ImageView imagen1 = (ImageView) findViewById(R.id.foto);
                 ImageView imagen2 = (ImageView) findViewById(R.id.foto2);
                 ImageView imagen3 = (ImageView) findViewById(R.id.foto3);
+
 
                 //Imagen 1
                 Bitmap bitmap = ((BitmapDrawable) imagen1.getDrawable()).getBitmap();
@@ -123,6 +128,7 @@ public class NuevoTesoro extends AppCompatActivity {
                     recompensa.setError("Recompensa tiene que tener un monto");
                 }else {
                     Integer Recompensa = Integer.parseInt(String.valueOf(recompensa.getText()));
+                    Recompensa = Recompensa +((Recompensa * 10)/100);
                     intent.putExtra("recompensaTesoro", Recompensa);
                 }
                 intent.putExtra("idEstadoTesoro", idTesoroEstado);

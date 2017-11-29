@@ -91,8 +91,10 @@ public class MisRecompensasAdapter extends ArrayAdapter<PeticionRecompensaModel>
         String titulo = " Felicitaciones !";
         vh.TituloAdapterMR.setText(titulo);
 
-
-        String texto = "Recibiste : $" + item.getTesoro().getRecompensa() + " de "+ item.getTesoro().getUsuario().getNombre()+ " por el tesoro "+item.getTesoro().getNombre() ;
+        int recompensaSinAdicional = Math.round(item.getTesoro().getRecompensa());
+        recompensaSinAdicional = recompensaSinAdicional-((recompensaSinAdicional*10)/100);
+        
+        String texto = "Recibiste : $" + recompensaSinAdicional + " de "+ item.getTesoro().getUsuario().getNombre()+ " por el tesoro "+item.getTesoro().getNombre() ;
         vh.TextoAdapterMR.setText(texto);
 
 

@@ -122,8 +122,14 @@ public class MapaNuevoTesoro extends FragmentActivity implements OnMapReadyCallb
         Bitmap imagen3Tesoro = BitmapFactory.decodeByteArray(imagen3TesoroCod, 0, imagen3TesoroCod.length);
         guardarTesoro(nombreTesoro,descripcionTesoro,categoriaTesoro,recompensaTesoro,idEstadoTesoro,imagen1Tesoro,imagen2Tesoro,imagen3Tesoro,latObtener,lngObtener);
 
+
+
         //Al finalizar se va hacia el mainActivity
         Intent intent2 = new Intent(getApplicationContext(),NuevoTesoroFinalizado.class);
+        intent2.putExtra("nombreTesoro", nombreTesoro);
+        intent2.putExtra("descripcionTesoro", descripcionTesoro);
+        intent2.putExtra("recompensaTesoro", recompensaTesoro);
+
         startActivity(intent2);
 
 
