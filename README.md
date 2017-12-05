@@ -12,6 +12,6 @@ Crear una red solidaria en la comunidad en la cual las personas sean beneficiada
  - Integración con MercadoPago.
  - Integración con GoogleMaps.
 
- ##Login con facebook
- El login se realizará en una primera fase solamente con Facebook, obteniendo los datos publicos del usuario y utilizandolos para la aplicación.
- ![captura/LoginConFacebook.jpeg]
+## Login con facebook
+El login se realizará en una primera fase solamente con Facebook, obteniendo los datos publicos del usuario y utilizandolos para la aplicación.
+![captura/LoginConFacebook.jpeg]
