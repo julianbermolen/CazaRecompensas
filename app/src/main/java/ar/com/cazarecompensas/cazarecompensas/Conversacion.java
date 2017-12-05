@@ -113,14 +113,13 @@ public class Conversacion extends AppCompatActivity {
                 TextView nombreUser = (TextView) findViewById(R.id.nombreUser);
 
                 if (idUsuario == comentarios1[0].getIdUsuarioEmisor()) {
-                    Picasso.with(getApplicationContext()).load(comentarios1[0].getUsuarioReceptor().getUrlFoto()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(imageUser);
                     String nombre = comentarios1[0].getUsuarioReceptor().getNombre() + " " + comentarios1[0].getUsuarioReceptor().getApellido();
-                    nombreUser.setText(nombre);
                     toolbar.setTitle(nombre);
+                    Drawable bitmap = getDrawable(comentarios1[0].getUsuarioEmisor().getUrlFoto());
+                    toolbar.setLogo(bitmap);
                 } else {
 
                     String nombre = comentarios1[0].getUsuarioEmisor().getNombre() + " " + comentarios1[0].getUsuarioEmisor().getApellido();
-                    nombreUser.setText(nombre);
                     toolbar.setTitle("  "+nombre);
                     Drawable bitmap = getDrawable(comentarios1[0].getUsuarioEmisor().getUrlFoto());
                     toolbar.setLogo(bitmap);

@@ -23,48 +23,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:orientation="vertical"
-                    >
-
-                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/fotoUser"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_launcher"
-                        android:layout_marginTop="10dp"
-                        android:layout_gravity="center"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/nombreUser"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="Bienvenido a tu conversación"
-                        android:textSize="18dp"
-                        android:textColor="@color/white" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -83,25 +41,37 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:layout_weight="3">
+            android:layout_weight="3"
+            android:gravity="bottom"
+            android:layout_gravity="bottom">
            <LinearLayout
                android:layout_width="match_parent"
                android:layout_height="match_parent"
-               android:orientation="horizontal">
+               android:orientation="horizontal"
+               android:layout_gravity="bottom"
+               android:gravity="bottom">
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
-            <Button
-                android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:text="Enviar"
-                android:textColor="@color/white"
-                android:layout_weight="3"
-                android:background="@color/colorPrimary"/>
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                />
+                 <LinearLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:orientation="horizontal"
+                     android:layout_weight="3"
+                     android:gravity="bottom">
+                      <Button
+                           android:id="@+id/button2"
+                           android:layout_width="match_parent"
+                           android:layout_height="40dp"
+                           android:background="@color/colorPrimary"
+                           android:text="Enviar"
+                           android:textColor="@color/white" />
+                 </LinearLayout>
            </LinearLayout>
         </LinearLayout>
-
+</LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
