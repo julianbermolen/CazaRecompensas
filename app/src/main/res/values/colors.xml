@@ -6,6 +6,7 @@
     <color name="colorAccent">#131b62</color>
     <color name="white">#FFFFFF</color>
     <color name="opaco">#c8ff9f22</color>
+    <color name="login">#56ff9f22</color>
     <color name="Negro">#000</color>
     <color name="Gris">#c0d1d1d1</color>
 </resources>
