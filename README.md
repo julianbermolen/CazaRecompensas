@@ -14,6 +14,6 @@ Crear una red solidaria en la comunidad en la cual las personas sean beneficiada
 
 ## Login con facebook
 El login se realizará en una primera fase solamente con Facebook, obteniendo los datos publicos del usuario y utilizandolos para la aplicación.
-##
+
 <img align="left" width="100" height="100" src="captura/LoginConFacebook.jpeg">
 
