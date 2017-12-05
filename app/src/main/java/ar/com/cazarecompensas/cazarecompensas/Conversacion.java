@@ -1,18 +1,24 @@
 package ar.com.cazarecompensas.cazarecompensas;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.internal.LinkedTreeMap;
+import com.mercadopago.model.Item;
 import com.squareup.picasso.Picasso;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +43,8 @@ public class Conversacion extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversacion);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -109,10 +116,15 @@ public class Conversacion extends AppCompatActivity {
                     Picasso.with(getApplicationContext()).load(comentarios1[0].getUsuarioReceptor().getUrlFoto()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(imageUser);
                     String nombre = comentarios1[0].getUsuarioReceptor().getNombre() + " " + comentarios1[0].getUsuarioReceptor().getApellido();
                     nombreUser.setText(nombre);
+                    toolbar.setTitle(nombre);
                 } else {
-                    Picasso.with(getApplicationContext()).load(comentarios1[0].getUsuarioEmisor().getUrlFoto()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(imageUser);
+
                     String nombre = comentarios1[0].getUsuarioEmisor().getNombre() + " " + comentarios1[0].getUsuarioEmisor().getApellido();
                     nombreUser.setText(nombre);
+                    toolbar.setTitle("  "+nombre);
+                    Drawable bitmap = getDrawable(comentarios1[0].getUsuarioEmisor().getUrlFoto());
+                    toolbar.setLogo(bitmap);
+
                 }
 
                 adapter = new ConversacionAdapter(getApplicationContext(), comentarios1, idUsuario);
@@ -135,5 +147,12 @@ public class Conversacion extends AppCompatActivity {
         startActivity(intent);
 
     }
-
+    public Drawable getDrawable(String bitmapUrl) {
+        try {
+            URL url = new URL(bitmapUrl);
+            Drawable d =new BitmapDrawable(BitmapFactory.decodeStream(url.openConnection().getInputStream()));
+            return d;
+        }
+        catch(Exception ex) {return null;}
+    }
 }
